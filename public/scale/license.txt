@@ -1,0 +1,11 @@
+Model Information:
+* title:	Victorian Scales
+* source:	https://sketchfab.com/3d-models/victorian-scales-33c4f254848f42bab8de2482e563eac4
+* author:	Emmalsawyer (https://sketchfab.com/Emmalsawyer)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Victorian Scales" (https://sketchfab.com/3d-models/victorian-scales-33c4f254848f42bab8de2482e563eac4) by Emmalsawyer (https://sketchfab.com/Emmalsawyer) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

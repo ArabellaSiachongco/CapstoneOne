@@ -1,0 +1,58 @@
+notes for react
+
+1. Differece between:
+    <Suspense></Suspense> = "we use this if theres a child included inside"
+    <Suspense/> = "w"e use this if there is no cild, possible: classname"
+    
+2. What is you API:
+    "theres a  prebuilt API in react, such as hooks and components, ecample of this in our code is the useContent or useREF"
+    
+3. meaning of:
+    x = "width"
+    y = "height"
+    z= "depth"
+    
+4. Use of BrowserRoute:
+    "the use of BrowserRoute is to render high resolution, like 3d images of THREEJS, it support the HTML5"
+
+5. const name {{index, icon, title}} :
+    props thene declare it. coming from constant: userLink
+
+6. no canvas loader aand noo section wrapper, di maayos ung nav hehe\
+
+meaning sa ThreeJs:
+
+1. ambient light with intensity 0.4, this will give a moderate and uniform lighting across the scene. that will prevent the model to blend much into the background.
+
+2. hemisphere light with intensity 0.15 and ground color of black - this is the light for top and bottom. 
+
+3.  position={[ -20, 10, 10 ]} - highlight position, top to side
+    angle={ 0.3 } - this keeps the light concentrated in specific part
+    penumbra={ 1 } - give the a light a smooth transition texture
+    castShadow
+    shadow-mapSize= { 1024 }
+    
+4.  frameloop="demand" - it updates the frame if there is a change in the object, to save power.
+    shadows is to enchance the realism of the object.
+    dpr={[ 1, 2 ]} or (device pixel ration) - based ont the device screen, it helps managing performance
+    gl={{ preserveDrawingBuffer: true }} - to minimize the use of memory 
+    maxPolarAngle={ Math.PI / 2 }
+    minPolarAngle={ 0.5 }
+
+5. SectionWrapper(Lawyer, "lawyer-section"): This wraps the Lawyer component and passes the idName as "lawyer-section".
+
+        
+    Explanation
+Check modelPath: By checking if modelPath contains the substring "helena" or "book", we can determine which model to render (HelenaCanvas or BookCanvas). This assumes that each model’s path has a unique identifier in the file name.
+
+Rendering the Appropriate Canvas: Depending on the value in modelPath, this code will render HelenaCanvas if modelPath includes "helena" or BookCanvas if it includes "book".
+
+Fallback: The null in the conditional chain ensures that if modelPath does not contain a recognized identifier, nothing is rendered.
+
+
+review the propsTypes
+navbar home, features not working
+tags are not working, it still needs to connect
+the link for features to lawyer needs change
+nag double yung tabs kapag pinindot yung logo 
+link sa points the same - bad :<
