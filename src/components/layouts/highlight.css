@@ -1,0 +1,46 @@
+.page-content-wrapper {
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
+  }
+  
+  .word-highlight {
+    position: relative;
+    cursor: pointer;
+    background: linear-gradient(120deg, rgba(255, 230, 0, 0.2), rgba(255, 230, 0, 0.2));
+    background-repeat: no-repeat;
+    background-size: 100% 0.3em;
+    background-position: 0 88%;
+    transition: all 0.2s ease-in-out;
+    z-index: 2;
+  }
+  
+  .word-highlight:hover {
+    background-size: 100% 100%;
+  }
+  
+  .definition-modal {
+    pointer-events: auto;
+    user-select: text;
+  }
+  
+  /* Ensure text is selectable */
+  .select-text {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+  }
+  
+  /* Make sure modal is above everything */
+  .definition-modal {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  @media (max-width: 640px) {
+    .definition-modal {
+      width: 90vw;
+      max-width: none;
+      left: 50% !important;
+    }
+  }

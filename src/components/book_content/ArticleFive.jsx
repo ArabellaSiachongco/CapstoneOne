@@ -1,1 +1,6 @@
-ArticleFour.jsx
+const ArticleFive = () => {
+    return (
+        <></>
+    )
+}
+export default ArticleFive;

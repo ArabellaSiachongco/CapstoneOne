@@ -133,6 +133,23 @@
   border-image-width: 50px;
 }
 
+
+.image-border-book {
+  border: 40px solid;
+  border-image-source: url('./assets/bookBorder.png');
+  border-image-slice: 200;
+  border-image-width: 30px;
+  
+  display: flex;
+  justify-content: center; 
+  align-items: center;   
+
+  width: 100%;
+  height: 100%; 
+  box-sizing: border-box; 
+}
+
+
 @keyframes mulShdSpin {
 
   0%,
