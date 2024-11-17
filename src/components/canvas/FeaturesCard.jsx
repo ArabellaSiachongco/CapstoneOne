@@ -5,8 +5,11 @@ import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import { Tilt } from "react-tilt";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const FeaturesCard = ({ feature }) => {
+  const navigate = useNavigate();
+  
   return (
     <VerticalTimelineElement
       contentStyle={{ background: "#1d1836", color: "#fff" }}
@@ -32,26 +35,22 @@ const FeaturesCard = ({ feature }) => {
           {feature.subtitle}
         </p>
       </div>
-
+    
       {feature.points && (
-  <ul className="mt-5 list-disc ml-5 space-y-2">
-    {feature.points.map((point, index) => (
-      <li
-        key={`features-point-${index}`}
-        className="text-gray-100 text-[14px] pl-1 tracking-wider"
-      >
-        <Link
-          to={`/book#${point.id}`} // Navigate to Book page with the section ID
-          className="text-blue-500 hover:underline"
-        >
-          {point.text}
-        </Link>
-      </li>
-    ))}
-  </ul>
-)}
+      <ul className="mt-5 list-disc ml-5 space-y-2">
+        {feature.points.map((point, index) => (
+          <li
+            key={`features-point-${index}`}
+            className="text-gray-100 text-[14px] pl-1 tracking-wider cursor-pointer"
+            onClick={() => navigate(`${point.li}#${point.id}`)}
+          >
+            {point.text}
+          </li>
+        ))}
+      </ul>
+    )}
 
-
+    
       {feature.tags && (
         <div className="flex flex-wrap gap-2 mt-3">
           {feature.tags.map((tag, index) => (

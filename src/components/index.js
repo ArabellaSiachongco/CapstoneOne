@@ -4,7 +4,7 @@ import Header from "./Header";
 import User from "./User";
 import Footer from "./Footer";
 import Testimonials from "./Testimonials";
-import Book from "./Book";
+import Constitution from "./Constitution";
 import Lawyer  from "./Lawyer";
 
 export {
@@ -14,6 +14,6 @@ export {
     User,
     Footer,
     Testimonials,
-    Book,
+    Constitution,
     Lawyer,
 };

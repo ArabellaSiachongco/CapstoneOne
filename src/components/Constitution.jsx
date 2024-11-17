@@ -3,15 +3,15 @@ import { React, useEffect } from "react";
 import { motion } from "framer-motion"; 
 import { styles } from "../styles";
 import "./layouts/book.css";
-import { table_of_contents } from "../constants";
+import { table_of_content_constitution } from "../constants/table_of_content";
 import { SectionWrapper, ScrollWrapper } from "/src/wrapper";
 import { fadeIn } from "../utility/motion";
 
-const Book = () => {
+const Constitution = () => {
   return (
     <ScrollWrapper>
-    <div id="book_ID" className="p-8 min-h-screen text-center image-border-table">
-      {/* Book Intro */}
+    <div id="Constitution_ID" className="p-8 min-h-screen text-center image-border-table">
+      {/* Constitution Intro */}
       <div className="mb-16">
         <motion.p
           variants={fadeIn("top", "tween", 0.1, 0.6)}
@@ -79,7 +79,7 @@ const Book = () => {
         animate="show"
         className="space-y-4 text-left max-w-3xl mx-auto"
       >
-        {table_of_contents.map((item) => (
+        {table_of_content_constitution.map((item) => (
           <Link
             key={item.href}
             to={item.href}
@@ -94,4 +94,4 @@ const Book = () => {
   );
 };
 
-export default SectionWrapper(Book, "book");
+export default SectionWrapper(Constitution, "Constitution");

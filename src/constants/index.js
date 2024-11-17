@@ -54,11 +54,13 @@ const features = [
         points: [
             {
                 text:"THE CONSTITUTION OF THE REPUBLIC OF THE PHILIPPINES", 
-                id: "book_ID"
+                id: "Constitution_ID",
+                li: "/constitution",
             },
             {
-                text:"Mollit qui ullamco proident nulla.", 
-                id: "sample1_ID"
+                text:"Indigenous Peoples’ Rights Act", 
+                id: "RA_8371_ID",
+                li:"/RA_8371",
             },
             {
                 text:"Ex proident consequat veniam quis exercitation irure labore reprehenderit cupidatat ut.", 
@@ -270,82 +272,6 @@ const lawyerProfiles = [
     },
 ];
 
-const table_of_contents = [
-    {
-        topic: "ARTICLE I National Territory",
-        href: "/articleOne"
-    },
-    {
-        topic: "ARTICLE II Declaration of Principles and State Policies",
-        href: "/articleTwo"
-    },
-    {
-        topic: "ARTICLE III Bill of Rights",
-        href: "/articleThree"
-    },
-    {
-        topic: "ARTICLE IV Citizenship",
-        href: "/articleFour"
-    },
-    {
-        topic: "ARTICLE V Suffrage",
-        href: "/articleFive"
-    },
-    {
-        topic: "ARTICLE VI Legislative Department",
-        href: "/articleSix"
-    },
-    {
-        topic: "ARTICLE VII Executive Department",
-        href: "/articleSeven"
-    },
-    {
-        topic: "ARTICLE VIII Judicial Department",
-        href: "/articleEight"
-    },
-    {
-        topic: "ARTICLE IX Constitutional Commissions",
-        href: "/articleNine"
-    },
-    {
-        topic: "ARTICLE X Local Government",
-        href: "/articleTen"
-    },
-    {
-        topic: "ARTICLE XI Accountability of Public Officers",
-        href: "/articleEleven"
-    },
-    {
-        topic: "ARTICLE XII National Economy and Patrimony",
-        href: "/articleTwelve"
-    },
-    {
-        topic: "ARTICLE XIII Social Justice and Human Rights",
-        href: "/articleThirteen"
-    },
-    {
-        topic: "ARTICLE XIV Education, Science and Technology, Arts, Culture and Sports",
-        href: "/articleFourteen"
-    },
-    {
-        topic: "ARTICLE XV The Family",
-        href: "/articleFifteen"
-    },
-    {
-        topic: "ARTICLE XVI General Provisions",
-        href: "/articleSixteen"
-    },
-    {
-        topic: "ARTICLE XVII Amendments or Revisions",
-        href: "/articleSeventeen"
-    },
-    {
-        topic: "ARTICLE XVIII Transitory Provisions",
-        href: "/articleEighteen"
-    },
-];
-
-
 export {
     navLinks,
     userLink,
@@ -355,8 +281,4 @@ export {
     testimonials,
     lawyerProfiles,
     tags,
-    table_of_contents 
 };
-
-
- 

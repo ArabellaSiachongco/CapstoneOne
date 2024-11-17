@@ -18,22 +18,3 @@
   z-index: -1; 
 }
 
-.image-border-declaration {
-  position: relative;
-  padding: 40px; 
-}
-
-.image-border-declaration::before {
-  content: "";
-  position: absolute; 
-  bottom: 0; 
-  left: 0;
-  width: 100%;
-  height: 100%; 
-  background-image: url('/src/assets/book_images/declaration.png');
-  background-size: contain; 
-  background-repeat: no-repeat; 
-  background-position: bottom right; 
-  opacity: 0.2;
-  z-index: -1; 
-}

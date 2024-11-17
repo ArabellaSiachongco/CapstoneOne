@@ -1,4 +1,3 @@
-// book_content/index.js
 import ArticleOne from "./ArticleOne";
 import ArticleTwo from "./ArticleTwo";
 import ArticleThree from "./ArticleThree";

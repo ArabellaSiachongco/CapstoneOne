@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import HTMLFlipBook from "react-pageflip";
-import { ArticleOne, ArticleTwo, ArticleThree, ArticleFour, ArticleFive, ArticleSix, ArticleSeven, ArticleEight, ArticleNine, ArticleTen, ArticleEleven, ArticleTwelve, ArticleThirteen, ArticleFourteen, ArticleFifteen, ArticleSixteen, ArticleSeventeen, ArticleEighteen } from "../book_content";
+import { ArticleOne, ArticleTwo, ArticleThree, ArticleFour, ArticleFive, ArticleSix, ArticleSeven, ArticleEight, ArticleNine, ArticleTen, ArticleEleven, ArticleTwelve, ArticleThirteen, ArticleFourteen, ArticleFifteen, ArticleSixteen, ArticleSeventeen, ArticleEighteen } from "../constitution_content";
 import "../layouts/Bookflip.css";
 import { styles } from "../../styles";
 
