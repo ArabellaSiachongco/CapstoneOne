@@ -2,11 +2,8 @@ const government = [
     {
         id: "local_government",
         title: "Local Government",
-        subtitle: "ARTICLE X",
+        subtitle: "ARTICLE X - General Provisions",
         sections: [
-            {
-                name: "General Provisions",
-                subsections: [
                     {
                         name: "Section 1",
                         paragraph: [
@@ -92,10 +89,6 @@ const government = [
                         ],
                     },
                 ],
-            },
-            
-            
-        ],
     },
 ];
 
@@ -160,4 +153,4 @@ const region = [
     },
 ]
 
-export default {government, region};
+export {government, region};

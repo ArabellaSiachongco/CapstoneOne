@@ -3,7 +3,7 @@ const civil = [
     {
         id: "civil_service",
         title: "The Civil Service Commission",
-        subtitle: "ARTICLE IX - B",
+        subtitle: "ARTICLE IX",
         sections: [
             {
                 name: "Section 1",

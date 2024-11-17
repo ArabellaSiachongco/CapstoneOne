@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { React, useEffect } from "react";
 import { motion } from "framer-motion"; 
 import { styles } from "../styles";
+import "./layouts/book.css";
 import { table_of_contents } from "../constants";
 import { SectionWrapper, ScrollWrapper } from "/src/wrapper";
 import { fadeIn } from "../utility/motion";

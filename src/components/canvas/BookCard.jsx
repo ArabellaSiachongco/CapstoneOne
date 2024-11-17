@@ -11,39 +11,33 @@ const BookCard = () => {
   });
 
   useEffect(() => {
-    // Function to update dimensions
     const updateDimensions = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      
-      // Calculate book dimensions based on screen size
-      let bookWidth = Math.min(width * 0.8, 900); // 80% of screen width up to 900px
-      let bookHeight = Math.min(height * 0.8, 800); // 80% of screen height up to 800px
-      
-      // Maintain aspect ratio
-      if (bookWidth / bookHeight > 1.2) { // If too wide
+
+      let bookWidth = Math.min(width * 0.9, 900); // 90% of screen width up to 900px
+      let bookHeight = Math.min(height * 0.75, 800); // 75% of screen height up to 800px
+
+      // Maintain aspect ratio (landscape or portrait)
+      if (bookWidth / bookHeight > 1.2) {
         bookWidth = bookHeight * 1.2;
       }
-      
+
       setDimensions({
         width: bookWidth,
         height: bookHeight
       });
     };
 
-    // Initial calculation
     updateDimensions();
 
-    // Add event listener for window resize
-    window.addEventListener('resize', updateDimensions);
-
-    // Cleanup
-    return () => window.removeEventListener('resize', updateDimensions);
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
   return (
-    <main className="w-full min-h-screen flex items-center justify-center p-4">
-      <div className="flipbook-container w-full max-w-6xl mx-auto">
+    <main className="w-full min-h-screen flex flex-col items-center justify-center p-4">
+      <div className="flipbook-container w-full max-w-full flex justify-center">
         <HTMLFlipBook
           width={dimensions.width}
           height={dimensions.height}
@@ -53,7 +47,7 @@ const BookCard = () => {
           maxWidth={900}
           maxHeight={800}
           showCover={true}
-          usePortrait={false}
+          usePortrait={dimensions.width < 500} // Switch to portrait mode for narrow screens
           drawShadow={true}
           flippingTime={1000}
           className="flipbook"
@@ -68,9 +62,9 @@ const BookCard = () => {
           </div>
 
           {/* Articles Pages */}
-          {[ArticleOne, ArticleTwo, ArticleThree, ArticleFour, ArticleFive, 
-            ArticleSix, ArticleSeven, ArticleEight, ArticleNine, ArticleTen, 
-            ArticleEleven, ArticleTwelve, ArticleThirteen, ArticleFourteen, 
+          {[ArticleOne, ArticleTwo, ArticleThree, ArticleFour, ArticleFive,
+            ArticleSix, ArticleSeven, ArticleEight, ArticleNine, ArticleTen,
+            ArticleEleven, ArticleTwelve, ArticleThirteen, ArticleFourteen,
             ArticleFifteen, ArticleSixteen, ArticleSeventeen, ArticleEighteen
           ].map((Article, index) => (
             <div key={index} className="page">

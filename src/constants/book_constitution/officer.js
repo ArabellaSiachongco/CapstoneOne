@@ -1,4 +1,4 @@
-const officers = [
+const officer = [
     {
         id: "public_officers",
         title: "Accountability of Public Officers",
@@ -131,4 +131,4 @@ const officers = [
         ],
     },
 ];
-export default officers;
+export default officer;

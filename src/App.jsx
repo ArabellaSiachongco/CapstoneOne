@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./components/layouts/MainLayout";
 import Book from "./components/Book"; 
-import BookCard from "./components/canvas/BookCard";
 import Navbar from "./components/Navbar";
 import Lawyer  from "./components/Lawyer";
 
@@ -39,8 +38,7 @@ const App = () => {
         <Route path="/lawyer-status" element={<Lawyer />} />
         
         {/* route for books content  */}
-        <Route path="/book" element={<Book />} />
-        <Route path="/book-card" element={<BookCard />} />
+        <Route path="/book" element={<Book />} />  
         <Route path="/articleOne" element={<ArticleOne />} />
         <Route path="/articleTwo" element={<ArticleTwo />} />
         <Route path="/articleThree" element={<ArticleThree />} />
@@ -59,7 +57,6 @@ const App = () => {
         <Route path="/articleSixteen" element={<ArticleSixteen />} />
         <Route path="/articleSeventeen" element={<ArticleSeventeen />} />
         <Route path="/articleEighteen" element={<ArticleEighteen />} />
-
       </Routes>
     </BrowserRouter>
   );

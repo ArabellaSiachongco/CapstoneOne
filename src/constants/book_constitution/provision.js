@@ -1,4 +1,4 @@
-const provisions = [
+const provision = [
     {
         id: "general_provisions",
         title: "General Provisions",
@@ -67,4 +67,4 @@ const provisions = [
     },
 ];
 
-export default provisions;
+export default provision;

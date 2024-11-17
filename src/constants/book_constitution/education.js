@@ -1,8 +1,8 @@
 const educations = [
     {
         id: "education",
-        title: "Education, Science and Technology, Arts, Culture, and Sports",
-        subtitle: "ARTICLE XIV",
+        title: "Education",
+        subtitle: "ARTICLE XIV - Education, Science and Technology, Arts, Culture, and Sports",
         sections: [
             {
                 name: "Section 1",
@@ -162,4 +162,4 @@ const sports = [
 ];
 
 
-export default { educations, languages, scienceAndTechnology, artsAndCulture, sports  }
+export { educations, languages, scienceAndTechnology, artsAndCulture, sports  }

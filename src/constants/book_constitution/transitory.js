@@ -1,4 +1,4 @@
-const provisions = [
+const transitory = [
     {
         id: "transitory_provisions",
         title: "Transitory Provisions",
@@ -152,4 +152,4 @@ const provisions = [
     },
 ];
 
-export default provisions;
+export default transitory;

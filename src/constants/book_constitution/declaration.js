@@ -4,6 +4,7 @@ const declarations = [
         id: "principles_and_state_policies",
         title:"Declaration of Principles and State Policies",
         subtitle:"ARTICLE II",
+        btn:'/articleThree',
         principle: "Principles",
         principle_section: [ 
             {

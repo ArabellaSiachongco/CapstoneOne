@@ -1,4 +1,4 @@
-const elections = [
+const election = [
     {
         id: "commission_on_elections",
         title: "The Commission on Elections",
@@ -86,4 +86,4 @@ const elections = [
         ],
     },
 ];
-export default elections;
+export default election;

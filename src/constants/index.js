@@ -273,7 +273,7 @@ const lawyerProfiles = [
 const table_of_contents = [
     {
         topic: "ARTICLE I National Territory",
-        href: "/book-card"
+        href: "/articleOne"
     },
     {
         topic: "ARTICLE II Declaration of Principles and State Policies",
