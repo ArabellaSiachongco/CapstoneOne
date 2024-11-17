@@ -37,13 +37,8 @@ import ChapterNine from "./components/peoples_rights_content/ChapterNine";
 import ChapterTen from "./components/peoples_rights_content/ChapterTen";
 import ChapterEleven from "./components/peoples_rights_content/ChapterEleven";
 import ChapterTwelve from "./components/peoples_rights_content/ChapterTwelve";
-import ChapterThirteen from "./components/peoples_rights_content/ChapterThirteen";
-import ChapterFourteen from "./components/peoples_rights_content/ChapterFourteen";
-import ChapterFifteen from "./components/peoples_rights_content/ChapterFifteen";
-import ChapterSixteen from "./components/peoples_rights_content/ChapterSixteen";
-import ChapterSeventeen from "./components/peoples_rights_content/ChapterSeventeen";
-import ChapterEighteen from "./components/peoples_rights_content/ChapterEighteen";
 
+1
 
 const App = () => {
   return (
@@ -95,12 +90,6 @@ const App = () => {
         <Route path="/chapterTen" element={<ChapterTen />} />
         <Route path="/chapterEleven" element={<ChapterEleven />} />
         <Route path="/chapterTwelve" element={<ChapterTwelve />} />
-        <Route path="/chapterThirteen" element={<ChapterThirteen />} />
-        <Route path="/chapterFourteen" element={<ChapterFourteen />} />
-        <Route path="/chapterFifteen" element={<ChapterFifteen />} />
-        <Route path="/chapterSixteen" element={<ChapterSixteen />} />
-        <Route path="/chapterSeventeen" element={<ChapterSeventeen />} />
-        <Route path="/chapterEighteen" element={<ChapterEighteen />} />
         
       </Routes>
     </BrowserRouter>

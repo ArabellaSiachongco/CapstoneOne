@@ -6,7 +6,7 @@ const chapterFour = [
         sections: [
             {
                 name: "Section 13",
-                subtitle: "The State recognizes the inherent right of ICCs/IPs to self-governance and self-determination and respects the integrity of their values, practices and institutions. Consequently, the State shall guarantee the right of ICCs/IPs to freely pursue their economic, social and cultural development.",
+                paragraph: "The State recognizes the inherent right of ICCs/IPs to self-governance and self-determination and respects the integrity of their values, practices and institutions. Consequently, the State shall guarantee the right of ICCs/IPs to freely pursue their economic, social and cultural development.",
             },
             {
                 name: "Section 14",

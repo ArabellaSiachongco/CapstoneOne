@@ -9,10 +9,10 @@ import { SectionWrapper, ScrollWrapper } from '/src/wrapper';
 const ChapterOne = () => {  
   const navigate = useNavigate(); // Initialize useNavigate
 
-  // Handle button click
   const handleNextArticleClick = () => {
-    navigate(chapterOne[0].btn); // Navigate to the URL specified in national[0].btn ("/articleTwo")
+    navigate("/chapterTwo"); 
   };
+  
   return (
     <div className="text-spacing-3 leading-relaxed tracking-wide image-border-national">
       <ScrollWrapper>
@@ -21,7 +21,15 @@ const ChapterOne = () => {
             <div key={item.id} className="my-5">
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
               <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
-              <p className={styles.paragraphSubTextLower}>{item.paragraph}</p>
+              <div>
+                    {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
+                    {item.sections.map((sections, index) => (
+                      <div key={index} className="my-4">
+                        <h6 className={styles.sectionTitle}>{sections.name}</h6>
+                        <p className={styles.paragraphSubTextLower}>{sections.paragraph}</p>
+                      </div>
+                    ))}
+                  </div>
             </div>
           ))}
           
@@ -30,7 +38,7 @@ const ChapterOne = () => {
             <button 
               onClick={handleNextArticleClick}
               className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500 flex ml-auto">
-              Next Article
+              Next Chapter
             </button>
           </div>
         </div>
