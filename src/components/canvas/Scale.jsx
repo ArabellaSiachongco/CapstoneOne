@@ -1,13 +1,13 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OrbitControls, Preload } from "@react-three/drei";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 // todo: change the gltf to glb 
 // ignore red signs 
 const Scale = ({ isMobile }) => {
     
-    const scale = useLoader(GLTFLoader, "/public/scaleblack/scene.gltf");
+    const scale = useLoader(GLTFLoader, "/scaleblack/scene.glb");
     
 return(
     <mesh>
