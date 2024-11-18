@@ -35,8 +35,8 @@ const Navbar = () => {
         >
           <img className="w-9 h-9 object-contain" src={logo} alt="Logo" />
           <p className="text-white text-[18px] font-bold cursor-pointer flex">
-            Legal &nbsp;
-            <span className="sm:block hidden">Awareness</span>
+            Karapatan &nbsp;
+            <span className="sm:block hidden"> Ko</span>
           </p>
         </Link>
 
@@ -55,7 +55,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Mobile menu icon */}
+        {/* home, features contact */}
         <div className="sm:hidden flex flex-1 justify-end items-center">
           <img
             src={toggle ? close : menu}

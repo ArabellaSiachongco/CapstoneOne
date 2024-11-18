@@ -1,6 +1,6 @@
 // src/components/layouts/MainLayout.jsx
 import React from 'react';
-import { Header, User, Features, Testimonials, Footer } from '../index';
+import { Header, User, Features, Testimonials, Footer } from './components/index';
 
 const MainLayout = () => {
   return (

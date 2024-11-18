@@ -32,21 +32,17 @@ const User = () => {
   return (
     <>
       <motion.div variants={textVariant()}>
-        <p className={styles.paragraphSubText}>Overview</p>
+        <p id="user" className={styles.paragraphSubText}>Overview</p>
         <h2 className={styles.headText}>User</h2>
       </motion.div>
 
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
-        className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
+        className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px] tracking-wide"
       >
-        <span className={styles.paragraphSubText}> August to December 2024 </span>{" "}
-        <br />
-        Id proident incididunt ut aliquip magna id eiusmod elit ut proident.
-        Nostrud et tempor nulla enim sint sint. Nostrud dolore est ea ea
-        voluptate laboris in cupidatat pariatur. Duis ut do in quis laborum
-        ullamco eu consectetur consequat dolor. Irure incididunt reprehenderit
-        esse laborum officia non velit aliquip.
+        <p className={styles.paragraphSubTextLower}>
+        Finding the right support and legal guidance is essential for making informed decisions during critical times. Our platform offers valuable resources to help individuals navigate complex situations, whether it's resolving disputes, understanding your rights, or seeking expert legal advice. With our tailored services, users of all backgrounds can feel confident and empowered to take the next step in their legal journey.
+        </p>
       </motion.p>
 
       <div className="mt-20 flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14">

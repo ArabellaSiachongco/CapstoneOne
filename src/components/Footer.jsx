@@ -32,15 +32,14 @@ const Footer = () => {
         <div>
           <h4 className={`${styles.headSubText} mb-4`}>Partnership</h4>
           <p className="text-sm mb-2">We are open to partnerships with legal professionals, NGOs, and advocacy groups.</p>
-          <p className="text-sm">Contact us at: <span className="text-blue-400 underline">partner@karapatan.ko</span></p>
         </div>
 
         {/* Contact Section */}
         <div>
           <h4 className={`${styles.headSubText} mb-4`}>Contact Information</h4>
-          <p className="text-sm mb-2">Email: <span className="text-blue-400 underline">contact@karapatan.ko</span></p>
+          <p className="text-sm mb-2">Email: <span className="text-white">karapatanko@gmail.com</span></p>
           <p className="text-sm mb-2">Phone: (123) 456-7890</p>
-          <p className="text-sm mb-2">Address: 123 Legal Rights Ave, Suite 101, Cityville</p>
+          <p className="text-sm mb-2">Address: Legarda Government Road</p>
         </div>
       </div>
 

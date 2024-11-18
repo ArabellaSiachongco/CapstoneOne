@@ -3,9 +3,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import { Tilt } from "react-tilt";
+// import { Tilt } from "react-tilt";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion"; 
+import { fadeIn } from "/src/utility/motion.js";
+
 
 const FeaturesCard = ({ feature }) => {
   const navigate = useNavigate();
@@ -14,7 +17,6 @@ const FeaturesCard = ({ feature }) => {
     <VerticalTimelineElement
       contentStyle={{ background: "#1d1836", color: "#fff" }}
       contentArrowStyle={{ borderRight: "7px solid #232631" }}
-      date={feature.date}
       iconStyle={{ background: feature.iconBg }}
       icon={
         <div className="flex justify-center items-center w-full h-full">
@@ -32,25 +34,35 @@ const FeaturesCard = ({ feature }) => {
           className="text-secondary text-[16px] font-semibold"
           style={{ margin: 0 }}
         >
-          {feature.subtitle}
+          {feature.subtitle} 
         </p>
       </div>
     
       {feature.points && (
-      <ul className="mt-5 list-disc ml-5 space-y-2">
-        {feature.points.map((point, index) => (
-          <li
-            key={`features-point-${index}`}
-            className="text-gray-100 text-[14px] pl-1 tracking-wider cursor-pointer"
-            onClick={() => navigate(`${point.li}#${point.id}`)}
-          >
-            {point.text}
-          </li>
-        ))}
-      </ul>
-    )}
+  <ul className="mt-5 list-disc ml-5 space-y-2">
+    {feature.points.map((point, index) => (
+      <li
+        key={`features-point-${index}`}
+        className="text-gray-100 text-[14px] pl-1 tracking-wider cursor-pointer hover:underline"
+        onClick={() => navigate(`${point.li}#${point.id}`)}
+      >
+        {point.text}
+      </li>
+    ))}
+  </ul>
+)}
 
-    
+
+      {feature.image && (
+        <div className="flex justify-center mt-3">
+          <img
+            src={feature.image}
+            alt={feature.title}
+            className="w-[50%] h-[50%] rounded-lg"
+          />
+        </div>
+      )}
+      
       {feature.tags && (
         <div className="flex flex-wrap gap-2 mt-3">
           {feature.tags.map((tag, index) => (
@@ -63,18 +75,6 @@ const FeaturesCard = ({ feature }) => {
           ))}
         </div>
       )}
-
-      <Tilt options={{ max: 45, scale: 1, speed: 450 }}>
-        {feature.image && (
-          <div className="flex justify-center mt-3">
-            <img
-              src={feature.image}
-              alt={feature.title}
-              className="w-[50%] h-[50%] rounded-lg"
-            />
-          </div>
-        )}
-      </Tilt>
 
       {feature.btn && (
         <div className="mt-5">
@@ -97,7 +97,9 @@ FeaturesCard.propTypes = {
     subtitle: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired, // Assuming it's a URL or image path
     iconBg: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
+    overview: PropTypes.string,
+    update: PropTypes.string,
+    born: PropTypes.string,
     color: PropTypes.string.isRequired,
     btn: PropTypes.string, // This can be an optional string (path for link)
     points: PropTypes.arrayOf(PropTypes.string), // Optional array of strings

@@ -13,13 +13,9 @@ const Lawyer = () => {
     <div className="container mx-auto px-4 py-6">
       <h2 className={`${styles.headText} my-5`}>Legal Matching</h2>
       <span className={styles.paragraphSubText}>Choose Your Lawyer</span>
-      <br />
-      <p>
-        Id proident incididunt ut aliquip magna id eiusmod elit ut proident.
-        Nostrud et tempor nulla enim sint sint. Nostrud dolore est ea ea
-        voluptate laboris in cupidatat pariatur. Duis ut do in quis laborum
-        ullamco eu consectetur consequat dolor. Irure incididunt reprehenderit
-        esse laborum officia non velit aliquip.
+      <br/> <br/>
+      <p className={styles.paragraphSubText}>
+      Finding the right lawyer is a crucial step in ensuring the best possible outcome for your legal case. Whether you're dealing with workplace discrimination, personal injury, or family law matters, we connect you with experienced professionals who specialize in your area of need. Legal match helps you find qualified attorneys and lawyers based on your specific legal concerns, ensuring you receive expert guidance.
       </p>
 
       {/* Render Tags */}

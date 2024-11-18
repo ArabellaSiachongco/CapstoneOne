@@ -22,10 +22,10 @@ const navLinks = [
         id: "feature",
         title: "Features",
     },
-    {
-        id: "contact",
-        title: "Contact",
-    },
+    // {
+    //     id: "contact",
+    //     title: "Contact",
+    // },
 ];
 
 const userLink = [
@@ -49,11 +49,11 @@ const features = [
         subtitle: "Table of Contents",
         icon: book,
         iconBg: "#383E56",
-        date: "August 31 - December 7",
+        // overview: "An in-depth look at legal texts in the Philippines.",
         color: "blue-text-gradient",
         points: [
             {
-                text:"THE CONSTITUTION OF THE REPUBLIC OF THE PHILIPPINES", 
+                text:"The Constitution Of The Republic Of The Philippines", 
                 id: "Constitution_ID",
                 li: "/constitution",
             },
@@ -78,7 +78,7 @@ const features = [
         subtitle: "Connecting You with the Right Expertise, Every Time.",
         icon: lawyerIcon,
         iconBg: "#383E56",
-        date: "August 31 - December 7",
+        // update: "Last Updated: November 19, 2024",
         color: "green-text-gradient",
         btn: "/lawyer-status",
         image: lawyers,
@@ -102,7 +102,7 @@ const features = [
         subtitle: "Your Smart Guide for Legal Books",
         icon: Ai,
         iconBg: "#383E56",
-        date: "August 31 - December 7",
+        // born: "Born in November 2024",
         color: "pink-text-gradient",
         btn: "/ai-robot",
         image: AiRobot,
