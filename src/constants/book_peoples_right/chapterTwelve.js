@@ -1,7 +1,7 @@
 const chapterTwelve = [
     {
         id: "penalty",
-        title: "Merger of the Office for Northern Cultural Communities (ONCC) and the Office for Southern Cultural Communities (OSCC)",
+        title: "Merger of the Office for Northern Cultural Communities and the Office for Southern Cultural Communities",
         subtitle: "Chapter XII",
         sections: [
             {

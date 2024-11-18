@@ -28,18 +28,18 @@ const chapterEight = [
                     },
                     {
                         name: "Proof Required",
-                        paragraph:[ 
-                        "Proof of Ancestral Domain Claims shall include the testimony of elders or community under oath, and other documents directly or indirectly attesting to the possession or occupation of the area since time immemorial by such ICCs/IPs in the concept of owners which shall be any one (1) of the following authentic documents:",
-                        "1. Written accounts of the ICCs/IPs customs and traditions",
-                        "2. Written accounts of the ICCs/IPs political structure and institution;",
-                        "3. Pictures showing long term occupation such as those of old improvements, burial grounds, sacred places and old villages;",
-                        "4. Historical accounts, including pacts and agreements concerning boundaries entered into by the ICCs/IPs concerned with other ICCs/IPs;",
-                        "5. Survey plans and sketch maps;",
-                        "6. Anthropological data;",
-                        "7. Genealogical surveys;",
-                        "8. Pictures and descriptive histories of traditional communal forests and hunting grounds;",
-                        "9. Pictures and descriptive histories of traditional landmarks such as mountains, rivers, creeks, ridges, hills, terraces and the like; and",
-                        "10. Write-ups of names and places derived from the native dialect of the community.",
+                        paragraph: [
+                            "Proof of Ancestral Domain Claims shall include the testimony of elders or community under oath, and other documents directly or indirectly attesting to the possession or occupation of the area since time immemorial by such ICCs/IPs in the concept of owners which shall be any one (1) of the following authentic documents:",
+                            "1. Written accounts of the ICCs/IPs customs and traditions",
+                            "2. Written accounts of the ICCs/IPs political structure and institution;",
+                            "3. Pictures showing long term occupation such as those of old improvements, burial grounds, sacred places and old villages;",
+                            "4. Historical accounts, including pacts and agreements concerning boundaries entered into by the ICCs/IPs concerned with other ICCs/IPs;",
+                            "5. Survey plans and sketch maps;",
+                            "6. Anthropological data;",
+                            "7. Genealogical surveys;",
+                            "8. Pictures and descriptive histories of traditional communal forests and hunting grounds;",
+                            "9. Pictures and descriptive histories of traditional landmarks such as mountains, rivers, creeks, ridges, hills, terraces and the like; and",
+                            "10. Write-ups of names and places derived from the native dialect of the community.",
                         ],
                     },
                     {
@@ -93,7 +93,7 @@ const chapterEight = [
             {
                 name: "Section 54",
                 subtitle: "Fraudulent Claims.",
-                paragraph:"The Ancestral Domains Office may, upon written request from the ICCs/IPs, review existing claims which have been fraudulently acquired by any person or community. Any claim found to be fraudulently acquired by, and issued to, any person or community may be cancelled by the NCIP after due notice and hearing of all parties concerned.",
+                paragraph: "The Ancestral Domains Office may, upon written request from the ICCs/IPs, review existing claims which have been fraudulently acquired by any person or community. Any claim found to be fraudulently acquired by, and issued to, any person or community may be cancelled by the NCIP after due notice and hearing of all parties concerned.",
             },
             {
                 name: "Section 55",
