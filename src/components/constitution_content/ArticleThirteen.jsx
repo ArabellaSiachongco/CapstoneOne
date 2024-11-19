@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { styles } from '/src/styles.js';
 import { SectionWrapper, ScrollWrapper } from '/src/wrapper';
 import {justice, laborSection, agrarian, housing, heal, girls, role, human } from '/src/constants/book_constitution/justice.js'
-
+import { useDictionary } from '/src/utility/dictionaryAPI.js';
 
 const ArticleThirteen = () => {
     const navigate = useNavigate();
+    const { selectedWord, definition, handleTextSelection } = useDictionary();
   
     // Handle Next Article Button click
     const handleNextArticleClick = () => {
@@ -35,7 +36,7 @@ const ArticleThirteen = () => {
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                   </div>
                 ))}
               </div>
@@ -52,7 +53,7 @@ const ArticleThirteen = () => {
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                   </div>
                 ))}
               </div>
@@ -71,7 +72,7 @@ const ArticleThirteen = () => {
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                   </div>
                 ))}
               </div>
@@ -90,7 +91,7 @@ const ArticleThirteen = () => {
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                   </div>
                 ))}
               </div>
@@ -109,7 +110,7 @@ const ArticleThirteen = () => {
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                   </div>
                 ))}
               </div>
@@ -128,7 +129,7 @@ const ArticleThirteen = () => {
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                   </div>
                 ))}
               </div>
@@ -147,7 +148,7 @@ const ArticleThirteen = () => {
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                   </div>
                 ))}
               </div>
@@ -166,13 +167,23 @@ const ArticleThirteen = () => {
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                   </div>
                 ))}
               </div>
             </div>
           ))}
           <br></br>
+          
+          {selectedWord && (
+            <div
+              className="absolute top-10 left-1/2 transform-translate-x-1/2 bg-white p-4 shadow-lg rounded-lg max-w-xs text-black"
+              style={{ zIndex: 100 }}
+            >
+              <p className={styles.dictionaryText}>{selectedWord}</p><hr className='border-2 mb-2'/>
+              <p>{definition}</p>
+            </div>
+          )}
           
           {/* Button Section */}
           <div className="mt-10 text-center flex justify-between">

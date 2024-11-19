@@ -7,10 +7,12 @@ import commissions from '/src/constants/book_constitution/commission.js';
 import civil from '/src/constants/book_constitution/civil.js';
 import election from '/src/constants/book_constitution/election.js';
 import audit from '/src/constants/book_constitution/audit.js';
+import { useDictionary } from '/src/utility/dictionaryAPI.js';
 
 
 const ArticleNine = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { selectedWord, definition, handleTextSelection } = useDictionary();
   
     // Handle Next Article Button click
     const handleNextArticleClick = () => {
@@ -38,7 +40,7 @@ const ArticleNine = () => {
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                   </div>
                 ))}
               </div>
@@ -57,7 +59,7 @@ const ArticleNine = () => {
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                   </div>
                 ))}
               </div>
@@ -76,7 +78,7 @@ const ArticleNine = () => {
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                   </div>
                 ))}
               </div>
@@ -95,12 +97,22 @@ const ArticleNine = () => {
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                   </div>
                 ))}
               </div>
             </div>
           ))}
+           
+          {selectedWord && (
+            <div
+              className="absolute top-10 left-1/2 transform-translate-x-1/2 bg-white p-4 shadow-lg rounded-lg max-w-xs text-black"
+              style={{ zIndex: 100 }}
+            >
+              <p className={styles.dictionaryText}>{selectedWord}</p><hr className='border-2 mb-2'/>
+              <p>{definition}</p>
+            </div>
+          )}
           
           {/* Button Section */}
           <div className="mt-10 text-center flex justify-between">

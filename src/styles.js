@@ -15,6 +15,7 @@ const styles ={
     
     paragraphSubTextLower: "sm:text-[18px] text-[14px] text-secondary tracking-wider",
     
+    dictionaryText: "text-black sm:text-[18px] text-[14px] tracking-wider uppercase mb-2",
 };
 
 export { styles }

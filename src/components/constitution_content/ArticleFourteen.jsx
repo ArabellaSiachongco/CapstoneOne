@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { styles } from '/src/styles.js';
 import { SectionWrapper, ScrollWrapper } from '/src/wrapper';
 import { educations, languages, scienceAndTechnology, artsAndCulture, sports } from '/src/constants/book_constitution/education.js';
+import { useDictionary } from '/src/utility/dictionaryAPI.js';
 
 const ArticleFourteen= () => {
     const navigate = useNavigate();
-  
+    const { selectedWord, definition, handleTextSelection } = useDictionary();
+
     // Handle Next Article Button click
     const handleNextArticleClick = () => {
       navigate("/articleFifteen"); 
@@ -34,7 +36,7 @@ const ArticleFourteen= () => {
                     {item.sections.map((section, index) => (
                       <div key={index} className="my-4">
                         <h6 className={styles.sectionTitle}>{section.name}</h6>
-                        <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                        <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                       </div>
                     ))}
                   </div>
@@ -51,7 +53,7 @@ const ArticleFourteen= () => {
                     {item.sections.map((section, index) => (
                       <div key={index} className="my-4">
                         <h6 className={styles.sectionTitle}>{section.name}</h6>
-                        <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                        <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                       </div>
                     ))}
                   </div>
@@ -70,7 +72,7 @@ const ArticleFourteen= () => {
                     {item.sections.map((section, index) => (
                       <div key={index} className="my-4">
                         <h6 className={styles.sectionTitle}>{section.name}</h6>
-                        <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                        <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                       </div>
                     ))}
                   </div>
@@ -89,7 +91,7 @@ const ArticleFourteen= () => {
                     {item.sections.map((section, index) => (
                       <div key={index} className="my-4">
                         <h6 className={styles.sectionTitle}>{section.name}</h6>
-                        <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                        <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                       </div>
                     ))}
                   </div>
@@ -108,13 +110,23 @@ const ArticleFourteen= () => {
                     {item.sections.map((section, index) => (
                       <div key={index} className="my-4">
                         <h6 className={styles.sectionTitle}>{section.name}</h6>
-                        <p className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                        <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
                       </div>
                     ))}
                   </div>
                 </div>
               ))}
               <br></br>
+              
+              {selectedWord && (
+                <div
+                  className="absolute top-10 left-1/2 transform-translate-x-1/2 bg-white p-4 shadow-lg rounded-lg max-w-xs text-black"
+                  style={{ zIndex: 100 }}
+                >
+                  <p className={styles.dictionaryText}>{selectedWord}</p><hr className='border-2 mb-2'/>
+                  <p>{definition}</p>
+                </div>
+              )}
               
               {/* Button Section */}
               <div className="mt-10 text-center flex justify-between">
@@ -124,8 +136,8 @@ const ArticleFourteen= () => {
                   className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500">
                   Previous Article
                 </button>
-    
-                {/* Next Article Button */}
+                
+                    {/* Next Article Button */}
                 <button 
                   onClick={handleNextArticleClick}
                   className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500">

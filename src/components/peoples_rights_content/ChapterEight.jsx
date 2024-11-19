@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { styles } from "/src/styles.js";
 import { SectionWrapper, ScrollWrapper } from "/src/wrapper";
 import chapterEight from "/src/constants/book_peoples_right/chapterEight.js";
+import { useDictionary } from "/src/utility/dictionaryAPI.js";
 
 const ChapterEight = () => {
   const navigate = useNavigate();
+  const { selectedWord, definition, handleTextSelection } = useDictionary();
 
   const handleNextArticleClick = () => navigate("/chapterNine");
   const handlePrevArticleClick = () => navigate("/chapterSeven");
@@ -36,14 +38,14 @@ const ChapterEight = () => {
                             <h6 className={styles.paragraphSubTextLower}>
                               {para.name}
                             </h6>
-                            <p className={styles.paragraphSubTextLower}>
+                            <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>
                               {para.paragraph}
                             </p>
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <p className={styles.paragraphSubTextLower}>
+                      <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>
                         {sections.paragraph}
                       </p>
                     )}
@@ -52,6 +54,16 @@ const ChapterEight = () => {
               </div>
             </div>
           ))}
+          
+           {selectedWord && (
+            <div
+              className="absolute top-10 left-1/2 transform-translate-x-1/2 bg-white p-4 shadow-lg rounded-lg max-w-xs text-black"
+              style={{ zIndex: 100 }}
+            >
+              <p className={styles.dictionaryText}>{selectedWord}</p><hr className='border-2 mb-2'/>
+              <p>{definition}</p>
+            </div>
+          )}
 
           {/* Button Section */}
           <div className="mt-10 text-center flex justify-between">

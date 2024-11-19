@@ -30,17 +30,17 @@ const navLinks = [
 
 const userLink = [
     {
-        title: "Youth",
+        title: "lawyer",
         icon: youth,
     },
     {
-        title: "Adulthood",
+        title: "student",
         icon: adulthood,
     },
-    {
-        title: "Senior",
-        icon: senior,
-    },
+    // {
+    //     title: "Senior",
+    //     icon: senior,
+    // },
 ];
 
 const features = [
