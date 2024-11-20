@@ -38,11 +38,12 @@ import ChapterTen from "./components/peoples_rights_content/ChapterTen";
 import ChapterEleven from "./components/peoples_rights_content/ChapterEleven";
 import ChapterTwelve from "./components/peoples_rights_content/ChapterTwelve";
 
-1
+import { ThemeProvider } from './components/Navbar';
 
 const App = () => {
   return (
     <BrowserRouter>
+    <ThemeProvider>
       <div className="relative bg-primary">
         <Navbar />
       </div>
@@ -92,6 +93,7 @@ const App = () => {
         <Route path="/chapterTwelve" element={<ChapterTwelve />} />
         
       </Routes>
+    </ThemeProvider>
     </BrowserRouter>
   );
 };

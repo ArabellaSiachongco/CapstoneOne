@@ -34,18 +34,18 @@ const LawyerStatusCard = ({ LawyerProfile, tags }) => {
             width={96} 
             height={96}
           />
-          <h2 className="text-xl font-bold mt-2">{LawyerProfile.name}</h2>
+          <h2 className="text-md font-bold mt-2">{LawyerProfile.name}</h2>
           <p className="text-sm">{LawyerProfile.title}</p>
         </div>
 
         {/* Current Stats */}
         <div className="mt-4 text-sm">
           <p className="font-semibold">
-            CURRENT SP:{" "}
+            Strategy Points:{" "}
             <span className="text-violet-400">{LawyerProfile.currentSP}</span>
           </p>
           <p className="font-semibold">
-            CURRENT POINTS:{" "}
+            Experience Points:{" "}
             <span className="text-violet-400">
               {LawyerProfile.currentPoints}
             </span>
@@ -54,11 +54,14 @@ const LawyerStatusCard = ({ LawyerProfile, tags }) => {
 
         {/* Divider */}
         <hr className="my-4 border-white" />
+        
+    {/* Message */}
+    {LawyerProfile.tagline && (
+      <div className="text-center text-xs text-violet-400 mb-4">
+        <p>{LawyerProfile.tagline}</p>
+      </div>
+    )}
 
-        {/* Synchronization Message */}
-        <div className="text-center text-xs text-violet-400 mb-4">
-          <p>[SYSTEM SYNC] Status Initialization Complete</p>
-        </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 gap-4 text-xs">
@@ -100,6 +103,7 @@ LawyerStatusCard.propTypes = {
     talent: PropTypes.string.isRequired,
     masteries: PropTypes.number.isRequired,
     constitutions: PropTypes.number.isRequired,
+    tagline: PropTypes.string.isRequired,
   }).isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
 };

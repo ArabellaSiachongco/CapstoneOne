@@ -15,11 +15,11 @@ import {
 
 const navLinks = [
     {
-        id: "home",
+        id: "/home",
         title: "Home",
     },
     {
-        id: "feature",
+        id: "/feature",
         title: "Features",
     },
     // {
@@ -183,15 +183,15 @@ const tags = [
 
 const lawyerProfiles = [
     {
-        image: "/src/assets/lawyers.png",
-        name: "Lawyer 1",
-        title: "Criminal Lawyer",
-        currentSP: 500,
-        currentPoints: 300,
-        stats: { strength: 5, endurance: 6, agility: 7 },
-        talent: "Negotiation",
-        masteries: 2,
-        constitutions: 1,
+      image: "/src/assets/palmer_lawyer.jpg",
+      name: "Palmer Fagyan Bugtong",
+      title: "Lawyer",
+      currentSP: 500,
+      currentPoints: "5 years",
+      stats: { strength: 8, endurance: 8, agility: 8 },
+      talent: "Negotiation",
+      tagline: "The Defender of the Defenseless", // A single string
+      constitutions: 1,
     },
     {
         image: "/src/assets/lawyers.png",

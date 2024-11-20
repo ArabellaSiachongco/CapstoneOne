@@ -1,96 +1,152 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import { Link } from "react-router-dom";
-import { styles } from "../styles";
-import { navLinks } from "../constants";
-import { logo, menu, close } from "../assets";
+import { VscListSelection } from "react-icons/vsc";
+import { FiSun, FiMoon, FiX } from "react-icons/fi";
+import { navLinks } from "../constants"; // Ensure this file is correct
 
-const Navbar = () => {
-  const [active, setActive] = useState("");
-  const [toggle, setToggle] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+const ThemeContext = createContext({
+  theme: "light",
+  toggleTheme: () => {},
+});
+
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem("theme") || "light";
+    } catch {
+      return "light";
+    }
+  });
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      setScrolled(scrollTop > 100);
-    };
+    try {
+      document.documentElement.classList.remove("light", "dark");
+      document.documentElement.classList.add(theme);
+      localStorage.setItem("theme", theme);
+    } catch {
+      console.error("Error applying theme");
+    }
+  }, [theme]);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
 
   return (
-    <nav
-      className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 
-        ${scrolled ? "bg-primary" : "bg-transparent"}`}
-    >
-      <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
-        <Link
-          to="/"
-          className="flex items-center gap-2"
-          onClick={() => {
-            setActive("");
-            window.scrollTo(0, 0);
-          }}
-        >
-          <img className="w-9 h-9 object-contain" src={logo} alt="Logo" />
-          <p className="text-white text-[18px] font-bold cursor-pointer flex">
-            Karapatan &nbsp;
-            <span className="sm:block hidden"> Ko</span>
-          </p>
-        </Link>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
 
-        {/* Desktop navigation */}
-        <ul className="list-none hidden sm:flex flex-row gap-10">
-          {navLinks.map((nav) => (
-            <li
-              key={nav.id}
-              className={`${
-                active === nav.title ? "text-white" : "text-secondary"
-              } hover:text-white text-[18px] font-medium cursor-pointer`}
-              onClick={() => setActive(nav.title)}
-            >
-              <a href={`#${nav.id}`}>{nav.title}</a>
-            </li>
-          ))}
-        </ul>
+export const useTheme = () => useContext(ThemeContext);
 
-        {/* home, features contact */}
-        <div className="sm:hidden flex flex-1 justify-end items-center">
-          <img
-            src={toggle ? close : menu}
-            alt="menu"
-            className="w-[28px] h-[28px] object-contain"
-            onClick={() => setToggle(!toggle)}
-          />
+const Navbar = () => {
+  const [isNavbarVisible, setIsNavbarVisible] = useState(false);
+  const [active, setActive] = useState("");
+  const { theme, toggleTheme } = useTheme();
 
-          {/* Mobile navigation dropdown */}
-          <div
-            className={`${
-              !toggle ? "hidden" : "flex"
-            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
-          >
-            <ul className="list-none flex justify-end items-start flex-1 flex-col gap-4">
-              {navLinks.map((nav) => (
-                <li
-                  key={nav.id}
-                  className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                    active === nav.title ? "text-white" : "text-secondary"
-                  }`}
-                  onClick={() => {
-                    setToggle(!toggle);
-                    setActive(nav.title);
-                  }}
-                >
-                  <a href={`#${nav.id}`}>{nav.title}</a>
-                </li>
-              ))}
+  const handleNavClick = (title) => {
+    setActive(title);
+    setIsNavbarVisible(false);
+  };
+
+  return (
+    <div className="relative">
+      {/* Burger Icon */}
+      <button
+        id="navbar-toggle"
+        onClick={() => setIsNavbarVisible((prev) => !prev)}
+        className="fixed top-4 left-4 z-30 bg-primary dark:bg-gray-800 p-2 rounded"
+        aria-label={isNavbarVisible ? "Close Navigation" : "Open Navigation"}
+      >
+        {isNavbarVisible ? <FiX className="text-white w-6 h-6" /> : <VscListSelection className="text-white w-6 h-6" />}
+      </button>
+
+      {/* Navbar */}
+      <div
+        id="navbar"
+        className={`fixed top-0 left-0 h-full w-64 bg-primary dark:bg-gray-800 transform transition-transform duration-300 ease-in-out z-20 ${
+          isNavbarVisible ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex flex-col h-full">
+          {/* Logo Section */}
+          <div className="p-5 border-b border-secondary dark:border-gray-700 flex items-center">
+            <Link to="/" className="flex items-center gap-2" onClick={() => handleNavClick("")}>
+              <div className="w-8 h-8 object-contain"></div>
+              <p className="text-white dark:text-gray-200 text-lg font-bold">Karapatan Ko</p>
+            </Link>
+          </div>
+
+          {/* Navigation Links */}
+          <nav className="flex-1 py-4">
+            <ul className="px-4 space-y-2">
+              {Array.isArray(navLinks) && navLinks.length > 0 ? (
+                navLinks.map((nav) => (
+                  <li key={nav.id}>
+                    {/* Use `href` for same-page navigation */}
+                    {nav.id.startsWith("#") ? (
+                      <a
+                        href={nav.id}
+                        className={`block p-3 rounded-lg text-lg transition-colors duration-200 ${
+                          active === nav.title
+                            ? "bg-secondary/20 dark:bg-gray-700/30 text-white"
+                            : "hover:bg-secondary/10 dark:hover:bg-gray-700/20 text-secondary dark:text-gray-300"
+                        }`}
+                        onClick={() => handleNavClick(nav.title)}
+                      >
+                        {nav.title}
+                      </a>
+                    ) : (
+                      // Use `to` for route-based navigation
+                      <Link
+                        to={nav.id}
+                        className={`block p-3 rounded-lg text-lg transition-colors duration-200 ${
+                          active === nav.title
+                            ? "bg-secondary/20 dark:bg-gray-700/30 text-white"
+                            : "hover:bg-secondary/10 dark:hover:bg-gray-700/20 text-secondary dark:text-gray-300"
+                        }`}
+                        onClick={() => handleNavClick(nav.title)}
+                      >
+                        {nav.title}
+                      </Link>
+                    )}
+                  </li>
+                ))
+              ) : (
+                <li className="text-center text-secondary dark:text-gray-400">No links available</li>
+              )}
             </ul>
+          </nav>
+
+          {/* Theme Toggle */}
+          <div className="p-4 border-t border-secondary dark:border-gray-700">
+            <button
+              onClick={toggleTheme}
+              className="w-full p-2 rounded-lg bg-gray-200/20 dark:bg-gray-700/20 text-white flex items-center justify-center space-x-2"
+              aria-label="Toggle Theme"
+            >
+              {theme === "light" ? <FiMoon className="w-6 h-6" /> : <FiSun className="w-6 h-6" />}
+              <span>{theme === "light" ? "Dark Mode" : "Light Mode"}</span>
+            </button>
           </div>
         </div>
       </div>
-    </nav>
+
+      {/* Overlay */}
+      {isNavbarVisible && (
+        <div
+          className="fixed inset-0 bg-black/50 z-10"
+          onClick={() => setIsNavbarVisible(false)}
+          aria-hidden="true"
+        />
+      )}
+    </div>
   );
 };
 
 export default Navbar;
+
+
+
