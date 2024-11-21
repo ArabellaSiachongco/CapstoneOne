@@ -60,7 +60,11 @@ const Navbar = () => {
         className="fixed top-4 left-4 z-30 bg-primary dark:bg-gray-800 p-2 rounded"
         aria-label={isNavbarVisible ? "Close Navigation" : "Open Navigation"}
       >
-        {isNavbarVisible ? <FiX className="text-white w-6 h-6" /> : <VscListSelection className="text-white w-6 h-6" />}
+        {isNavbarVisible ? (
+          <FiX className="text-white w-6 h-6" />
+        ) : (
+          <VscListSelection className="text-white w-6 h-6" />
+        )}
       </button>
 
       {/* Navbar */}
@@ -73,9 +77,15 @@ const Navbar = () => {
         <div className="flex flex-col h-full">
           {/* Logo Section */}
           <div className="p-5 border-b border-secondary dark:border-gray-700 flex items-center">
-            <Link to="/" className="flex items-center gap-2" onClick={() => handleNavClick("")}>
+            <Link
+              to="/"
+              className="flex items-center gap-2"
+              onClick={() => handleNavClick("")}
+            >
               <div className="w-8 h-8 object-contain"></div>
-              <p className="text-white dark:text-gray-200 text-lg font-bold">Karapatan Ko</p>
+              <p className="text-white dark:text-gray-200 text-lg font-bold">
+                Karapatan Ko
+              </p>
             </Link>
           </div>
 
@@ -84,22 +94,33 @@ const Navbar = () => {
             <ul className="px-4 space-y-2">
               {Array.isArray(navLinks) && navLinks.length > 0 ? (
                 navLinks.map((nav) => (
-                  <li key={nav.id}>
-                    {/* Use `href` for same-page navigation */}
-                    {nav.id.startsWith("#") ? (
-                      <a
-                        href={nav.id}
-                        className={`block p-3 rounded-lg text-lg transition-colors duration-200 ${
-                          active === nav.title
-                            ? "bg-secondary/20 dark:bg-gray-700/30 text-white"
-                            : "hover:bg-secondary/10 dark:hover:bg-gray-700/20 text-secondary dark:text-gray-300"
-                        }`}
-                        onClick={() => handleNavClick(nav.title)}
-                      >
-                        {nav.title}
-                      </a>
+                  <li key={nav.id} className="group">
+                    {nav.sections ? (
+                      <>
+                        <button
+                          className="block p-3 rounded-lg text-lg transition-colors duration-200 hover:bg-secondary/10 dark:hover:bg-gray-700/20 text-secondary dark:text-gray-300 w-full text-left"
+                        >
+                          {nav.title}
+                        </button>
+                        <ul className="pl-4 mt-2 space-y-2 hidden group-hover:block">
+                          {nav.sections.map((section) => (
+                            <li key={section.id}>
+                              <a
+                                href={section.id}
+                                className={`block p-2 rounded-lg text-md transition-colors duration-200 ${
+                                  active === section.title
+                                    ? "bg-secondary/20 dark:bg-gray-700/30 text-white"
+                                    : "hover:bg-secondary/10 dark:hover:bg-gray-700/20 text-secondary dark:text-gray-300"
+                                }`}
+                                onClick={() => handleNavClick(section.title)}
+                              >
+                                {section.title}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
                     ) : (
-                      // Use `to` for route-based navigation
                       <Link
                         to={nav.id}
                         className={`block p-3 rounded-lg text-lg transition-colors duration-200 ${
@@ -115,7 +136,9 @@ const Navbar = () => {
                   </li>
                 ))
               ) : (
-                <li className="text-center text-secondary dark:text-gray-400">No links available</li>
+                <li className="text-center text-secondary dark:text-gray-400">
+                  No links available
+                </li>
               )}
             </ul>
           </nav>
@@ -127,7 +150,11 @@ const Navbar = () => {
               className="w-full p-2 rounded-lg bg-gray-200/20 dark:bg-gray-700/20 text-white flex items-center justify-center space-x-2"
               aria-label="Toggle Theme"
             >
-              {theme === "light" ? <FiMoon className="w-6 h-6" /> : <FiSun className="w-6 h-6" />}
+              {theme === "light" ? (
+                <FiMoon className="w-6 h-6" />
+              ) : (
+                <FiSun className="w-6 h-6" />
+              )}
               <span>{theme === "light" ? "Dark Mode" : "Light Mode"}</span>
             </button>
           </div>
@@ -147,6 +174,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-

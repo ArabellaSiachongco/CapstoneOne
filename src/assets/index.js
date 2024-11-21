@@ -1,10 +1,13 @@
 import logo from "./icon/logo.png";
-import youth from "./youth.png";
-import adulthood from "./adulthood.png";
 import senior from "./senior.png";
+import userStudents from "./userStudents.png";
+import userLawyer from "./userLawyer.png";
 import book from "./book.png";
 import lawyerIcon from "./lawyerIcon.png";
 import Ai from "./Ai.png";
+import sunflower from "./sunflower.png";
+import blindfold_woman from "./blindfold_woman.png"
+import lawbook from "./lawbook.png"
 
 import lawyers from "./lawyers.png";
 import AiRobot from "./AiRobot.png"
@@ -20,9 +23,9 @@ import tesla from "./company/tesla.png";
 
 export {
   logo,
-  youth,
-  adulthood,
   senior,
+  userLawyer,
+  userStudents,
   lawyerIcon,
   book,
   Ai,
@@ -35,5 +38,7 @@ export {
   shopify,
   starbucks,
   tesla,
-
+  sunflower,
+  blindfold_woman,
+  lawbook
 };

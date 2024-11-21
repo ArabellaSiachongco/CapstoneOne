@@ -3,39 +3,44 @@
 // update: icons, text
 
 import {
-    youth,
-    adulthood,
+    userLawyer,
+    userStudents,
     senior,
     book,
     Ai,
     lawyerIcon,
     AiRobot,
     lawyers,
+    lawbook
 } from "../assets";
 
 const navLinks = [
     {
-        id: "/home",
-        title: "Home",
+        id: "/articleOne",
+        title: "Article I",
     },
     {
-        id: "/feature",
-        title: "Features",
+    id: "/articleTwo",
+    title: "Article II",
+    sections: [
+        { id: "#principles", title: "Principles" },
+        { id: "#policies", title: "Policies" },
+    ],
     },
-    // {
-    //     id: "contact",
-    //     title: "Contact",
-    // },
+    {
+    id: "/articleThree",
+    title: "Article III",
+    },
 ];
 
 const userLink = [
     {
-        title: "lawyer",
-        icon: youth,
+        title: "LAWYER",
+        icon: userLawyer,
     },
     {
-        title: "student",
-        icon: adulthood,
+        title: "STUDENT",
+        icon: userStudents,
     },
     // {
     //     title: "Senior",
@@ -51,6 +56,7 @@ const features = [
         iconBg: "#383E56",
         // overview: "An in-depth look at legal texts in the Philippines.",
         color: "blue-text-gradient",
+        
         points: [
             {
                 text:"The Constitution Of The Republic Of The Philippines", 
@@ -62,16 +68,17 @@ const features = [
                 id: "RA_8371_ID",
                 li:"/RA_8371",
             },
-            {
-                text:"Ex proident consequat veniam quis exercitation irure labore reprehenderit cupidatat ut.", 
-                id: "sample2_ID"
-            },
-            {
-                text:"Fugiat fugiat culpa do nisi nulla dolore consectetur mollit.S", 
-                id: "sample3_ID"
-            },     
-
+            // {
+            //     text:"Ex proident consequat veniam quis exercitation irure labore reprehenderit cupidatat ut.", 
+            //     id: "sample2_ID"
+            // },
+            // {
+            //     text:"Fugiat fugiat culpa do nisi nulla dolore consectetur mollit.S", 
+            //     id: "sample3_ID"
+            // },     
         ],
+        image: lawbook,
+        span: "More law books to come"
     },
     {
         title: "Legal Matching",

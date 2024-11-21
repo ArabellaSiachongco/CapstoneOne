@@ -34,25 +34,25 @@ const ArticleTwo = () => {
 
               {/* Map through principle_section and display each section */}
               <div>
-                <h5 className={styles.paragraphSubText}>Principles</h5>
-                {item.principle_section.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
-                  </div>
-                ))}
-              </div>
+              <h5 id="principles" className={styles.paragraphSubText}>Principles</h5>
+              {item.principle_section.map((section, index) => (
+                <div key={index} className="my-4">
+                  <h6 className={styles.sectionTitle}>{section.name}</h6>
+                  <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                </div>
+              ))}
+            </div>
 
-              {/* Map through policy_section and display each section */}
-              <div>
-                <h5 className={`${styles.paragraphSubText} mt-5`}>Policies</h5>
-                {item.policy_section.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
-                  </div>
-                ))}
-              </div>
+            <div>
+              <h5 id="policies" className={`${styles.paragraphSubText} mt-5`}>Policies</h5>
+              {item.policy_section.map((section, index) => (
+                <div key={index} className="my-4">
+                  <h6 className={styles.sectionTitle}>{section.name}</h6>
+                  <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{section.paragraph}</p>
+                </div>
+              ))}
+            </div>
+
             </div>
           ))}
           
@@ -73,14 +73,14 @@ const ArticleTwo = () => {
             <button 
               onClick={handlePrevArticleClick}
               className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500">
-              Previous Article
+              Article I
             </button>
 
             {/* Next Article Button */}
             <button 
               onClick={handleNextArticleClick}
               className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500">
-              Next Article
+              Article III
             </button>
           </div>
         </div>

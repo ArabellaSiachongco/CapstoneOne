@@ -41,16 +41,14 @@ const ArticleOne = () => {
           
           {/* Button Section */}
           <div className="mt-5 text-center">
-            <hr /><br />
+            <hr/><br />
             <button
               onClick={handleNextArticleClick}
               className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500 flex ml-auto"
             >
               <span className="text-xs">
-                ARTICLE II Declaration of Principles and State Policies
-              </span>{" "}
-              &nbsp;
-              <i className="fa-sharp fa-solid fa-arrow-right"></i>
+                ARTICLE II
+              </span>
             </button>
           </div>
         </div>

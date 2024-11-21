@@ -16,9 +16,17 @@ const Features = () => {
         <p id='feature' className={`${styles.paragraphSubText} `}>
           Our Features
         </p>
-        <h2 className={`${styles.headText}`}>
-          Features
+        <h2 className={`${styles.headText} highlight-border`}>
+          <span className="title-with-line">Features</span>
         </h2>
+      </motion.div>
+      
+      <motion.div variants={textVariant()}
+        className="text-secondary text-[17px] max-w-3xl leading-[30px] tracking-wide"
+      >
+        <p className={styles.paragraphSubTextLower}>
+        Access AI Helena for expert help, Legal Match for connections, and a Law Books Library with a tooltip dictionary.
+        </p>
       </motion.div>
       
       <div className='mt-20 flex flex-col'>
