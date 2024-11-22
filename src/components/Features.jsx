@@ -14,7 +14,7 @@ const Features = () => {
     <>
       <motion.div variants={textVariant()}>
         <p id='feature' className={`${styles.paragraphSubText} `}>
-          Our Features
+          Explore Our
         </p>
         <h2 className={`${styles.headText} highlight-border`}>
           <span className="title-with-line">Features</span>

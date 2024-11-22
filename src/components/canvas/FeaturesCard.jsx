@@ -70,9 +70,7 @@ const FeaturesCard = ({ feature }) => {
       )}
 
     {feature.span && ( 
-        <p className="flex flex-col justify-between items-center mt-3">
-          {feature.span}  {/* Render the span text at the bottom */}
-        </p>
+        <p className="flex flex-col justify-between items-center mt-3"><em>{feature.span}</em></p>
     )}
   
       {feature.tags && (
@@ -88,13 +86,14 @@ const FeaturesCard = ({ feature }) => {
         </div>
       )}
 
+{/* turn this to tags the tags will have lines */}
       {feature.btn && (
         <div className="mt-5 ">
           <Link
             to={feature.btn}
             className="px-6 py-2 text-white border-2 rounded-lg text-sm font-semibold"
           >
-            Learn More
+            Explore
           </Link>
         </div>
       )}

@@ -53,8 +53,6 @@ const ArticleOne = () => {
           </div>
         </div>
       </ScrollWrapper>
-
-      
     </div>
   );
 };
