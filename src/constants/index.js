@@ -111,7 +111,7 @@ const features = [
         iconBg: "#383E56",
         // born: "Born in November 2024",
         color: "pink-text-gradient",
-        btn: "/ai-robot",
+        btn: "/helena",
         image: AiRobot,
     },
 ];

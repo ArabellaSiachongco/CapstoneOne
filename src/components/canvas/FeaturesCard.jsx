@@ -16,12 +16,12 @@ const FeaturesCard = ({ feature }) => {
     <VerticalTimelineElement
       contentStyle={{
         background: "black",
-        border: "4px solid", 
+        border: "4px solid",
         borderImage: "linear-gradient(to top, #f12711, #f5af19) 1",
         borderRadius: "12px",
         boxShadow:
-          "0 10px 15px rgba(0, 0, 0, 0.5), 0 4px 6px rgba(0, 0, 0, 0.3)", 
-        transition: "transform 0.2s ease, box-shadow 0.2s ease", 
+          "0 10px 15px rgba(0, 0, 0, 0.5), 0 4px 6px rgba(0, 0, 0, 0.3)",
+        transition: "transform 0.2s ease, box-shadow 0.2s ease",
       }}
       contentArrowStyle={{ borderRight: "15px solid #f5af19" }}
       iconStyle={{ background: feature.iconBg }}
@@ -59,20 +59,22 @@ const FeaturesCard = ({ feature }) => {
         </ul>
       )}
 
-      {feature.image &&(
+      {feature.image && (
         <div className="flex justify-center mt-3">
           <img
             src={feature.image}
             alt={feature.title}
             className="w-[50%] h-[50%] rounded-lg"
           />
-        </div>      
+        </div>
       )}
 
-    {feature.span && ( 
-        <p className="flex flex-col justify-between items-center mt-3"><em>{feature.span}</em></p>
-    )}
-  
+      {feature.span && (
+        <p className="flex flex-col justify-between items-center mt-3">
+          <em>{feature.span}</em>
+        </p>
+      )}
+
       {feature.tags && (
         <div className="flex flex-wrap gap-2 mt-3 justify-center">
           {feature.tags.map((tag, index) => (
@@ -86,14 +88,17 @@ const FeaturesCard = ({ feature }) => {
         </div>
       )}
 
-{/* turn this to tags the tags will have lines */}
+      {/* turn this to tags the tags will have lines */}
       {feature.btn && (
-        <div className="mt-5 ">
+        <div className="mt-5 flex justify-center">
           <Link
             to={feature.btn}
-            className="px-6 py-2 text-white border-2 rounded-lg text-sm font-semibold"
+            className="px-6 py-2 text-white rounded-lg text-sm font-semibold flex items-center"
           >
-            Explore
+            <i>
+              Chat now&nbsp;
+              <i className="fa-solid fa-arrow-right ml-1"></i>
+            </i>
           </Link>
         </div>
       )}
@@ -106,7 +111,7 @@ FeaturesCard.propTypes = {
   feature: PropTypes.shape({
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired, 
+    icon: PropTypes.string.isRequired,
     iconBg: PropTypes.string.isRequired,
     overview: PropTypes.string,
     update: PropTypes.string,
@@ -120,8 +125,8 @@ FeaturesCard.propTypes = {
         name: PropTypes.string.isRequired,
         color: PropTypes.string.isRequired,
       })
-    ), 
-    image: PropTypes.string, 
+    ),
+    image: PropTypes.string,
   }).isRequired,
 };
 

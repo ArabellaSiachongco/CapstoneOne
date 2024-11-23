@@ -66,7 +66,7 @@ const App = () => {
 
           {/* Lawyers status window route */}
           <Route path="/lawyer-status" element={<Lawyer />} />
-          <Route path="/ai-robot" element={<Helena />} />
+          <Route path="/helena" element={<Helena />} />
 
           {/* For books with table of contents */}
           <Route path="/constitution" element={<Constitution />} />

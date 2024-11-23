@@ -2,15 +2,15 @@ import logo from "./icon/logo.png";
 import senior from "./senior.png";
 import userStudents from "./userStudents.png";
 import userLawyer from "./userLawyer.png";
-import book from "./book.png";
+import book from "./lawbook.png";
 import lawyerIcon from "./lawyerIcon.png";
-import Ai from "./Ai.png";
+import Ai from "./icon/helenaIcon.png";
 import sunflower from "./sunflower.png";
 import blindfold_woman from "./blindfold_woman.png"
-import lawbook from "./lawbook.png"
+import lawbook from "./icon/bookIcon.png"
 
-import lawyers from "./lawyers.png";
-import AiRobot from "./AiRobot.png"
+import lawyers from "./match.png";
+import AiRobot from "./helena.png"
 
 import github from "./github.png";
 import menu from "./menu.svg";

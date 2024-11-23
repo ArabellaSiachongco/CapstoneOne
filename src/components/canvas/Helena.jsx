@@ -1,83 +1,153 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { styles } from '../../styles' 
-import { fadeIn, textVariant } from '../../utility/motion'; 
-import { SectionWrapper } from '../../wrapper';
+import React, { useState } from "react";
+import aiRobot from "../../constants/aiRobot";
+import { styles } from "../../styles";
+import { SectionWrapper } from "../../wrapper";
 
-const ChatUI = () => {
-  const [messages, setMessages] = useState([
-    { text: "Hi there! How can I help you today?", type: "bot" },
-  ]);
-  const [input, setInput] = useState("");
+const Chatbot = () => {
+    const [chat, setChat] = useState([]); // Chat history
+    const [userInput, setUserInput] = useState(""); // User's typed or selected message
+    const [showChoices, setShowChoices] = useState(true); // Controls visibility of choices
+    const [isThinking, setIsThinking] = useState(false); // Controls "thinking" animation
+    const [recommendations, setRecommendations] = useState([]); // Recommendation questions
 
-  const handleSend = () => {
-    if (!input.trim()) return;
+    // Handle when user sends a message
+    const handleSendMessage = () => {
+        if (userInput.trim()) {
+            const newChat = [...chat, { sender: "User", message: userInput }]; // Add user's message to chat
+            setChat(newChat);
 
-    // Append user message
-    setMessages([...messages, { text: input, type: "user" }]);
+            setIsThinking(true);
 
-    // Clear input
-    setInput("");
+            // Simulate AI thinking and delay the response
+            setTimeout(() => {
+                const aiResponse = generateAIResponse(userInput);
+                setChat((prevChat) => [...prevChat, { sender: "Helena", message: aiResponse }]); // Add AI's response to chat
+                setIsThinking(false); // Stop "thinking" animation
+            }, 2000); // 2-second delay for thinking
 
-    // Mock bot reply
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { text: "Thanks for your message! Let me assist you.", type: "bot" },
-      ]);
-    }, 1000); // Simulate bot response delay
-  };
+            setUserInput(""); // Clear the input field
+            setRecommendations([]); // Hide recommendations
+        }
+    };
 
-  return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center">
-      {/* Chat Header */}
-      <div className="w-full max-w-2xl bg-gray-800 p-4 text-center text-lg font-semibold">
-        AI Chat Assistant
-      </div>
+    // Generate AI Response based on user input
+    const generateAIResponse = (question) => {
+        const match = aiRobot.find((item) =>
+            question.toLowerCase().includes(item.type.toLowerCase())
+        );
+        return match
+            ? match.message
+            : "I'm sorry, I don't have information on that right now.";
+    };
 
-      {/* Chat Container */}
-      <div className="w-full max-w-2xl flex flex-col h-[80vh] bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-        {/* Messages Section */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {messages.map((msg, index) => (
-            <div
-              key={index}
-              className={`flex ${
-                msg.type === "user" ? "justify-end" : "justify-start"
-              }`}
-            >
-              <div
-                className={`max-w-xs px-4 py-2 rounded-lg ${
-                  msg.type === "user"
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-700 text-gray-300"
-                }`}
-              >
-                {msg.text}
-              </div>
+    // Handle selecting a predefined question
+    const handleSelectQuestion = (question) => {
+        setUserInput(question);
+        setRecommendations([]); // Hide recommendations
+        handleSendMessage();
+    };
+
+    // Handle input change and provide recommendations
+    const handleInputChange = (e) => {
+        const input = e.target.value;
+        setUserInput(input);
+
+        if (input.trim().length > 0) {
+            const filteredRecommendations = aiRobot
+                .filter((item) =>
+                    item.type.toLowerCase().includes(input.toLowerCase())
+                )
+                .map((item) => item.type);
+            setRecommendations(filteredRecommendations);
+        } else {
+            setRecommendations([]);
+        }
+    };
+
+    // Show recommendations on input focus
+    const handleInputFocus = () => {
+        if (!userInput.trim()) {
+            const allRecommendations = aiRobot.map((item) => item.type);
+            setRecommendations(allRecommendations);
+        }
+    };
+
+    return (
+        <div className="h-screen flex flex-col">
+            {/* Header */}
+            <p id="helena" className={styles.paragraphSubText}>Our Artificial Intelligence</p>
+            <h2 className={`${styles.headText} highlight-border`}>
+                <span className="title-with-line">Helena</span>
+            </h2>
+            <p className={`${styles.paragraphSubTextLower} mb-5`}>
+                Empowering lawyers with tools to simplify their practice and assisting
+                students in navigating their academic and legal journeys.
+            </p>
+
+            {/* Chat Window */}
+            <div className="w-full max-w-[900px] mx-auto border-2 shadow-md rounded-lg p-4 mb-4 flex-grow overflow-y-auto">
+                {chat.length > 0 ? (
+                    chat.map((chatItem, index) => (
+                        <div
+                            key={index}
+                            className={`chat-message ${
+                                chatItem.sender === "User"
+                                    ? "bg-slate-100 text-black self-end"
+                                    : "self-start"
+                            } px-4 py-2 rounded-md mb-2 shadow-sm`}
+                        >
+                            <strong>{chatItem.sender}:</strong> {chatItem.message}
+                        </div>
+                    ))
+                ) : (
+                    <div className="text-gray-400 text-left">
+                        No messages yet. Start by asking a question!
+                    </div>
+                )}
+                {isThinking && (
+                    <div className="chat-message bg-gray-200 text-gray-600 self-start px-4 py-2 rounded-md mb-2 shadow-sm italic">
+                        Helena is typing...
+                    </div>
+                )}
             </div>
-          ))}
-        </div>
 
-        {/* Input Section */}
-        <div className="bg-gray-800 p-4 flex items-center space-x-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none"
-            placeholder="Type your message..."
-          />
-          <button
-            onClick={handleSend}
-            className="border-2 border-orange-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-          >
-            Send
-          </button>
+            {/* Recommended Questions */}
+            {recommendations.length > 0 && (
+                <div className="w-full max-w-[900px] mx-auto bg-gray-100 p-4 rounded-md mb-4 shadow">
+                    <p className="text-gray-600 text-sm mb-2">Recommended Questions:</p>
+                    <div className="flex flex-wrap gap-2">
+                        {recommendations.map((item, index) => (
+                            <button
+                                key={index}
+                                onClick={() => handleSelectQuestion(item)}
+                                className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md shadow hover:bg-gray-300 transition text-sm"
+                            >
+                                {item}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Input Box */}
+            <div className="w-full max-w-[900px] mx-auto flex space-x-2">
+                <input
+                    type="text"
+                    value={userInput}
+                    onChange={handleInputChange}
+                    onFocus={handleInputFocus} // Show recommendations on focus
+                    placeholder="Type your message here..."
+                    className="flex-grow rounded-md px-4 py-2 focus:outline-none focus:ring-2 border-2"
+                />
+                <button
+                    onClick={handleSendMessage}
+                    className="border text-white px-4 py-2 rounded-md shadow-md hover:bg-slate-600 transition"
+                >
+                    Send
+                </button>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
-export default SectionWrapper(ChatUI);
+export default SectionWrapper(Chatbot);

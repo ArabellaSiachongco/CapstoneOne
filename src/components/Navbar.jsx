@@ -69,9 +69,10 @@ const Navbar = () => {
               onClick={() => handleNavClick("")}
             >
               <div className="w-8 h-8 object-contain"></div>
-              <p className="text-white dark:text-gray-200 text-lg font-bold">
+              <p className="text-white dark:text-gray-200 text-lg font-bold highlight-border">
                 Karapatan Ko
               </p>
+             
             </Link>
           </div>
 
