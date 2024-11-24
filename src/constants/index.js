@@ -18,14 +18,14 @@ import {
 } from "../assets";
 
 const navLinks = [
-    {
-        id: "/",
-        title: "HOME",
-    },
-    {
-        id: "features",
-        title: "FEATURES",
-    },
+    // {
+    //     id: "/",
+    //     title: "HOME",
+    // },
+    // {
+    //     id: "features",
+    //     title: "FEATURES",
+    // },
 ];
 
 const userLink = [
@@ -36,11 +36,7 @@ const userLink = [
     {
         title: "STUDENT",
         icon: userStudents,
-    },
-    // {
-    //     title: "Senior",
-    //     icon: senior,
-    // },
+    },,
 ];
 
 const features = [

@@ -13,7 +13,7 @@ const Features = () => {
     <ScrollWrapper>
     <>
       <motion.div variants={textVariant()}>
-        <p id='feature' className={`${styles.paragraphSubText} `}>
+        <p id="features" className={`${styles.paragraphSubText} `}>
           Explore Our
         </p>
         <h2 className={`${styles.headText} highlight-border`}>

@@ -1,4 +1,4 @@
-import logo from "./icon/logo.png";
+import logo from "./icon/logo2.png";
 import senior from "./senior.png";
 import userStudents from "./userStudents.png";
 import userLawyer from "./userLawyer.png";

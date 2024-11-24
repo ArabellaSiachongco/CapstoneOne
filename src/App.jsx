@@ -3,7 +3,7 @@ import MainLayout from "./MainLayout";
 import Navbar from "./components/Navbar";
 import Lawyer from "./components/Lawyer";
 import Helena from "./components/canvas/Helena";
-// import NavbarTop from "./components/NavbarTop";
+import NavbarTop from "./components/NavbarTop";
 
 import RA_12066 from "./components/RA_12066";
 import Constitution from "./components/Constitution";
@@ -45,14 +45,14 @@ import ChapterTwelve from "./components/peoples_rights_content/ChapterTwelve";
 // NavbarWrapper to determine when to show Navbar
 const NavbarWrapper = ({ children }) => {
   const location = useLocation();
-
-  // Define paths where Navbar should be visible
   const showNavbar = location.pathname.startsWith("/articleOne") || location.pathname.startsWith("/chapterOne");
-
+  const showNavbarAgain = location.pathname.startsWith("/helena") || location.pathname.startsWith("/lawyer-status");
   return (
     <>
       {showNavbar && <Navbar />}
+      {showNavbarAgain && <NavbarTop />}
       {children}
+      
     </>
   );
 };

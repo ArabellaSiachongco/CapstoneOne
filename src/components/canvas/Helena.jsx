@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import aiRobot from "../../constants/aiRobot";
 import { styles } from "../../styles";
 import { SectionWrapper } from "../../wrapper";
@@ -8,6 +8,12 @@ const Chatbot = () => {
     const [userInput, setUserInput] = useState("");
     const [isThinking, setIsThinking] = useState(false); 
     const [recommendations, setRecommendations] = useState([]); 
+    const chatContainerRef = React.useRef(null); // Reference to chat container
+
+    // Scroll to the top on component load
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     // Handle when user sends a message
     const handleSendMessage = () => {
@@ -81,10 +87,12 @@ const Chatbot = () => {
             <p className={`${styles.paragraphSubTextLower} mb-4`}> 
              Our team is working tirelessly to enhance her capabilities, refine her personality, and ensure she delivers the best possible experience. Stay tuned—Helena will soon be fully operational and ready to assist you in ways you never imagined!
             </p>
-            {/* <hr className="mb-9"/> */}
 
             {/* Chat Window */}
-            <div className="w-full max-w-[900px] mx-auto shadow-md rounded-lg p-4 mb-4 flex-grow overflow-y-auto">
+            <div
+                ref={chatContainerRef}
+                className="w-full max-w-[900px] mx-auto shadow-md rounded-lg p-4 mb-4 flex-grow overflow-y-auto flex flex-col"
+            >
                 {chat.length > 0 ? (
                     chat.map((chatItem, index) => (
                         <div
@@ -99,7 +107,7 @@ const Chatbot = () => {
                         </div>
                     ))
                 ) : (
-                    <div className={`${styles.AiText} text-center mt-20 `}>
+                    <div className={`${styles.AiText} text-center mt-20`}>
                         What can I help with?
                     </div>
                 )}
@@ -130,24 +138,23 @@ const Chatbot = () => {
 
             {/* Input Box */}
             <div className="w-full max-w-[900px] rounded-sm mx-auto flex space-x-2">
-            <div className="relative flex-grow">
-                <input
-                    type="text"
-                    value={userInput}
-                    onChange={handleInputChange}
-                    onFocus={handleInputFocus}
-                    placeholder="Type your message here..."
-                    className="w-full h-20 rounded-lg px-4 py-2 focus:ring-2 border-2 pr-16"
-                />
-                <button
-                    onClick={handleSendMessage}
-                    className="absolute right-4 top-1/2 bg-slate-600 transform -translate-y-1/2 text-white px-4 py-2 rounded-full shadow-md hover:bg-slate-500 transition"
-                >
-                    <i className="fa-solid fa-arrow-up"></i>
-                </button>
+                <div className="relative flex-grow">
+                    <input
+                        type="text"
+                        value={userInput}
+                        onChange={handleInputChange}
+                        onFocus={handleInputFocus}
+                        placeholder="Type your message here..."
+                        className="w-full h-20 rounded-lg px-4 py-2 focus:ring-2 border-2 pr-16"
+                    />
+                    <button
+                        onClick={handleSendMessage}
+                        className="absolute right-4 top-1/2 bg-slate-600 transform -translate-y-1/2 text-white px-4 py-2 rounded-full shadow-md hover:bg-slate-500 transition"
+                    >
+                        <i className="fa-solid fa-arrow-up"></i>
+                    </button>
+                </div>
             </div>
-        </div>
-
         </div>
     );
 };
