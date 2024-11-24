@@ -2,11 +2,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 
-const LawyerStatusCard = ({ LawyerProfile, tags }) => {
+const LawyerStatusCard = ({ LawyerProfile }) => {
   return (
     <div>
       {/* Tags Section */}
-      {tags && tags.length > 0 && (
+      {/* {tags && tags.length > 0 && (
         <div className="flex flex-wrap mt-4">
           {tags.map((tag) => (
             <span
@@ -17,10 +17,10 @@ const LawyerStatusCard = ({ LawyerProfile, tags }) => {
             </span>
           ))}
         </div>
-      )}
+      )} */}
 
       <motion.div
-        className="max-w-md p-6 mt-5 bg-gradient-to-br bg-gray-900 rounded-lg shadow-lg relative text-white image-border-lawyer"
+        className="max-w-md p-6 mt-10 rounded-lg shadow-lg relative text-white image-border-lawyer"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -30,7 +30,7 @@ const LawyerStatusCard = ({ LawyerProfile, tags }) => {
           <img
             src={LawyerProfile.image}
             alt={LawyerProfile.name}
-            className="w-24 h-24 rounded-lg border-2 violet-gradient shadow-md"
+            className="w-24 h-24 rounded-lg border-2 bg-white shadow-md"
             width={96} 
             height={96}
           />
@@ -39,26 +39,26 @@ const LawyerStatusCard = ({ LawyerProfile, tags }) => {
         </div>
 
         {/* Current Stats */}
-        <div className="mt-4 text-sm">
+        <div className="mt-5 text-sm">
           <p className="font-semibold">
-            Strategy Points:{" "}
-            <span className="text-violet-400">{LawyerProfile.currentSP}</span>
+            Consultation:{" "}
+            <span className="text-orange-400">{LawyerProfile.currentSP}</span>
           </p>
-          <p className="font-semibold">
-            Experience Points:{" "}
-            <span className="text-violet-400">
+          <p className="mt-1 font-semibold">
+            Experience:{" "}
+            <span className="text-orange-400">
               {LawyerProfile.currentPoints}
             </span>
           </p>
         </div>
 
         {/* Divider */}
-        <hr className="my-4 border-white" />
+        <hr className="my-4 mt-6 border-white" />
         
     {/* Message */}
     {LawyerProfile.tagline && (
-      <div className="text-center text-xs text-violet-400 mb-4">
-        <p>{LawyerProfile.tagline}</p>
+      <div className="text-center tracking-wide text-sm text-white mb-4">
+        <b>{LawyerProfile.tagline}</b>
       </div>
     )}
 
@@ -74,12 +74,8 @@ const LawyerStatusCard = ({ LawyerProfile, tags }) => {
           <div>
             <p className="font-semibold">TALENT</p>
             <p>{LawyerProfile.talent}</p>
-            <p className="font-semibold mt-2">
-              MASTERIES ({LawyerProfile.masteries}/3)
-            </p>
-            <p className="font-semibold mt-2">
-              CONSTITUTIONS ({LawyerProfile.constitutions}/3)
-            </p>
+            <p className="font-semibold mt-2">ADDRESS:</p>
+            <p>{LawyerProfile.address}</p>
           </div>
         </div>
       </motion.div>
@@ -101,11 +97,10 @@ LawyerStatusCard.propTypes = {
       agility: PropTypes.number.isRequired,
     }).isRequired,
     talent: PropTypes.string.isRequired,
-    masteries: PropTypes.number.isRequired,
-    constitutions: PropTypes.number.isRequired,
     tagline: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
   }).isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string),
+  // tags: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default LawyerStatusCard;

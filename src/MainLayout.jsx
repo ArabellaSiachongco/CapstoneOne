@@ -5,6 +5,7 @@ import { Header, User, Features, Testimonials, Footer } from './components/index
 const MainLayout = () => {
   return (
     <> 
+      {/* <NavbarTop/> */}
       <div className='bg-hero-pattern bg-cover bg-no-repeat bg-center'>
         <Header />
       </div>

@@ -96,7 +96,7 @@ const FeaturesCard = ({ feature }) => {
             className="px-6 py-2 text-white rounded-lg text-sm font-semibold flex items-center"
           >
             <i>
-              Chat now&nbsp;
+              See More&nbsp;
               <i className="fa-solid fa-arrow-right ml-1"></i>
             </i>
           </Link>

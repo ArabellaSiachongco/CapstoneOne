@@ -8,7 +8,7 @@ import { useDictionary } from '/src/utility/dictionaryAPI.js';
 
 const ArticleEight = () => {
   const navigate = useNavigate();
-  const { selectedWord, definition, handleTextSelection } = useDictionary();
+  const { selectedWord, definition, tooltipPosition, handleTextSelection } = useDictionary();
 
   // Handle Next Article Button click
   const handleNextArticleClick = () => {
@@ -44,13 +44,18 @@ const ArticleEight = () => {
             </div>
           ))}
 
-          {/* Word Selection and Definition */}
+          {/* Word Selection and Definition Tooltip */}
           {selectedWord && (
             <div
-              className="absolute top-10 left-1/2 transform-translate-x-1/2 bg-white p-4 shadow-lg rounded-lg max-w-xs text-black"
-              style={{ zIndex: 100 }}
+              className="absolute bg-white p-4 shadow-lg rounded-lg max-w-xs text-black"
+              style={{
+                left: tooltipPosition.left,
+                top: tooltipPosition.top,
+                zIndex: 100,
+              }}
             >
-              <p className={styles.dictionaryText}>{selectedWord}</p><hr className='border-2 mb-2'/>
+              <p className={styles.dictionaryText}>{selectedWord}</p>
+              <hr className="border-2 mb-2" />
               <p>{definition}</p>
             </div>
           )}

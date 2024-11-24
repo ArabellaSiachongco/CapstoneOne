@@ -4,16 +4,15 @@ import { styles } from "../../styles";
 import { SectionWrapper } from "../../wrapper";
 
 const Chatbot = () => {
-    const [chat, setChat] = useState([]); // Chat history
-    const [userInput, setUserInput] = useState(""); // User's typed or selected message
-    const [showChoices, setShowChoices] = useState(true); // Controls visibility of choices
-    const [isThinking, setIsThinking] = useState(false); // Controls "thinking" animation
-    const [recommendations, setRecommendations] = useState([]); // Recommendation questions
+    const [chat, setChat] = useState([]);
+    const [userInput, setUserInput] = useState("");
+    const [isThinking, setIsThinking] = useState(false); 
+    const [recommendations, setRecommendations] = useState([]); 
 
     // Handle when user sends a message
     const handleSendMessage = () => {
         if (userInput.trim()) {
-            const newChat = [...chat, { sender: "User", message: userInput }]; // Add user's message to chat
+            const newChat = [...chat, { sender: "User", message: userInput }]; 
             setChat(newChat);
 
             setIsThinking(true);
@@ -21,7 +20,7 @@ const Chatbot = () => {
             // Simulate AI thinking and delay the response
             setTimeout(() => {
                 const aiResponse = generateAIResponse(userInput);
-                setChat((prevChat) => [...prevChat, { sender: "Helena", message: aiResponse }]); // Add AI's response to chat
+                setChat((prevChat) => [...prevChat, { sender: "Helena", message: aiResponse }]); 
                 setIsThinking(false); // Stop "thinking" animation
             }, 2000); // 2-second delay for thinking
 
@@ -43,7 +42,7 @@ const Chatbot = () => {
     // Handle selecting a predefined question
     const handleSelectQuestion = (question) => {
         setUserInput(question);
-        setRecommendations([]); // Hide recommendations
+        setRecommendations([]); 
         handleSendMessage();
     };
 
@@ -75,17 +74,17 @@ const Chatbot = () => {
     return (
         <div className="h-screen flex flex-col">
             {/* Header */}
-            <p id="helena" className={styles.paragraphSubText}>Our Artificial Intelligence</p>
-            <h2 className={`${styles.headText} highlight-border`}>
+            <p className={styles.paragraphSubText}>Our Artificial Intelligence</p>
+            <h2 id="helena" className={`${styles.headText} highlight-border`}>
                 <span className="title-with-line">Helena</span>
             </h2>
-            <p className={`${styles.paragraphSubTextLower} mb-5`}>
-                Empowering lawyers with tools to simplify their practice and assisting
-                students in navigating their academic and legal journeys.
+            <p className={`${styles.paragraphSubTextLower} mb-4`}> 
+             Our team is working tirelessly to enhance her capabilities, refine her personality, and ensure she delivers the best possible experience. Stay tuned—Helena will soon be fully operational and ready to assist you in ways you never imagined!
             </p>
+            {/* <hr className="mb-9"/> */}
 
             {/* Chat Window */}
-            <div className="w-full max-w-[900px] mx-auto border-2 shadow-md rounded-lg p-4 mb-4 flex-grow overflow-y-auto">
+            <div className="w-full max-w-[900px] mx-auto shadow-md rounded-lg p-4 mb-4 flex-grow overflow-y-auto">
                 {chat.length > 0 ? (
                     chat.map((chatItem, index) => (
                         <div
@@ -100,13 +99,13 @@ const Chatbot = () => {
                         </div>
                     ))
                 ) : (
-                    <div className="text-gray-400 text-left">
-                        No messages yet. Start by asking a question!
+                    <div className={`${styles.AiText} text-center mt-20 `}>
+                        What can I help with?
                     </div>
                 )}
                 {isThinking && (
-                    <div className="chat-message bg-gray-200 text-gray-600 self-start px-4 py-2 rounded-md mb-2 shadow-sm italic">
-                        Helena is typing...
+                    <div className="chat-message text-white self-start px-4 py-2 rounded-md mb-2 shadow-sm italic">
+                        Helena is thinking...
                     </div>
                 )}
             </div>
@@ -130,22 +129,25 @@ const Chatbot = () => {
             )}
 
             {/* Input Box */}
-            <div className="w-full max-w-[900px] mx-auto flex space-x-2">
+            <div className="w-full max-w-[900px] rounded-sm mx-auto flex space-x-2">
+            <div className="relative flex-grow">
                 <input
                     type="text"
                     value={userInput}
                     onChange={handleInputChange}
-                    onFocus={handleInputFocus} // Show recommendations on focus
+                    onFocus={handleInputFocus}
                     placeholder="Type your message here..."
-                    className="flex-grow rounded-md px-4 py-2 focus:outline-none focus:ring-2 border-2"
+                    className="w-full h-20 rounded-lg px-4 py-2 focus:ring-2 border-2 pr-16"
                 />
                 <button
                     onClick={handleSendMessage}
-                    className="border text-white px-4 py-2 rounded-md shadow-md hover:bg-slate-600 transition"
+                    className="absolute right-4 top-1/2 bg-slate-600 transform -translate-y-1/2 text-white px-4 py-2 rounded-full shadow-md hover:bg-slate-500 transition"
                 >
-                    Send
+                    <i className="fa-solid fa-arrow-up"></i>
                 </button>
             </div>
+        </div>
+
         </div>
     );
 };

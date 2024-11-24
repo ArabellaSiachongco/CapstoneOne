@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import Testimonials from "./Testimonials";
 import Constitution from "./Constitution";
 import Lawyer  from "./Lawyer";
+// import NavbarTop from "./NavbarTop";
 
 export {
     Features,
@@ -16,4 +17,5 @@ export {
     Testimonials,
     Constitution,
     Lawyer,
+    // NavbarTop
 };

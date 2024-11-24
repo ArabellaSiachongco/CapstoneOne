@@ -122,6 +122,16 @@
   transform: translateZ(0);
 }
 
+
+/* website loader  */
+canvas {
+  width: 400px;
+  height: 400px;
+  display: block;
+  margin: 0 auto
+}
+
+
 .image-border-lawyer {
   border: 40px solid;
   border-image-source: url('./assets/border.png');

@@ -11,25 +11,20 @@ import {
     lawyerIcon,
     AiRobot,
     lawyers,
-    lawbook
+    lawbook,
+    profile,
+    profile1,
+    profile2,
 } from "../assets";
 
 const navLinks = [
     {
-        id: "/articleOne",
-        title: "Article I",
+        id: "/",
+        title: "HOME",
     },
     {
-    id: "/articleTwo",
-    title: "Article II",
-    sections: [
-        { id: "#principles", title: "Principles" },
-        { id: "#policies", title: "Policies" },
-    ],
-    },
-    {
-    id: "/articleThree",
-    title: "Article III",
+        id: "features",
+        title: "FEATURES",
     },
 ];
 
@@ -51,7 +46,7 @@ const userLink = [
 const features = [
     {
         title: "Law books",
-        subtitle: "Table of Contents",
+        subtitle: "Simply highlight any word in our law books to instantly fetch its definition.",
         icon: book,
         iconBg: "#383E56",
         // overview: "An in-depth look at legal texts in the Philippines.",
@@ -89,20 +84,28 @@ const features = [
         color: "green-text-gradient",
         btn: "/lawyer-status",
         image: lawyers,
-        tags: [
-            {
-                name: "Harassment",
-                color: "blue-text-gradient",
-            },
-            {
-                name: "Bullying",
-                color: "green-text-gradient",
-            },
-            {
-                name: "Discrimination",
-                color: "pink-text-gradient",
-            },
-        ],
+        // tags: [
+        //     {
+        //         name: "5 years",
+        //         color: "blue-text-gradient",
+        //         btn:"",
+        //     },
+        //     {
+        //         name: "Bullying",
+        //         color: "green-text-gradient",
+        //         btn:"",
+        //     },
+        //     {
+        //         name: "Discrimination",
+        //         color: "pink-text-gradient",
+        //         btn:"",
+        //     },
+        //     {
+        //         name: "Harassment",
+        //         color: "blue-text-gradient",
+        //         btn:"",
+        //     },
+        // ],
     },
     {
         title: "Helena",
@@ -169,113 +172,59 @@ const testimonials = [
     },
 ];
 
-const tags = [
-    {
-        id: "bullying",
-        title: "Bullying",  
-    },
-    {
-        id: "harassment",
-        title: "Sexual Harassment",  
-    },
-    {
-        id: "trial",
-        title: "Trial",  
-    },
-    {
-        id: "sample",
-        title: "Sample",  
-    },
-];
+// const tags = [
+//     {
+//         id: "bullying",
+//         title: "Bullying",  
+//     },
+//     {
+//         id: "harassment",
+//         title: "Sexual Harassment",  
+//     },
+//     {
+//         id: "trial",
+//         title: "Trial",  
+//     },
+//     {
+//         id: "sample",
+//         title: "Sample",  
+//     },
+// ];
 
 const lawyerProfiles = [
     {
-      image: "/src/assets/palmer_lawyer.jpg",
+      image: profile1,
       name: "Palmer Fagyan Bugtong",
       title: "Lawyer",
-      currentSP: 500,
-      currentPoints: "5 years",
+      currentSP: "Personal, 8-11 am",
+      currentPoints: "5 years lawyer",
       stats: { strength: 8, endurance: 8, agility: 8 },
       talent: "Negotiation",
-      tagline: "The Defender of the Defenseless", // A single string
-      constitutions: 1,
+      tagline: "The Defender of the Defenseless", 
+      address: "Liaison Officer at Magalgalit Law Office",
+    },
+    // No. 7, 2/F Israel Bldg., Gibraltar Road, Baguio City 2600
+    {
+        image: profile,
+        name: "Noel Magalgalit",
+        title: "Lawyer",
+        currentSP: "Personal, 8-11 am",
+        currentPoints: "15 years lawyer",
+        stats: { strength: 7, endurance: 8, agility: 7 },
+        talent: "Public Speaking",
+        tagline: "The Defender of the Defenseless", 
+        address: "Liaison Officer at Magalgalit Law Office",
     },
     {
-        image: "/src/assets/lawyers.png",
-        name: "Lawyer 2",
-        title: "Corporate Lawyer",
-        currentSP: 700,
-        currentPoints: 500,
-        stats: { strength: 6, endurance: 8, agility: 6 },
-        talent: "Corporate Law",
-        masteries: 3,
-        constitutions: 2,
-    },
-    {
-        image: "/src/assets/lawyers.png",
-        name: "Lawyer 3",
-        title: "Corporate Lawyer",
-        currentSP: 700,
-        currentPoints: 500,
-        stats: { strength: 6, endurance: 8, agility: 6 },
-        talent: "Corporate Law",
-        masteries: 3,
-        constitutions: 2,
-    },
-    {
-        image: "/src/assets/lawyers.png",
-        name: "Lawyer 4",
-        title: "Corporate Lawyer",
-        currentSP: 700,
-        currentPoints: 500,
-        stats: { strength: 6, endurance: 8, agility: 6 },
-        talent: "Corporate Law",
-        masteries: 3,
-        constitutions: 2,
-    },
-    {
-        image: "/src/assets/lawyers.png",
-        name: "Lawyer 5",
-        title: "Corporate Lawyer",
-        currentSP: 700,
-        currentPoints: 500,
-        stats: { strength: 6, endurance: 8, agility: 6 },
-        talent: "Argumentation, Negotiation, Persuasion, Case Analysis",
-        masteries: 3,
-        constitutions: 2,
-    },
-    {
-        image: "/src/assets/lawyers.png",
-        name: "Lawyer 6",
-        title: "Corporate Lawyer",
-        currentSP: 700,
-        currentPoints: 500,
-        stats: { strength: 6, endurance: 8, agility: 6 },
-        talent: "Corporate Law",
-        masteries: 3,
-        constitutions: 2,
-    },
-    {
-        image: "/src/assets/lawyers.png",
-        name: "Lawyer 7",
-        title: "Corporate Lawyer",
-        currentSP: 700,
-        currentPoints: 500,
-        stats: { strength: 6, endurance: 8, agility: 6 },
-        talent: "Corporate Law",
-        masteries: 3,
-        constitutions: 2,
-    },
-    {
-        image: "/src/assets/lawyers.png",
-        name: "Lawyer 8",
-        title: "Corporate Lawyer",
-        currentSP: 700,
-        currentPoints: 500,
-        stats: { strength: 6, endurance: 8, agility: 6 },
-        talent: "Corporate Law",
-        masteries: 3,
-        constitutions: 2,
+        image: profile2,
+        name: "Rose Angela Allasiw",
+        title: "Lawyer",
+        currentSP: "Personal, 1-5 pm",
+        currentPoints: "5 years lawyer",
+        stats: { strength: 6, endurance: 8, agility: 9 },
+        talent: "Persuasion",
+        tagline: "The Fast Talker and the Faster Thinker", 
+        address: "Liaison Officer at Magalgalit Law Office",
     },
 ];
 
@@ -287,5 +236,5 @@ export {
     partnerships,
     testimonials,
     lawyerProfiles,
-    tags,
+    // tags,
 };

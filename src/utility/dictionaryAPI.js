@@ -1,25 +1,33 @@
-import { useState } from 'react';
-
-const API_KEY = 'd87993c8-62f0-4e2f-a1ba-ccd973139434'; // Replace with your Merriam-Webster API key
-
-// Custom hook to handle word selection and fetching definition
 export const useDictionary = () => {
   const [selectedWord, setSelectedWord] = useState(null);
   const [definition, setDefinition] = useState(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
 
-  // Function to handle text selection and set the selected word
+  const API_KEY = process.env.REACT_APP_DICTIONARY_API_KEY;
+
   const handleTextSelection = (e) => {
-    const selection = window.getSelection().toString().trim();
-    if (selection) {
-      setSelectedWord(selection); // Store the selected word
-      fetchDefinition(selection); // Fetch the definition for the selected word
+    const selection = window.getSelection();
+    const selectedText = selection.toString().trim();
+
+    if (selectedText) {
+      setSelectedWord(selectedText); // Store the selected word
+      fetchDefinition(selectedText); // Fetch the definition for the selected word
+
+      // Get the bounding rectangle of the selected text for positioning
+      const range = selection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      setTooltipPosition({
+        top: rect.bottom + window.scrollY + 8, // Add slight spacing below the word
+        left: rect.left + window.scrollX,
+      });
     } else {
       setSelectedWord(null); // Clear selected word if nothing is highlighted
+      setDefinition(null);
     }
   };
 
   const fetchDefinition = async (word) => {
-    const url = `https://dictionaryapi.com/api/v3/references/learners/json/${word}?key=${API_KEY}`;  // Dynamic word in URL
+    const url = `https://dictionaryapi.com/api/v3/references/learners/json/${word}?key=${API_KEY}`;
 
     try {
       const response = await fetch(url);
@@ -28,16 +36,16 @@ export const useDictionary = () => {
         if (data.length > 0 && data[0].shortdef) {
           setDefinition(data[0].shortdef[0]); // Set the first short definition
         } else {
-          setDefinition("No definition found.");
+          setDefinition('No definition found.');
         }
       } else {
-        setDefinition("No definition found.");
+        setDefinition('No definition found.');
       }
     } catch (error) {
-      console.error("Error fetching definition:", error);
-      setDefinition("Error fetching definition.");
+      console.error('Error fetching definition:', error);
+      setDefinition('Error fetching definition.');
     }
   };
 
-  return { selectedWord, definition, handleTextSelection };
+  return { selectedWord, definition, tooltipPosition, handleTextSelection };
 };

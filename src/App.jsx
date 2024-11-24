@@ -3,6 +3,7 @@ import MainLayout from "./MainLayout";
 import Navbar from "./components/Navbar";
 import Lawyer from "./components/Lawyer";
 import Helena from "./components/canvas/Helena";
+// import NavbarTop from "./components/NavbarTop";
 
 import RA_12066 from "./components/RA_12066";
 import Constitution from "./components/Constitution";
@@ -107,6 +108,7 @@ const App = () => {
           <Route path="/chapterTwelve" element={<Layout> <ChapterTwelve /></Layout>} />
         </Routes>
       </NavbarWrapper>
+      {/* <NavbarTop/> */}
     </BrowserRouter>
   );
 };

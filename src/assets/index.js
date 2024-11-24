@@ -6,11 +6,13 @@ import book from "./lawbook.png";
 import lawyerIcon from "./lawyerIcon.png";
 import Ai from "./icon/helenaIcon.png";
 import sunflower from "./sunflower.png";
-import blindfold_woman from "./blindfold_woman.png"
-import lawbook from "./icon/bookIcon.png"
-
+import blindfold_woman from "./blindfold_woman.png";
+import lawbook from "./icon/bookIcon.png";
 import lawyers from "./match.png";
-import AiRobot from "./helena.png"
+import AiRobot from "./helena.png";
+import profile from "./profile.png";
+import profile1 from "./profile1.png";
+import profile2 from "./profile2.png";
 
 import github from "./github.png";
 import menu from "./menu.svg";
@@ -40,5 +42,8 @@ export {
   tesla,
   sunflower,
   blindfold_woman,
-  lawbook
+  lawbook,
+  profile,
+  profile1,
+  profile2,
 };
