@@ -33,6 +33,7 @@ const LawyerStatusCard = ({ LawyerProfile }) => {
             className="w-24 h-24 rounded-lg border-2 bg-white shadow-md"
             width={96} 
             height={96}
+            loading="lazy"
           />
           <h2 className="text-md font-bold mt-2">{LawyerProfile.name}</h2>
           <p className="text-sm">{LawyerProfile.title}</p>

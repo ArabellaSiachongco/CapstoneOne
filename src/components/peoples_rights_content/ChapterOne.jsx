@@ -1,22 +1,22 @@
-import React from 'react';
-import "/src/components/layouts/book.css"
-import chapterOne from '/src/constants/book_peoples_right/chapterOne.js';
-import { useNavigate } from 'react-router-dom';
-import { styles } from '/src/styles.js';
-import { SectionWrapper, ScrollWrapper } from '/src/wrapper';
-import { useDictionary } from '/src/utility/dictionaryAPI.js';
+import React from "react";
+import "../../components/layouts/book.css";
+import { useNavigate } from "react-router-dom";
+import { styles } from "../../styles.js";
+import { SectionWrapper, ScrollWrapper } from "../../wrapper";
+import chapterOne from '../../constants/book_peoples_right/chapterOne.js';
+import { useDictionary } from "../../utility/dictionaryAPI.js";
 
 
 const ChapterOne = () => {  
   const navigate = useNavigate(); // Initialize useNavigate
-  const { selectedWord, definition, handleTextSelection } = useDictionary();
+  const { selectedWord, definition, tooltipPosition, handleTextSelection } = useDictionary();
 
   const handleNextArticleClick = () => {
     navigate("/chapterTwo"); 
   };
   
   return (
-    <div className="text-spacing-3 leading-relaxed tracking-wide image-border-national">
+    <div className="text-spacing-3 leading-relaxed tracking-wide ">
       <ScrollWrapper>
         <div>
           {chapterOne.map((item) => (
@@ -27,7 +27,7 @@ const ChapterOne = () => {
                     {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
                     {item.sections.map((sections, index) => (
                       <div key={index} className="my-4">
-                        <h6 className={styles.sectionTitle}>{sections.name}</h6>
+                        <h6 className={styles.paragraphSubText}>{sections.name}</h6>
                         <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>{sections.paragraph}</p>
                       </div>
                     ))}
@@ -38,9 +38,14 @@ const ChapterOne = () => {
           {selectedWord && (
             <div
               className="absolute top-10 left-1/2 transform-translate-x-1/2 bg-white p-4 shadow-lg rounded-lg max-w-xs text-black"
-              style={{ zIndex: 100 }}
+              style={{
+                left: tooltipPosition.left,
+                top: tooltipPosition.top,
+                zIndex: 100,
+              }}
             >
-              <p className={styles.dictionaryText}>{selectedWord}</p><hr className='border-2 mb-2'/>
+              <p className={styles.dictionaryText}>{selectedWord}</p>
+              <hr className="border-2 mb-2" />
               <p>{definition}</p>
             </div>
           )}

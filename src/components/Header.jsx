@@ -11,11 +11,13 @@ const Header = () => {
           src={sunflower}
           alt="Sunflower"
           className="absolute inset-0 w-full h-full object-cover z-0"
+          loading="lazy"
         />
         <img
           src={blindfold_woman}
           alt="Blindfold Woman"
           className="absolute inset-0 w-full h-full object-cover z-0"
+          loading="lazy"
         />
       </div>
       

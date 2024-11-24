@@ -31,6 +31,7 @@ const FeaturesCard = ({ feature }) => {
             src={feature.icon}
             alt={feature.title}
             className="w-[90%] h-[90%] object-contain"
+            loading="lazy"
           />
         </div>
       }

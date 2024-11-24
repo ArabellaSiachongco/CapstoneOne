@@ -1,14 +1,15 @@
-import React from 'react';
+import React from "react";
 import "/src/components/layouts/book.css";
-import { useNavigate } from 'react-router-dom';
-import { styles } from '/src/styles.js';
-import { SectionWrapper, ScrollWrapper } from '/src/wrapper';
-import judicial from '/src/constants/book_constitution/judicial.js';
-import { useDictionary } from '/src/utility/dictionaryAPI.js';
+import { useNavigate } from "react-router-dom";
+import { styles } from "/src/styles.js";
+import { SectionWrapper, ScrollWrapper } from "/src/wrapper";
+import judicial from "/src/constants/book_constitution/judicial.js";
+import { useDictionary } from "/src/utility/dictionaryAPI.js";
 
 const ArticleEight = () => {
   const navigate = useNavigate();
-  const { selectedWord, definition, tooltipPosition, handleTextSelection } = useDictionary();
+  const { selectedWord, definition, tooltipPosition, handleTextSelection } =
+    useDictionary();
 
   // Handle Next Article Button click
   const handleNextArticleClick = () => {
@@ -34,8 +35,11 @@ const ArticleEight = () => {
               <div>
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
-                    <h6 className={styles.sectionTitle}>{section.name}</h6>
-                    <p className={styles.paragraphSubTextLower} onMouseUp={handleTextSelection}>
+                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
+                    <p
+                      className={styles.paragraphSubTextLower}
+                      onMouseUp={handleTextSelection}
+                    >
                       {section.paragraph}
                     </p>
                   </div>

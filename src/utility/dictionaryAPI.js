@@ -1,9 +1,12 @@
+import { useState } from 'react';
+
 export const useDictionary = () => {
   const [selectedWord, setSelectedWord] = useState(null);
   const [definition, setDefinition] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
 
-  const API_KEY = process.env.REACT_APP_DICTIONARY_API_KEY;
+  // Access environment variable for API key
+  const API_KEY = import.meta.env.VITE_DICTIONARY_API_KEY;
 
   const handleTextSelection = (e) => {
     const selection = window.getSelection();
