@@ -68,3 +68,24 @@ const getWordMeaning = async (word) => {
 };
 
 waht if tanggalin natin ung  book tas lagyan na lang ng btn pag ni click yun may animation na flip
+
+
+table one: fill up
+company name
+first name
+middle name
+last name
+purpose for consulatation though public assistance and compliants desk (not sure)
+Address: Liaison Officer at Magalgalit Law Office
+Date: date ng appoitment
+Time: time ng appoitment
+
+table two: yung with answer
+company name
+first name
+middle name
+last name
+purpose for consulatation though public assistance and compliants desk (not sure)
+Address: Liaison Officer at Magalgalit Law Office
+Date: date ng appoitment
+Time: time ng appoitment

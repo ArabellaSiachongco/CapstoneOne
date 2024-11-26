@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const LawyerStatusCard = ({ LawyerProfile }) => {
   return (
@@ -79,7 +80,19 @@ const LawyerStatusCard = ({ LawyerProfile }) => {
             <p>{LawyerProfile.address}</p>
           </div>
         </div>
-      </motion.div>
+        
+        
+        {LawyerProfile.btn && (
+        <div className="mt-5 flex justify-center">
+          <Link
+            to={LawyerProfile.btn}
+            className="px-6 py-2 border-2 border-orange-500 hover:bg-slate-700 text-white rounded-lg text-sm font-semibold flex items-center"
+          > Get an Appointment
+          </Link>
+        </div>
+      )}
+        
+        </motion.div>
     </div>
   );
 };
@@ -100,6 +113,7 @@ LawyerStatusCard.propTypes = {
     talent: PropTypes.string.isRequired,
     tagline: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
+    btn: PropTypes.isRequired,
   }).isRequired,
   // tags: PropTypes.arrayOf(PropTypes.string),
 };

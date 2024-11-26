@@ -3,10 +3,14 @@ import MainLayout from "./MainLayout";
 import Navbar from "./components/Navbar";
 import Lawyer from "./components/Lawyer";
 import Helena from "./components/canvas/Helena";
-import NavbarTop from "./components/NavbarTop";
+import NavbarTop from "./components/NavbarTop"; 
 
 import RA_12066 from "./components/RA_12066";
 import Constitution from "./components/Constitution";
+
+import Appointment from "./components/Appointment";
+import AppointmentTable from "./components/canvas/AppointmentTable";
+import AppointmentResult from "./components/canvas/AppointmentResult";
 
 import Layout from "./components/Layout";
 
@@ -67,6 +71,11 @@ const App = () => {
 
           {/* Lawyers status window route */}
           <Route path="/lawyer-status" element={<Lawyer />} />
+          
+          <Route path="/appointment" element={<Appointment />} />
+          <Route path="/appointment-table" element={<AppointmentTable />} />
+          <Route path="/appointment-result" element={<AppointmentResult />} />
+          
           <Route path="/helena" element={<Helena />} />
 
           {/* For books with table of contents */}

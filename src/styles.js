@@ -18,6 +18,8 @@ const styles ={
     dictionaryText: "text-black sm:text-[18px] text-[14px] tracking-wider uppercase mb-2",
     
     AiText: "text-white font-medium lg:text-[40px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px]",
+    
+    appointmentSubTextLower: "font-medium sm:text-[20px] text-[14px] text-secondary tracking-wide text-left",
 
 };
 
