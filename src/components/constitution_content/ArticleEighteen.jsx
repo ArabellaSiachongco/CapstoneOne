@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../components/layouts/book.css";
 import { useNavigate } from "react-router-dom";
 import { styles } from "../../styles.js";
@@ -10,6 +10,26 @@ const ArticleEighteen = () => {
   const navigate = useNavigate();
   const { selectedWord, definition, tooltipPosition, handleTextSelection } =
     useDictionary();
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  // Handle Scroll Event to toggle visibility of the scroll-to-top button
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200) {
+        setShowScrollButton(true);
+      } else {
+        setShowScrollButton(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Scroll to Top Functionality
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   // Handle Previous Article Button click
   const handlePrevArticleClick = () => {
@@ -76,6 +96,16 @@ const ArticleEighteen = () => {
           </div>
         </div>
       </ScrollWrapper>
+
+      {/* Scroll-to-Top Button */}
+      {showScrollButton && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 w-12 h-12 bg-gray-600 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-800 transition-all duration-300"
+        >
+          <i className="fas fa-arrow-up"></i>
+        </button>
+      )}
     </div>
   );
 };
