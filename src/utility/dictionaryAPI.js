@@ -8,6 +8,12 @@ export const useDictionary = () => {
   // Access environment variable for API key
   const API_KEY = import.meta.env.VITE_DICTIONARY_API_KEY;
 
+  // Handle case where API_KEY is not set
+  if (!API_KEY) {
+    console.error('API Key is missing. Please set VITE_DICTIONARY_API_KEY in your environment variables.');
+    return;
+  }
+
   const handleTextSelection = (e) => {
     const selection = window.getSelection();
     const selectedText = selection.toString().trim();
