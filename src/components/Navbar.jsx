@@ -10,7 +10,7 @@ const Navbar = () => {
   const [active, setActive] = useState("");
   const location = useLocation(); // Get the current route
 
-  console.log("Current Pathname:", location.pathname);
+  // console.log("Current Pathname:", location.pathname);
 
   // Determine which table of content to display based on the current route
   const table_of_content = (() => {

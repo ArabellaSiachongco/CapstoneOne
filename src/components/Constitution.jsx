@@ -6,14 +6,20 @@ import "./layouts/book.css";
 import { table_of_content_constitution } from "../constants/table_of_content";
 import { SectionWrapper, ScrollWrapper } from "/src/wrapper";
 import { fadeIn } from "../utility/motion";
+import { useDictionary } from "../utility/dictionaryAPI.js";
+
 
 const Constitution = () => {
+  const { selectedWord, definition, tooltipPosition, handleTextSelection } =
+  useDictionary();
+
   return (
     <ScrollWrapper>
     <div id="Constitution_ID" className="p-8 min-h-screen text-center image-border-table">
       {/* Constitution Intro */}
       <div className="mb-16">
         <motion.p
+         onMouseUp={handleTextSelection}
           variants={fadeIn("top", "tween", 0.1, 0.6)}
           initial="hidden"
           animate="show"
@@ -33,11 +39,13 @@ const Constitution = () => {
           variants={fadeIn("top", "tween", 0.3, 1)}
           initial="hidden"
           animate="show"
+          onMouseUp={handleTextSelection}
           className={`${styles.paragraphHeadText} text-white mb-6`}
         >
           <strong className="tracking-wide">THE CONSTITUTION OF THE REPUBLIC OF THE PHILIPPINES</strong>
         </motion.h1>
         <motion.p
+         onMouseUp={handleTextSelection}
           variants={fadeIn("top", "tween", 0.4, 1.2)}
           initial="hidden"
           animate="show"
@@ -89,6 +97,29 @@ const Constitution = () => {
           </Link>
         ))}
       </motion.div>
+      
+      {/* Word Selection and Definition Tooltip */}
+      {selectedWord && (
+        <div
+          className="absolute text-left bg-white p-4 shadow-lg rounded-lg max-w-xs text-black"
+          style={{
+            left: tooltipPosition.left,
+            top: tooltipPosition.top,
+            zIndex: 100,
+          }}
+        >
+          <div className="flex items-center justify-between">
+            <p className={styles.dictionaryText}>{selectedWord}</p>
+            {/* Icon aligned to the right */}
+            <i className="fas fa-volume-up ml-5 text-gray-600"></i>
+          </div>
+          <hr className="border-2 mb-2" />
+          <p>{definition}</p>
+        </div>
+      )}
+
+
+      
     </div>
     </ScrollWrapper>
   );

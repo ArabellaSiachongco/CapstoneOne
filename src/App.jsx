@@ -51,10 +51,13 @@ const NavbarWrapper = ({ children }) => {
   const location = useLocation();
   const showNavbar = location.pathname.startsWith("/articleOne") || location.pathname.startsWith("/chapterOne");
   const showNavbarAgain = location.pathname.startsWith("/helena") || location.pathname.startsWith("/lawyer-status");
+  const showNavbarInside = location.pathname.startsWith("/appointment");
+  
   return (
     <>
       {showNavbar && <Navbar />}
       {showNavbarAgain && <NavbarTop />}
+      {showNavbarInside && <NavbarTop />}
       {children}
       
     </>

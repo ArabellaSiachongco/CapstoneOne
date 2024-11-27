@@ -67,25 +67,15 @@ const getWordMeaning = async (word) => {
   return data[0]?.meanings[0]?.definitions[0]?.definition || "Definition not found.";
 };
 
+
+-----------
+
 waht if tanggalin natin ung  book tas lagyan na lang ng btn pag ni click yun may animation na flip
 
-
-table one: fill up
-company name
-first name
-middle name
-last name
-purpose for consulatation though public assistance and compliants desk (not sure)
-Address: Liaison Officer at Magalgalit Law Office
-Date: date ng appoitment
-Time: time ng appoitment
-
-table two: yung with answer
-company name
-first name
-middle name
-last name
-purpose for consulatation though public assistance and compliants desk (not sure)
-Address: Liaison Officer at Magalgalit Law Office
-Date: date ng appoitment
-Time: time ng appoitment
+id:
+    service_f8p4u88 - service id
+    template_rtaqjfs - template id
+    bwAG3xTPWcur0njNLlBao - private key
+    Z-JlpUZqWVtTdl2mp - public key
+    
+what if lagyan ng loading pagka nasend ung appointment ...BET

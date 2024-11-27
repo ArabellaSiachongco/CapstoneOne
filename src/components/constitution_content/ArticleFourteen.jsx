@@ -152,19 +152,22 @@ const ArticleFourteen = () => {
 
           {selectedWord && (
             <div
-              className="absolute bg-white p-4 shadow-lg rounded-lg max-w-xs text-black"
+              className="absolute text-left bg-white p-4 shadow-lg rounded-lg max-w-xs text-black"
               style={{
                 left: tooltipPosition.left,
                 top: tooltipPosition.top,
                 zIndex: 100,
               }}
             >
-              <p className={styles.dictionaryText}>{selectedWord}</p>
+              <div className="flex items-center justify-between">
+                <p className={styles.dictionaryText}>{selectedWord}</p>
+                {/* Icon aligned to the right */}
+                <i className="fas fa-volume-up ml-5 text-gray-600"></i>
+              </div>
               <hr className="border-2 mb-2" />
               <p>{definition}</p>
             </div>
           )}
-
           {/* Button Section */}
           <div className="mt-10 text-center flex justify-between">
             {/* Previous Article Button */}

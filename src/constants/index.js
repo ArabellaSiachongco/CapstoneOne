@@ -18,14 +18,14 @@ import {
 } from "../assets";
 
 const navLinks = [
-    // {
-    //     id: "/",
-    //     title: "HOME",
-    // },
-    // {
-    //     id: "features",
-    //     title: "FEATURES",
-    // },
+    {
+        id: "helena",
+        title: "HELENA AI",
+    },
+    {
+        id: "lawyer-status",
+        title: "LEGAL MATCH",
+    },
 ];
 
 const userLink = [
@@ -192,7 +192,7 @@ const lawyerProfiles = [
       image: profile1,
       name: "Palmer Fagyan Bugtong",
       title: "Criminal Law",
-      currentSP: "Personal, 8-11 am",
+      currentSP: "Face to Face",
       currentPoints: "5 years lawyer",
       stats: { strength: 8, endurance: 8, agility: 8 },
       talent: "Negotiation",
@@ -205,7 +205,7 @@ const lawyerProfiles = [
         image: profile,
         name: "Atty. Noel Magalgalit",
         title: "Civil Law",
-        currentSP: "Personal, 8-11 am",
+        currentSP: "Face to Face",
         currentPoints: "15 years lawyer",
         stats: { strength: 7, endurance: 8, agility: 7 },
         talent: "Public Speaking",
@@ -217,7 +217,7 @@ const lawyerProfiles = [
         image: profile1,
         name: "Atty. Jess B. Evasco",
         title: "Criminal Law",
-        currentSP: "Personal, 1-5 pm",
+        currentSP: "Face to Face",
         currentPoints: "5 years lawyer",
         stats: { strength: 6, endurance: 8, agility: 9 },
         talent: "Persuasion",

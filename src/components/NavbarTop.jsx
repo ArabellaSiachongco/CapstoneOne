@@ -21,24 +21,21 @@ const Navbar = () => {
   }, []);
 
   const handleNavigation = (id) => {
+    // Check if we are navigating to a section ID (hash-based navigation)
     if (id === "/") {
-      // Navigate to the home route
-      navigate("/");
-      window.scrollTo(0, 0); 
+      navigate("/"); // If it is home, just navigate to the root
+      window.scrollTo(0, 0); // Scroll to top of the page
     } else {
-      // For hash-based navigation
-      const section = document.getElementById(id);
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth" }); // Scroll to the section
-      }
+      // For section-based navigation
+      navigate(id); // Navigate to the section via hash (e.g., #helena)
+      setActive(id); // Update the active section
     }
-    setActive(id)
   };
 
   return (
     <nav
       className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 
-        ${scrolled ? "bg-primary" : "bg-transparent"}`}
+        ${scrolled ? "bg-primary" : "bg-primary"}`}
     >
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
         <Link
@@ -59,7 +56,7 @@ const Navbar = () => {
             <li
               key={nav.id}
               className={`${
-                active === nav.title ? "text-white" : "text-secondary"
+                active === nav.id ? "text-white" : "text-secondary"
               } hover:text-white text-[18px] font-medium cursor-pointer`}
               onClick={() => handleNavigation(nav.id)}
             >
@@ -88,7 +85,7 @@ const Navbar = () => {
                 <li
                   key={nav.id}
                   className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                    active === nav.title ? "text-white" : "text-secondary"
+                    active === nav.id ? "text-white" : "text-secondary"
                   }`}
                   onClick={() => {
                     setToggle(!toggle);

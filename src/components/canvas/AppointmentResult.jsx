@@ -3,10 +3,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { SectionWrapper } from "../../wrapper";
 import { styles } from "../../styles";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import emailjs from "@emailjs/browser";
 
 const AppointmentModal = ({ formData, isOpen, onClose }) => {
+  const navigate = useNavigate(); // Use navigate hook to navigate after modal closes
+
   if (!isOpen) return null;
+
+  const handleClose = () => {
+    onClose(); // Close the modal
+    navigate("/lawyer-status"); // Navigate to /lawyer-status when modal is closed
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -21,7 +29,7 @@ const AppointmentModal = ({ formData, isOpen, onClose }) => {
         </p>
         <div className="mt-6 flex justify-center">
           <button
-            onClick={onClose}
+            onClick={handleClose} // Call handleClose on button click
             className="px-4 py-2 border-2 border-orange-700 text-black rounded hover:bg-gray-500 transition"
           >
             Close
@@ -43,7 +51,31 @@ const AppointmentResult = () => {
   };
 
   const handleConfirmClick = () => {
-    setIsModalOpen(true);
+    if (!formData) {
+      alert("No appointment details found.");
+      return;
+    }
+
+    // Send the email using EmailJS
+    emailjs
+      .send(
+        "service_f8p4u88", //  service ID
+        "template_rtaqjfs", //  template ID
+        {
+          from_name: `${formData.firstName} ${formData.lastName}`,
+          to_name: "Siabell", // The recipient name
+          from_email: formData.email,
+          message: `Appointment confirmed for ${formData.firstName} ${formData.lastName} on ${formData.date} at ${formData.time}.`,
+        },
+        "Z-JlpUZqWVtTdl2mp" // public key
+      )
+      .then(() => {
+        setIsModalOpen(true); // Open modal if email is sent successfully
+      })
+      .catch((error) => {
+        console.error("Error sending email:", error);
+        alert("Something went wrong, please try again.");
+      });
   };
 
   const handleCloseModal = () => {
@@ -65,7 +97,7 @@ const AppointmentResult = () => {
         <span className="title-with-line">Confirmation</span>
       </h2>
       <p className={styles.paragraphSubTextLower}>
-        Please Review the details of your appointment. Keep in mind that this
+        Please review the details of your appointment. Keep in mind that this
         appointment is non-transferable.
       </p>
 
@@ -157,14 +189,13 @@ const AppointmentResult = () => {
         >
           Go back
         </button>
-       
-        
-            <Link
-                onClick={handleConfirmClick}
-                to="/lawyer-status"
-                className="px-6 py-2 border-2 border-orange-700 hover:bg-slate-700 text-white rounded-lg text-sm font-semibold flex items-center"
-            > Confirm
-            </Link>            
+
+        <button
+          onClick={handleConfirmClick}
+          className="px-6 py-2 border-2 border-orange-700 hover:bg-slate-700 text-white rounded-lg text-sm font-semibold flex items-center"
+        >
+          Confirm
+        </button>
       </div>
 
       {/* Appointment Modal */}
