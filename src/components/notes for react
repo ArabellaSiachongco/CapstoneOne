@@ -49,13 +49,7 @@ Rendering the Appropriate Canvas: Depending on the value in modelPath, this code
 
 Fallback: The null in the conditional chain ensures that if modelPath does not contain a recognized identifier, nothing is rendered.
 
-
-review the propsTypes
-navbar home, features not working
 tags are not working, it still needs to connect
-the link for features to lawyer needs change
-nag double yung tabs kapag pinindot yung logo 
-link sa points the same - bad :<
 
 anong pinagkaiba ng index sa styles? 
 yung main layout dapat katabi ung app js or ibang file name kasi layout pang css.

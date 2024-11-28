@@ -60,7 +60,6 @@ const NavbarWrapper = ({ children }) => {
       {showNavbarAgain && <NavbarTop />}
       {showNavbarInside && <NavbarTop />}
       {children}
-      
     </>
   );
 };

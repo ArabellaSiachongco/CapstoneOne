@@ -5,12 +5,12 @@ export const useDictionary = () => {
   const [definition, setDefinition] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
 
-  // Access environment variable for API key
+  // API key
   const API_KEY = import.meta.env.VITE_DICTIONARY_API_KEY;
 
   // Handle case where API_KEY is not set
   if (!API_KEY) {
-    console.error('API Key is missing. Please set VITE_DICTIONARY_API_KEY in your environment variables.');
+    console.error('API Key is missing.');
     return;
   }
 
@@ -24,7 +24,7 @@ export const useDictionary = () => {
 
       // Get the bounding rectangle of the selected text for positioning
       const range = selection.getRangeAt(0);
-      const rect = range.getBoundingClientRect();
+      const rect = range.getBoundingClientRect(); //is a DOM element, method
       setTooltipPosition({
         top: rect.bottom + window.scrollY + 8, // Add slight spacing below the word
         left: rect.left + window.scrollX,

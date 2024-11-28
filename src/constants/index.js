@@ -145,19 +145,19 @@ const testimonials = [
     },
     {
         testimonial:
-            "I thought it was impossible to make a seniorsite as beautiful as our product, but Rick proved me wrong.",
-        name: "Sara Lee",
-        designation: "CFO",
-        company: "Acme Co",
-        image: profile1,
+            "The website has a clean and professional look, and suitable for legal resources. However, some areas could benefit from improved visual appeal, such as personalized dashboard and inclusion of search bar.",
+        name: "Lina An-an",
+        designation: "Student",
+        company: "University of the Cordilleras",
+        image: profile2,
     },
     {
         testimonial:
-            "I thought it was impossible to make a seniorsite as beautiful as our product, but Rick proved me wrong.",
-        name: "Lee",
-        designation: "CFO",
-        company: "Acme Co",
-        image: profile2,
+            "It will help many people, especially those who are unaware of their rights. I love the Legal Matching, as it connects us with professionals. The convenience of booking appointments directly on the site is a great addition.",
+        name: "Palmer Bugtong",
+        designation: "Lawyer",
+        company: "Magalgalit Law Office",
+        image: profile1,
     },
 ];
 
