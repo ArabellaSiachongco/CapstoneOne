@@ -6,7 +6,7 @@ import { SectionWrapper } from "../../wrapper";
 const Chatbot = () => {
     const [chat, setChat] = useState([]);
     const [userInput, setUserInput] = useState("");
-    const [isThinking, setIsThinking] = useState(false); 
+    const [isThinking, setIsThinking] = useState(false); //animation think
     const [recommendations, setRecommendations] = useState([]); 
     const chatContainerRef = React.useRef(null); // Reference to chat container
 
@@ -23,12 +23,12 @@ const Chatbot = () => {
 
             setIsThinking(true);
 
-            // Simulate AI thinking and delay the response
+            // AI thinking and delay the response
             setTimeout(() => {
                 const aiResponse = generateAIResponse(userInput);
                 setChat((prevChat) => [...prevChat, { sender: "Helena", message: aiResponse }]); 
                 setIsThinking(false); // Stop "thinking" animation
-            }, 2000); // 2-second delay for thinking
+            }, 500); // delay for thinking
 
             setUserInput(""); // Clear the input field
             setRecommendations([]); // Hide recommendations
@@ -45,14 +45,14 @@ const Chatbot = () => {
             : "I'm sorry, I don't have information on that right now.";
     };
 
-    // Handle selecting a predefined question
+    //  selecting a predefined question
     const handleSelectQuestion = (question) => {
         setUserInput(question);
         setRecommendations([]); 
         handleSendMessage();
     };
 
-    // Handle input change and provide recommendations
+    //  input change and provide recommendations
     const handleInputChange = (e) => {
         const input = e.target.value;
         setUserInput(input);
@@ -69,7 +69,7 @@ const Chatbot = () => {
         }
     };
 
-    // Show recommendations on input focus
+    // Show recommendations 
     const handleInputFocus = () => {
         if (!userInput.trim()) {
             const allRecommendations = aiRobot.map((item) => item.type);

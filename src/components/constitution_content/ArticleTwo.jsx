@@ -13,7 +13,6 @@ const ArticleTwo = () => {
 
   const [showScrollButton, setShowScrollButton] = useState(false);
 
-  // Handle Scroll Event to toggle visibility of the scroll-to-top button
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 200) {
@@ -27,17 +26,14 @@ const ArticleTwo = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll to Top Functionality
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Handle Next Article Button click
   const handleNextArticleClick = () => {
     navigate("/articleThree");
   };
 
-  // Handle Previous Article Button click
   const handlePrevArticleClick = () => {
     navigate("/articleOne");
   };
@@ -49,7 +45,6 @@ const ArticleTwo = () => {
           {/* Iterate through the declarations array */}
           {declarations.map((item) => (
             <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
               <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
 
@@ -109,9 +104,7 @@ const ArticleTwo = () => {
             </div>
           )}
 
-          {/* Button Section */}
           <div className="mt-10 text-center flex justify-between">
-            {/* Previous Article Button */}
             <button
               onClick={handlePrevArticleClick}
               className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500"
@@ -119,7 +112,6 @@ const ArticleTwo = () => {
               Article I
             </button>
 
-            {/* Next Article Button */}
             <button
               onClick={handleNextArticleClick}
               className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500"

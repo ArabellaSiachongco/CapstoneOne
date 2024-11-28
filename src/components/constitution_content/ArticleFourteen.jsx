@@ -32,17 +32,14 @@ const ArticleFourteen = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll to Top Functionality
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Handle Next Article Button click
   const handleNextArticleClick = () => {
     navigate("/articleFifteen");
   };
 
-  // Handle Previous Article Button click
   const handlePrevArticleClick = () => {
     navigate("/articleThirteen");
   };
@@ -51,15 +48,12 @@ const ArticleFourteen = () => {
     <div className="text-spacing-3 leading-relaxed tracking-wide">
       <ScrollWrapper>
         <div>
-          {/* Iterate through the declarations array */}
           {educations.map((item) => (
             <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
               <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
 
               <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.paragraphSubText}>{section.name}</h6>
@@ -78,10 +72,8 @@ const ArticleFourteen = () => {
 
           {languages.map((item) => (
             <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
               <h5 className={styles.paragraphHeadText}>{item.title}</h5>
               <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.paragraphSubText}>{section.name}</h6>
@@ -100,12 +92,10 @@ const ArticleFourteen = () => {
 
           {scienceAndTechnology.map((item) => (
             <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
               <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
 
               <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.paragraphSubText}>{section.name}</h6>
@@ -124,12 +114,10 @@ const ArticleFourteen = () => {
 
           {artsAndCulture.map((item) => (
             <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
               <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
 
               <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.paragraphSubText}>{section.name}</h6>
@@ -148,12 +136,10 @@ const ArticleFourteen = () => {
 
           {sports.map((item) => (
             <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
               <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
 
               <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.paragraphSubText}>{section.name}</h6>

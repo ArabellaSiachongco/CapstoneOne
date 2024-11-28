@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types"; 
 import { motion } from "framer-motion";
 import { styles } from "../styles";
 import { SectionWrapper } from "../wrapper";
@@ -28,7 +29,7 @@ const TestimonialCard = ({
           </p>
           <p className="mt-1 text-secondary text-[12px]">
             {" "}
-            {designation} of {company}
+            {designation} at {company}
           </p>
         </div>
         <img
@@ -42,12 +43,19 @@ const TestimonialCard = ({
   </motion.div>
 );
 
+TestimonialCard.propTypes = {
+  index: PropTypes.number.isRequired, 
+  testimonial: PropTypes.string.isRequired, 
+  name: PropTypes.string.isRequired,
+  designation: PropTypes.string.isRequired, 
+  company: PropTypes.string.isRequired, 
+  image: PropTypes.string.isRequired, 
+};
+
 const Testimonial = () => {
   return (
     <div className="mt-12 rounded-[20px]">
-      <div
-        className={`${styles.padding} rounded-2xl min-h-[300px]`}
-      >
+      <div className={`${styles.padding} rounded-2xl min-h-[300px]`}>
         <motion.div variants={textVariant()}>
           <p className={styles.paragraphSubText}>What others say</p>
           <h2 className={`${styles.headText} highlight-border`}>
@@ -58,7 +66,7 @@ const Testimonial = () => {
       <div className={`${styles.paddingX} -mt-20 pb-14 flex flex-wrap gap-7`}>
         {testimonials.map((testimonial, index) => (
           <TestimonialCard
-            key={testimonials.name}
+            key={testimonial.name} 
             index={index}
             {...testimonial}
           />

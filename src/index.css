@@ -11,7 +11,7 @@
   font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
   /* to make it bg black */
-  color-scheme: dark; 
+  color-scheme: dark;
 }
 
 .hash-span {
@@ -23,22 +23,20 @@
 .black-gradient {
   background: #000000;
   /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right,
-      #434343,
-      #000000);
+  background: -webkit-linear-gradient(to right, #434343, #000000);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right,
-      #434343,
-      #000000);
+  background: linear-gradient(to right, #434343, #000000);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .violet-gradient {
   background: #804dee;
   background: linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
-  background: -webkit-linear-gradient(-90deg,
-      #804dee 0%,
-      rgba(60, 51, 80, 0) 100%);
+  background: -webkit-linear-gradient(
+    -90deg,
+    #804dee 0%,
+    rgba(60, 51, 80, 0) 100%
+  );
 }
 
 .green-pink-gradient {
@@ -54,44 +52,37 @@
   /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to top, #f12711, #f5af19);
   border-radius: 12px; /* Optional for rounded corners */
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5), /* Deep shadow for contrast */
-              0 4px 6px rgba(0, 0, 0, 0.3); /* Softer shadow for depth */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5),
+    /* Deep shadow for contrast */ 0 4px 6px rgba(0, 0, 0, 0.3); /* Softer shadow for depth */
   transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth effect */
 }
 
 /* Add hover or tilt effect */
 .orange-gradient:hover {
   transform: translateY(-10px); /* Slight lift */
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6), 
-              0 6px 10px rgba(0, 0, 0, 0.4); /* Enhance shadow on hover */
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6), 0 6px 10px rgba(0, 0, 0, 0.4); /* Enhance shadow on hover */
 }
 
 .highlight-border {
-  color: transparent; 
+  color: transparent;
   background: linear-gradient(to top, #f12711, #f5af19);
-  -webkit-background-clip: text; 
+  -webkit-background-clip: text;
   background-clip: text;
-
 }
 
 .text-3d {
   position: relative;
-  font-weight: 700; 
-  color: #ffffff; 
-  text-shadow: 1px 7px 3px #845517; 
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 1px 7px 3px #845517;
 }
-
 
 .orange-text-gradient {
   background: #f12711;
   /* fallback for old browsers */
-  background: -webkit-linear-gradient(to top,
-      #f12711,
-      #f5af19);
+  background: -webkit-linear-gradient(to top, #f12711, #f5af19);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to top,
-      #f12711,
-      #f5af19);
+  background: linear-gradient(to top, #f12711, #f5af19);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -103,11 +94,11 @@
 }
 
 .title-with-line::after {
-  content: ""; 
+  content: "";
   flex-grow: 1;
   height: 2px;
-  background: linear-gradient(to right, #f12711, #f5af19);   
-  margin-left: 12px; 
+  background: linear-gradient(to right, #f12711, #f5af19);
+  margin-left: 12px;
 }
 
 /* canvas- styles */
@@ -122,32 +113,29 @@
   transform: translateZ(0);
 }
 
-
 /* website loader  */
 canvas {
   width: 400px;
   height: 400px;
   display: block;
-  margin: 0 auto
+  margin: 0 auto;
 }
-
 
 .image-border-lawyer {
   border: 40px solid;
-  border-image-source: url('./assets/border.png');
+  border-image-source: url("./assets/border.png");
   border-image-slice: 100;
   border-image-width: 50px;
 }
 
 .image-border-table {
   border: 40px solid;
-  border-image-source: url('./assets/table_of_content_border.png');
+  border-image-source: url("./assets/table_of_content_border.png");
   border-image-slice: 100;
   border-image-width: 50px;
 }
 
 @keyframes mulShdSpin {
-
   0%,
   100% {
     box-shadow: 0em -2.6em 0em 0em #ffffff,

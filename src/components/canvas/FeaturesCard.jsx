@@ -1,14 +1,9 @@
-// src/components/FeaturesCard.jsx
 import React from "react";
 import PropTypes from "prop-types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-// import { Tilt } from "react-tilt";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { fadeIn } from "/src/utility/motion.js";
-
 const FeaturesCard = ({ feature }) => {
   const navigate = useNavigate();
 
@@ -119,7 +114,13 @@ FeaturesCard.propTypes = {
     born: PropTypes.string,
     color: PropTypes.string.isRequired,
     btn: PropTypes.string,
-    points: PropTypes.arrayOf(PropTypes.string),
+    points: PropTypes.arrayOf(
+      PropTypes.shape({
+        text: PropTypes.string.isRequired,
+        li: PropTypes.string,
+        id: PropTypes.string,
+      })
+    ),
     span: PropTypes.string,
     tags: PropTypes.arrayOf(
       PropTypes.shape({

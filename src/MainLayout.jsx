@@ -18,4 +18,3 @@ const MainLayout = () => {
 };
 
 export default MainLayout;
-// bg cover 

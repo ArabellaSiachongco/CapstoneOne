@@ -3,16 +3,7 @@ import "../../components/layouts/book.css";
 import { useNavigate } from "react-router-dom";
 import { styles } from "../../styles.js";
 import { SectionWrapper, ScrollWrapper } from "../../wrapper";
-import {
-  justice,
-  laborSection,
-  agrarian,
-  housing,
-  heal,
-  girls,
-  role,
-  human,
-} from "../../constants/book_constitution/justice.js";
+import { justice, laborSection, agrarian, housing, heal, girls, role, human } from "../../constants/book_constitution/justice.js";
 import { useDictionary } from "../../utility/dictionaryAPI.js";
 
 const ArticleThirteen = () => {
@@ -22,7 +13,6 @@ const ArticleThirteen = () => {
 
   const [showScrollButton, setShowScrollButton] = useState(false);
 
-  // Handle Scroll Event to toggle visibility of the scroll-to-top button
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 200) {
@@ -36,17 +26,14 @@ const ArticleThirteen = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll to Top Functionality
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Handle Next Article Button click
   const handleNextArticleClick = () => {
     navigate("/articleFourteen");
   };
 
-  // Handle Previous Article Button click
   const handlePrevArticleClick = () => {
     navigate("/articleTwelve");
   };

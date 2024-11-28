@@ -12,7 +12,6 @@ const ArticleOne = () => {
     useDictionary();
   const [showScrollButton, setShowScrollButton] = useState(false);
 
-  // Handle Scroll Event to toggle visibility of the scroll-to-top button
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 200) {
@@ -26,7 +25,6 @@ const ArticleOne = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll to Top Functionality
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -38,7 +36,7 @@ const ArticleOne = () => {
   return (
     <div
       className="text-spacing-3 leading-relaxed tracking-wide"
-      onMouseUp={handleTextSelection} // Call handleTextSelection when text is selected
+      onMouseUp={handleTextSelection}
     >
       <ScrollWrapper>
         <div>

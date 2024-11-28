@@ -10,3 +10,5 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
+
+// layout kasi ng buong navbar hahaha 

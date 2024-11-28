@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
 import { React, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion"; 
 import { styles } from "../styles";
-import "./layouts/book.css";
 import { table_of_content_constitution } from "../constants/table_of_content";
 import { SectionWrapper, ScrollWrapper } from "/src/wrapper";
 import { fadeIn } from "../utility/motion";
+import "./layouts/book.css";
 import { useDictionary } from "../utility/dictionaryAPI.js";
 
 
@@ -45,7 +45,7 @@ const Constitution = () => {
           <strong className="tracking-wide">THE CONSTITUTION OF THE REPUBLIC OF THE PHILIPPINES</strong>
         </motion.h1>
         <motion.p
-         onMouseUp={handleTextSelection}
+          onMouseUp={handleTextSelection}
           variants={fadeIn("top", "tween", 0.4, 1.2)}
           initial="hidden"
           animate="show"

@@ -15,6 +15,7 @@ import profile1 from "./profile1.png";
 import profile2 from "./profile2.png";
 import close from "./close.svg";
 import menu from "./menu.svg";
+import testimonial1 from "./testimonial1.png";
 
 
 export {
@@ -35,4 +36,5 @@ export {
   profile2,
   close,
   menu,
+  testimonial1,
 };

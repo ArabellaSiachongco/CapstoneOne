@@ -1,7 +1,7 @@
+import React, { useState } from "react";
 import { styles } from '../styles';
 import { SectionWrapper } from "/src/wrapper";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
 
 const Appointment = () => {
     const [isChecked, setIsChecked] = useState(false);
@@ -18,37 +18,27 @@ const Appointment = () => {
             <table className="mt-5 w-full border-collapse border border-gray-200">
                 <tbody>
                     <tr>
-                        <td
-                            className={`${styles.appointmentSubTextLower} border border-gray-300 p-3`}
-                        >
+                        <td className={`${styles.appointmentSubTextLower} border border-gray-300 p-3`}>
                             1. Securing an appointment is <b>FREE OF CHARGE</b> and Appointment Slip is <b>NON-TRANSFERABLE</b>.
                         </td>
                     </tr>
                     <tr>
-                        <td
-                            className={`${styles.appointmentSubTextLower} border border-gray-300 p-3`}
-                        >
+                        <td className={`${styles.appointmentSubTextLower} border border-gray-300 p-3`}>
                             2. <b>MINORS</b> are not allowed to book an appointment.
                         </td>
                     </tr>
                     <tr>
-                        <td
-                            className={`${styles.appointmentSubTextLower} border border-gray-300 p-3`}
-                        >
+                        <td className={`${styles.appointmentSubTextLower} border border-gray-300 p-3`}>
                             3. The appointment must be named after the requester who will personally apply at the Magalgalit Law Office.
                         </td>
                     </tr>
                     <tr>
-                        <td
-                            className={`${styles.appointmentSubTextLower} border border-gray-300 p-3`}
-                        >
+                        <td className={`${styles.appointmentSubTextLower} border border-gray-300 p-3`}>
                             4. Be at the Magalgalit Law Office at least 30 minutes before the appointment schedule.
                         </td>
                     </tr>
                     <tr>
-                        <td
-                            className={`${styles.appointmentSubTextLower} border border-gray-300 p-3`}
-                        >
+                        <td className={`${styles.appointmentSubTextLower} border border-gray-300 p-3`}>
                             <label>
                                 <input
                                     type="checkbox"
@@ -65,9 +55,8 @@ const Appointment = () => {
             <div className="mt-5 flex justify-end">
                 <Link
                     to={isChecked ? "/appointment-table" : "#"}
-                    className={`px-6 py-2 border-2 border-orange-500 text-white rounded-lg text-sm font-semibold flex items-center ${
-                        isChecked ? "hover:bg-slate-700" : "bg-gray-500 cursor-not-allowed"
-                    }`}
+                    className={`px-6 py-2 border-2 border-orange-500 text-white rounded-lg text-sm font-semibold flex items-center ${isChecked ? "hover:bg-slate-700" : "bg-gray-500 cursor-not-allowed"
+                        }`}
                     onClick={(e) => {
                         if (!isChecked) e.preventDefault();
                     }}

@@ -21,9 +21,9 @@ const Navbar = () => {
   }, []);
 
   const handleNavigation = (id) => {
-    // Check if we are navigating to a section ID (hash-based navigation)
+    // hash-based navigation
     if (id === "/") {
-      navigate("/"); // If it is home, just navigate to the root
+      navigate("/"); 
       window.scrollTo(0, 0); // Scroll to top of the page
     } else {
       // For section-based navigation

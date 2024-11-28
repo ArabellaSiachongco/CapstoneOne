@@ -1,7 +1,7 @@
 .page-content-wrapper {
     position: relative;
     z-index: 1;
-    pointer-events: auto; /* Ensure interactive elements within this wrapper are clickable */
+    pointer-events: auto; 
 }
 
 .word-highlight {
@@ -9,43 +9,43 @@
     cursor: pointer;
     background: linear-gradient(120deg, rgba(255, 230, 0, 0.2), rgba(255, 230, 0, 0.2)); /* Subtle highlight */
     background-repeat: no-repeat;
-    background-size: 100% 0.3em; /* Adjusted for subtle underline effect */
+    background-size: 100% 0.3em; 
     background-position: 0 88%;
-    transition: all 0.2s ease-in-out; /* Smooth transition for hover effect */
-    z-index: 2; /* Ensure word highlight is above other content */
+    transition: all 0.2s ease-in-out; 
+    z-index: 2; 
 }
 
 .word-highlight:hover {
-    background-size: 100% 100%; /* On hover, the highlight expands */
+    background-size: 100% 100%; 
 }
 
 /* Styling for the modal where word definition appears */
 .definition-modal {
     pointer-events: auto;
-    user-select: text; /* Ensure text inside the modal can be selected */
+    user-select: text; 
     position: absolute;
     top: 10px;
     left: 50%;
-    transform: translateX(-50%); /* Center the modal */
+    transform: translateX(-50%); 
     padding: 10px 20px;
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* Light shadow for visual depth */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); 
     max-width: 400px;
-    z-index: 9999; /* Ensure modal is above everything */
+    z-index: 9999; 
 }
 
 .definition-modal p {
     margin: 0;
     font-size: 14px;
-    color: #333; /* Darker text color for readability */
+    color: #333;
 }
 
 .select-text {
     user-select: text !important;
     -webkit-user-select: text !important;
     -moz-user-select: text !important;
-    -ms-user-select: text !important; /* Ensure text can be selected on all browsers */
+    -ms-user-select: text !important;
 }
 
 /* Responsive adjustments for mobile screens */
@@ -53,12 +53,12 @@
     .definition-modal {
         width: 90vw;
         max-width: none;
-        left: 50% !important; /* Ensure modal is centered on smaller screens */
-        transform: translateX(-50%) !important; /* Fix centering */
+        left: 50% !important; 
+        transform: translateX(-50%) !important; 
         padding: 15px;
     }
 
     .word-highlight {
-        background-size: 100% 0.5em; /* Adjust the underline for small screens */
+        background-size: 100% 0.5em; 
     }
 }

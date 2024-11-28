@@ -5,6 +5,7 @@ import { styles } from "../styles";
 import { userLink } from "../constants";
 import { fadeIn, textVariant } from "../utility/motion";
 import { SectionWrapper } from "../wrapper";
+import PropTypes from "prop-types";
 
 // UserCard component with responsive design
 const UserCard = ({ index, title, icon }) => {
@@ -28,6 +29,12 @@ const UserCard = ({ index, title, icon }) => {
   );
 };
 
+UserCard.propTypes = {
+  index: PropTypes.number.isRequired, 
+  title: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
+};
+
 const User = () => {
   return (
     <>
@@ -42,10 +49,9 @@ const User = () => {
         variants={fadeIn("", "", 0.1, 1)}
         className="text-secondary text-[17px] max-w-3xl leading-[30px] tracking-wide"
       >
-        <p className={styles.paragraphSubTextLower}>
-        Empowering lawyers with tools to simplify their practice and assisting students in navigating their academic and legal journeys. 
-        </p>
+        Empowering lawyers with tools to simplify their practice and assisting students in navigating their academic and legal journeys.
       </motion.p>
+
 
       <div className="mt-20 flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14">
         {userLink.map((user, index) => (

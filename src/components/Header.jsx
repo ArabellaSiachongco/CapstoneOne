@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { styles } from "../styles";
-// import { ScaleCanvas } from "../components/canvas";
 import { sunflower, blindfold_woman } from "../assets";
+// import { ScaleCanvas } from "../components/canvas";
 
 const Header = () => {
   return (

@@ -44,4 +44,4 @@ const Features = () => {
   );
 };
 
-export default SectionWrapper(Features);
+export default SectionWrapper (Features);

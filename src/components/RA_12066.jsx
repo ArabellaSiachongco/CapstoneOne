@@ -31,22 +31,22 @@ const RA_12066 = () => {
                         </motion.p>
                         <br />
                         <motion.p variants={fadeIn("top", "spring", 0.5, 3)} onMouseUp={handleTextSelection} className={`${styles.paragraphSubTextLower} text-white mb-2`}>
-                            <p>Metro Manila</p>
+                            Metro Manila
                         </motion.p>
                         <br /><br />
 
                         <motion.p variants={fadeIn("top", "spring", 0.5, 4)} onMouseUp={handleTextSelection} className={`${styles.paragraphSubTextLower} text-white mb-2`}>
-                            <p>Nineteenth Congress</p>
+                            Nineteenth Congress
                         </motion.p>
                         <br /><br />
 
                         <motion.p variants={fadeIn("top", "spring", 0.5, 6)} onMouseUp={handleTextSelection} className={`${styles.paragraphSubTextLower} text-white mb-2`}>
-                            <p>Third Regular Session</p>
+                            Third Regular Session
                         </motion.p>
                         <br /><br />
 
                         <motion.p variants={fadeIn("top", "spring", 0.5, 5)} onMouseUp={handleTextSelection} className={`${styles.paragraphSubTextLower} text-white mb-2`}>
-                            <p>Begun and held in Metro Manila, on Monday, the twenty-second <br /> day of July, two thousand twenty-four.</p>
+                            Begun and held in Metro Manila, on Monday, the twenty-second <br /> day of July, two thousand twenty-four.
                         </motion.p>
 
                         <motion.hr
@@ -55,9 +55,7 @@ const RA_12066 = () => {
                             animate="show"
                             className="w-20 mx-auto border-t-2 border-white my-4"
                         />
-
                     </motion.div>
-
 
                     <motion.div variants={fadeIn("top", "spring", 0.5, 7)} className="mb-6">
                         <h3 onMouseUp={handleTextSelection}

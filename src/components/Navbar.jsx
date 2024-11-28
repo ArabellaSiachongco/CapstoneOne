@@ -12,7 +12,7 @@ const Navbar = () => {
 
   // console.log("Current Pathname:", location.pathname);
 
-  // Determine which table of content to display based on the current route
+  // Determine which table of content to display
   const table_of_content = (() => {
     if (location.pathname.startsWith("/article")) {
       return table_of_content_constitution;

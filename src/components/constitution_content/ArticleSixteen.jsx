@@ -12,7 +12,6 @@ const ArticleSixteen = () => {
     useDictionary();
   const [showScrollButton, setShowScrollButton] = useState(false);
 
-  // Handle Scroll Event to toggle visibility of the scroll-to-top button
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 200) {
@@ -26,17 +25,14 @@ const ArticleSixteen = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll to Top Functionality
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Handle Next Article Button click
   const handleNextArticleClick = () => {
     navigate("/articleSeventeen");
   };
 
-  // Handle Previous Article Button click
   const handlePrevArticleClick = () => {
     navigate("/articleFifteen");
   };
@@ -45,7 +41,6 @@ const ArticleSixteen = () => {
     <div className="text-spacing-3 leading-relaxed tracking-wide">
       <ScrollWrapper>
         <div>
-          {/* Iterate through the declarations array */}
           {provision.map((item) => (
             <div key={item.id} className="my-5">
               {/* Display Article Title and Subtitle */}
@@ -53,7 +48,6 @@ const ArticleSixteen = () => {
               <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
 
               <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
                 {item.sections.map((section, index) => (
                   <div key={index} className="my-4">
                     <h6 className={styles.paragraphSubText}>{section.name}</h6>
@@ -90,7 +84,6 @@ const ArticleSixteen = () => {
 
           {/* Button Section */}
           <div className="mt-10 text-center flex justify-between">
-            {/* Previous Article Button */}
             <button
               onClick={handlePrevArticleClick}
               className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500"
@@ -98,7 +91,6 @@ const ArticleSixteen = () => {
               Previous Article
             </button>
 
-            {/* Next Article Button */}
             <button
               onClick={handleNextArticleClick}
               className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500"

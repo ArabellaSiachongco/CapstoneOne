@@ -3,16 +3,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { SectionWrapper } from "../../wrapper";
 import { styles } from "../../styles";
-// import { Link } from "react-router-dom";
 import emailjs from "@emailjs/browser";
 
 const AppointmentModal = ({ formData, isOpen, onClose }) => {
-  const navigate = useNavigate(); // Use navigate hook to navigate after modal closes
+  const navigate = useNavigate(); 
 
   if (!isOpen) return null;
 
   const handleClose = () => {
-    onClose(); // Close the modal
+    onClose(); 
     navigate("/lawyer-status"); // Navigate to /lawyer-status when modal is closed
   };
 
@@ -38,6 +37,15 @@ const AppointmentModal = ({ formData, isOpen, onClose }) => {
       </div>
     </div>
   );
+};
+
+AppointmentModal.propTypes = {
+  formData: PropTypes.shape({
+    date: PropTypes.string.isRequired,
+    time: PropTypes.string.isRequired,
+  }).isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 const AppointmentResult = () => {

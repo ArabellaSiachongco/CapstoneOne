@@ -46,6 +46,7 @@ import ChapterTen from "./components/peoples_rights_content/ChapterTen";
 import ChapterEleven from "./components/peoples_rights_content/ChapterEleven";
 import ChapterTwelve from "./components/peoples_rights_content/ChapterTwelve";
 
+
 // NavbarWrapper to determine when to show Navbar
 const NavbarWrapper = ({ children }) => {
   const location = useLocation();

@@ -15,6 +15,7 @@ import {
     profile,
     profile1,
     profile2,
+    testimonial1,
 } from "../assets";
 
 const navLinks = [
@@ -59,14 +60,6 @@ const features = [
                 id: "RA_8371_ID",
                 li:"/RA_8371",
             },
-            // {
-            //     text:"Ex proident consequat veniam quis exercitation irure labore reprehenderit cupidatat ut.", 
-            //     id: "sample2_ID"
-            // },
-            // {
-            //     text:"Fugiat fugiat culpa do nisi nulla dolore consectetur mollit.S", 
-            //     id: "sample3_ID"
-            // },     
         ],
         image: lawbook,
         span: "More law books to come"
@@ -144,11 +137,11 @@ const partnerships = [
 const testimonials = [
     {
         testimonial:
-            "I thought it was impossible to make a seniorsite as beautiful as our product, but Rick proved me wrong.",
-        name: "Sara Lee",
-        designation: "CFO",
-        company: "Acme Co",
-        image: profile,
+            "The website is well designed and user-friendly, with features like AI chat and definitions for any highlighted text. It is clear how to use it from the first time, and I didn't face any complications.",
+        name: "Jamil Al Amin",
+        designation: "Student",
+        company: "University of the Cordilleras",
+        image: testimonial1,
     },
     {
         testimonial:
@@ -161,7 +154,7 @@ const testimonials = [
     {
         testimonial:
             "I thought it was impossible to make a seniorsite as beautiful as our product, but Rick proved me wrong.",
-        name: "Sara Lee",
+        name: "Lee",
         designation: "CFO",
         company: "Acme Co",
         image: profile2,
