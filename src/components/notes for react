@@ -61,10 +61,7 @@ const getWordMeaning = async (word) => {
   return data[0]?.meanings[0]?.definitions[0]?.definition || "Definition not found.";
 };
 
-
 -----------
-
-waht if tanggalin natin ung  book tas lagyan na lang ng btn pag ni click yun may animation na flip
 
 id:
     service_f8p4u88 - service id
@@ -74,3 +71,16 @@ id:
     
 what if lagyan ng loading pagka nasend ung appointment ...BET
 
+loading when going to other file - meron na sa login at signup
+reset credentials email and pass when submitting wrongly
+modal for forgat my pass, btn for submit should navigate to login part.
+
+to change the API to gmail ng karapatan ko - ginawan ko na ng gmail
+to add - the data privacy link for appointment
+nawawala navbartop ng lawyer status ay helena
+validatoin nawawala - kapag ni submit ng walang name 
+database ng lawyers para ma edit nila ung appointment
+
+
+sign out ng user dashboard
+ok na admin at user problem is wala pa header

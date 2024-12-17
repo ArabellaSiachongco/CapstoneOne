@@ -161,29 +161,11 @@ const testimonials = [
     },
 ];
 
-// const tags = [
-//     {
-//         id: "bullying",
-//         title: "Bullying",  
-//     },
-//     {
-//         id: "harassment",
-//         title: "Sexual Harassment",  
-//     },
-//     {
-//         id: "trial",
-//         title: "Trial",  
-//     },
-//     {
-//         id: "sample",
-//         title: "Sample",  
-//     },
-// ];
-
 const lawyerProfiles = [
     {
       image: profile1,
       name: "Palmer Fagyan Bugtong",
+      nickname:"Atty. Palmer",
       title: "Criminal Law",
       currentSP: "Face to Face",
       currentPoints: "5 years lawyer",
@@ -191,12 +173,13 @@ const lawyerProfiles = [
       talent: "Negotiation",
       tagline: "The Defender of the Defenseless", 
       address: "Liaison Officer at Magalgalit Law Office",
-      btn: "/appointment",
+      btn: "/appointmentLawyer1",
     },
     // No. 7, 2/F Israel Bldg., Gibraltar Road, Baguio City 2600
     {
         image: profile,
-        name: "Atty. Noel Magalgalit",
+        name: "Noel Magalgalit",
+        nickname:"Atty. Magalgalit",
         title: "Civil Law",
         currentSP: "Face to Face",
         currentPoints: "15 years lawyer",
@@ -204,11 +187,12 @@ const lawyerProfiles = [
         talent: "Public Speaking",
         tagline: "The Defender of the Defenseless", 
         address: "Liaison Officer at Magalgalit Law Office",
-        btn: "/appointment",
+        btn: "/appointmentLawyer2",
     },
     {
         image: profile1,
-        name: "Atty. Jess B. Evasco",
+        name: "Jess B. Evasco",
+        nickname:"Atty. Evasco",
         title: "Criminal Law",
         currentSP: "Face to Face",
         currentPoints: "5 years lawyer",
@@ -216,9 +200,10 @@ const lawyerProfiles = [
         talent: "Persuasion",
         tagline: "The Fast Talker and the Faster Thinker", 
         address: "Liaison Officer at Magalgalit Law Office",
-        btn: "/appointment",
+        btn: "/appointmentLawyer3",
     },
 ];
+
 
 export {
     navLinks,
