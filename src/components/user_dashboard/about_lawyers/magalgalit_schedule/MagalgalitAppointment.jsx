@@ -4,7 +4,7 @@ import { SectionWrapper } from "/src/wrapper";
 import { Link, useNavigate } from "react-router-dom";
 import { lawyerProfiles } from "../../../../constants/index.js"; 
 
-const Appointment = () => {
+const MagalgalitAppointment = () => {
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
  
@@ -73,4 +73,4 @@ const Appointment = () => {
     );
 };
 
-export default SectionWrapper(Appointment);
+export default SectionWrapper(MagalgalitAppointment);
