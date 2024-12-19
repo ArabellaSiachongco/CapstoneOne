@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { SectionWrapper } from "../../../../wrapper/index.js";
 import { styles } from "../../../../styles.js";
 import emailjs from "@emailjs/browser";
-import { lawyerProfiles } from "../../../../constants/index.js"; 
+import { lawyerProfiles } from "../../../../constants/index.js";
 
 const AppointmentModal = ({ formData, isOpen, onClose }) => {
   const navigate = useNavigate();
@@ -49,14 +49,14 @@ AppointmentModal.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-const AppointmentResult = () => {
+const EvascoAppointmentResult = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const formData = location.state?.formData;
 
   const handlePrevArticleClick = () => {
-    navigate("/appointmentTableLawyer2");
+    navigate("/appointmentTableLawyer3");
   };
 
   const handleConfirmClick = () => {
@@ -154,11 +154,19 @@ const AppointmentResult = () => {
                 {formData.time}
               </td>
             </tr>
+            <tr>
+              <td className="w-1/3 px-4 py-3 text-right border border-gray-300 font-semibold">
+                Selected Reasons
+              </td>
+              <td className="w-2/3 px-4 py-3 border border-gray-300">
+                {formData.time}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
-      
-      <br/>
+
+      <br />
       <p className={styles.paragraphSubText}>Contact Information</p>
       <div className="mt-6 mb-6">
         <table className="min-w-full table-auto border-collapse border border-gray-300">
@@ -174,8 +182,8 @@ const AppointmentResult = () => {
           </tbody>
         </table>
       </div>
-      <br/>
-      
+      <br />
+
       <p className={styles.paragraphSubText}>You've got an appointment with an attorney</p>
       <div className="mt-6 mb-6">
         <table className="min-w-full table-auto border-collapse border border-gray-300">
@@ -193,7 +201,7 @@ const AppointmentResult = () => {
                 Title
               </td>
               <td className="w-2/3 px-4 py-3 border border-gray-300">
-              Attorney at Law specializing in {lawyerProfiles[2].title}
+                Attorney at Law specializing in {lawyerProfiles[2].title}
               </td>
             </tr>
             <tr>
@@ -201,7 +209,7 @@ const AppointmentResult = () => {
                 Address
               </td>
               <td className="w-2/3 px-4 py-3 border border-gray-300">
-              Insular Life Building, Legarda Street, corner Abanao extension, Baguio, 2660 Benguet
+                Insular Life Building, Legarda Street, corner Abanao extension, Baguio, 2660 Benguet
               </td>
             </tr>
           </tbody>
@@ -212,7 +220,8 @@ const AppointmentResult = () => {
       <div className="mt-8">
         <h3 className={`${styles.paragraphSubText} mb-3`}>Office Location</h3>
         <div className="overflow-hidden rounded-lg border-2 border-gray-700">
-          <iframe href="https://maps.app.goo.gl/H6XYGse1jVNK42J46"
+          <iframe
+            src="https://maps.app.goo.gl/H6XYGse1jVNK42J46"
             width="100%"
             height="450"
             style={{ border: 0 }}
@@ -220,7 +229,8 @@ const AppointmentResult = () => {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             title="Office Location"
-          ></iframe>
+          />
+
         </div>
       </div>
 
@@ -250,7 +260,7 @@ const AppointmentResult = () => {
   );
 };
 
-AppointmentResult.propTypes = {
+EvascoAppointmentResult.propTypes = {
   formData: PropTypes.shape({
     firstName: PropTypes.string.isRequired,
     middleName: PropTypes.string,
@@ -261,4 +271,4 @@ AppointmentResult.propTypes = {
   }),
 };
 
-export default SectionWrapper(AppointmentResult);
+export default SectionWrapper(EvascoAppointmentResult);

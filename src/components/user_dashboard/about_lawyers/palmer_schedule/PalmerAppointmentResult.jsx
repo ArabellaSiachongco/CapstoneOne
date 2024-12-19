@@ -49,7 +49,7 @@ AppointmentModal.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-const AppointmentResult = () => {
+const PalmerAppointmentResult = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -154,6 +154,14 @@ const AppointmentResult = () => {
                 {formData.time}
               </td>
             </tr>
+            <tr>
+              <td className="w-1/3 px-4 py-3 text-right border border-gray-300 font-semibold">
+                Selected Reason
+              </td>
+              <td className="w-2/3 px-4 py-3 border border-gray-300">
+                {formData.reasons || "No reason selected"}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -212,7 +220,7 @@ const AppointmentResult = () => {
       <div className="mt-8">
         <h3 className={`${styles.paragraphSubText} mb-3`}>Office Location</h3>
         <div className="overflow-hidden rounded-lg border-2 border-gray-700">
-          <iframe href="https://maps.app.goo.gl/H6XYGse1jVNK42J46"
+          <iframe src="https://maps.app.goo.gl/H6XYGse1jVNK42J46"
             width="100%"
             height="450"
             style={{ border: 0 }}
@@ -250,7 +258,7 @@ const AppointmentResult = () => {
   );
 };
 
-AppointmentResult.propTypes = {
+PalmerAppointmentResult.propTypes = {
   formData: PropTypes.shape({
     firstName: PropTypes.string.isRequired,
     middleName: PropTypes.string,
@@ -261,4 +269,4 @@ AppointmentResult.propTypes = {
   }),
 };
 
-export default SectionWrapper(AppointmentResult);
+export default SectionWrapper(PalmerAppointmentResult);

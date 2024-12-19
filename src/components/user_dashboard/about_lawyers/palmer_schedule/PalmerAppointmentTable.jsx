@@ -4,7 +4,7 @@ import { GoTriangleRight, GoTriangleLeft } from "react-icons/go";
 import { SectionWrapper } from "../../../../wrapper";
 import { styles } from "../../../../styles";
 
-const AppointmentTable = () => {
+const PalmerAppointmentTable = () => {
   const navigate = useNavigate();
   const { state } = useLocation(); // Get the state passed from the sign-up page
   const { name, email } = state || {}; // Destructure name and email
@@ -21,7 +21,7 @@ const AppointmentTable = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
 
-  // List of unavailable in YYYY-MM-DD format (for 2024-2025)
+  // List of unavailable dates in YYYY-MM-DD format (for 2024-2025)
   const unavailable = [
     "2024-12-24", "2024-12-25", "2024-12-30",
     "2025-01-01", "2025-04-09", "2025-04-17", "2025-04-19", "2025-05-01",
@@ -40,6 +40,10 @@ const AppointmentTable = () => {
       }));
     }
   }, [name, email]);
+
+  const handlePrevArticleClick = () => {
+    navigate("/appointmentLawyer1");
+  };
 
   // Handle changes to form fields
   const handleChange = (key, value) => {
@@ -71,8 +75,9 @@ const AppointmentTable = () => {
 
   // Helper functions to check date exclusions
   const isPastDate = (date) => date < new Date().setHours(0, 0, 0, 0);
-  const isHoliday = (date) => unavailable.includes(date.toISOString().split("T")[0]);
-  const isDateSelectable = (date) => !isPastDate(date) && date.getDay() !== 0 && date.getDay() !== 6 && !isHoliday(date);
+  const isHoliday = (date) => unavailable.includes(formatDate(date));
+  const isDateSelectable = (date) =>
+    !isPastDate(date) && date.getDay() !== 0 && date.getDay() !== 6 && !isHoliday(date);
 
   const getFirstDayOfMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1).getDay();
   const getDaysInMonth = (date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -91,10 +96,18 @@ const AppointmentTable = () => {
     return days;
   };
 
+  // Format date to YYYY-MM-DD
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   const handleDateClick = (date) => {
     if (isDateSelectable(date)) {
       setSelectedDate(date);
-      handleChange("date", date.toISOString().split("T")[0]);
+      handleChange("date", formatDate(date));
     }
   };
 
@@ -116,7 +129,6 @@ const AppointmentTable = () => {
     { id: 3, start: "10:00 am", end: "11:00 am" },
   ];
 
-  // Handle selecting a time slot
   const handleTimeSelect = (start, end) => {
     const selectedTime = `${start} - ${end}`;
     setFormData((prev) => ({
@@ -125,7 +137,6 @@ const AppointmentTable = () => {
     }));
   };
 
-  // Function to get calendar day class
   const getCalendarDayClass = (date) => {
     if (!date) return "bg-dark"; // Empty slots
     if (isHoliday(date) || date.getDay() === 0 || date.getDay() === 6) return "bg-gray-700"; // Weekend or holiday
@@ -134,6 +145,34 @@ const AppointmentTable = () => {
     if (new Date().toDateString() === date.toDateString()) return "bg-orange-950"; // Today
     return "hover:bg-orange-900 cursor-pointer"; // Default class
   };
+  
+    const [selectedReason, setSelectedReason] = useState("");
+    const [otherReason, setOtherReason] = useState("");
+  
+    const reasons = [
+      "Legal consultation for personal matters",
+      "Business-related legal advice",
+      "Assistance with document preparation",
+      "Representation in a court case",
+      "Other reasons"
+    ];
+    const handleReasonChange = (reason) => {
+      setSelectedReason(reason);
+      setFormData((prev) => ({
+        ...prev,
+        reasons: reason === "Other reasons" ? otherReason : reason,
+      }));
+    };
+  
+    const handleOtherReasonChange = (value) => {
+      setOtherReason(value);
+      if (selectedReason === "Other reasons") {
+        setFormData((prev) => ({
+          ...prev,
+          reasons: value,
+        }));
+      }
+    };
 
   return (
     <>
@@ -213,8 +252,46 @@ const AppointmentTable = () => {
               required
             />
           </div>
-          <br/><br/><br/>
+          <br /> 
+          
+          {/* Reasons */}
+          <label className="text-white font-medium mb-2" htmlFor="reason">
+            Select a Reason
+          </label>
+          <div className="space-y-3">
+            <table className="min-w-full border rounded-lg border-gray-300">
+              <tbody>
+                {reasons.map((reason, index) => (
+                  <tr key={index} className="rounded-lg">
+                    <td className="border border-gray-300 p-3 rounded-lg">
+                      <label className="flex items-center space-x-3">
+                        <input
+                          type="radio"
+                          name="reason"
+                          value={reason}
+                          checked={selectedReason === reason}
+                          onChange={(e) => handleReasonChange(e.target.value)}
+                          className="w-4 h-4"
+                        />
+                        <span className="text-white">{reason}</span>
+                      </label>
+                    </td>
+                  </tr>
+                ))}
 
+                {selectedReason === "Other reasons" && (
+                  <textarea
+                    placeholder="Please specify your reason"
+                    value={otherReason}
+                    onChange={(e) => handleOtherReasonChange(e.target.value)}
+                    className="w-full mt-2 p-6 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-700"
+                  />
+                )}
+              </tbody>
+            </table>
+          </div>
+          
+          <br /><br />
           {/* Calendar */}
           <div className="mb-4">
             <div className="flex justify-between mb-2">
@@ -240,9 +317,8 @@ const AppointmentTable = () => {
               {renderCalendarDays().map((date, index) => (
                 <div
                   key={index}
-                  className={`py-2 px-4 rounded-lg cursor-pointer ${
-                    getCalendarDayClass(date)
-                  }`}
+                  className={`py-2 px-4 rounded-lg cursor-pointer ${getCalendarDayClass(date)
+                    }`}
                   onClick={() => date && handleDateClick(date)}
                 >
                   {date ? date.getDate() : ""}
@@ -250,8 +326,8 @@ const AppointmentTable = () => {
               ))}
             </div>
           </div>
-          
-          <br/><br/><br/>
+
+          <br /><br /><br />
 
           {/* Time Slots */}
           <div className="mb-4">
@@ -262,30 +338,38 @@ const AppointmentTable = () => {
                   key={slot.id}
                   type="button"
                   onClick={() => handleTimeSelect(slot.start, slot.end)}
-                  className={`w-full py-2 text-white rounded-lg border ${
-                    formData.time === `${slot.start} - ${slot.end}`
+                  className={`w-full py-2 text-white rounded-lg border ${formData.time === `${slot.start} - ${slot.end}`
                       ? "bg-orange-900"
                       : "bg-gray-700"
-                  }`}
+                    }`}
                 >
                   {slot.start} - {slot.end}
                 </button>
               ))}
             </div>
           </div>
-          <br/> <br/>
+          <br /> <br />
 
           {/* Submit */}
-          <button
-            type="submit"
-            className="w-full py-2 border-2 border-orange-600 text-white font-medium rounded-lg hover:bg-orange-900 focus:outline-none focus:ring-2 focus:ring-orange-700"
-          >
-            Confirm Appointment
-          </button>
+          <div className="text-center flex justify-between">
+            <button
+              onClick={handlePrevArticleClick}
+              className="px-6 py-2 border-2 border-orange-700 text-white rounded-lg hover:bg-gray-500"
+            >
+              Go back
+            </button>
+
+            <button
+              type="submit"
+              className="px-6 py-2 border-2 border-orange-700 text-white rounded-lg hover:bg-gray-500"
+            >
+              Confirm Appointment
+            </button>
+          </div>
         </form>
       </div>
     </>
   );
 };
 
-export default SectionWrapper(AppointmentTable);
+export default SectionWrapper(PalmerAppointmentTable);

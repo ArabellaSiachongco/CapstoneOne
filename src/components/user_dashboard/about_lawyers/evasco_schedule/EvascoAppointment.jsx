@@ -4,7 +4,7 @@ import { SectionWrapper } from "/src/wrapper";
 import { Link, useNavigate } from "react-router-dom";
 import { lawyerProfiles } from "../../../../constants/index.js"; 
 
-const Appointment = () => {
+const EvascoAppointment = () => {
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
  
@@ -60,7 +60,7 @@ const Appointment = () => {
                 </button>
                 <div className="w-1/4"></div>
                 <Link
-                    to={isChecked ? "/appointmentTableLawyer2" : "#"}
+                    to={isChecked ? "/appointmentTableLawyer3" : "#"}
                     className={`px-6 py-2 border-2 border-orange-500 text-white rounded-lg text-sm font-semibold flex items-center ${isChecked ? "hover:bg-slate-700" : "bg-gray-500 cursor-not-allowed"}`}
                     onClick={(e) => {
                         if (!isChecked) e.preventDefault();
@@ -73,4 +73,4 @@ const Appointment = () => {
     );
 };
 
-export default SectionWrapper(Appointment);
+export default SectionWrapper(EvascoAppointment);
