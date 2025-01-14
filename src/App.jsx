@@ -71,7 +71,6 @@ const NavbarWrapper = ({ children }) => {
   const location = useLocation();
   const showNavbar = location.pathname.startsWith("/articleOne") || location.pathname.startsWith("/chapterOne");
   const showNavbarTop = location.pathname.startsWith("/helena") || location.pathname.startsWith("/lawyer-status") || location.pathname.startsWith("/appointment");
-
   return (
     <>
       {showNavbar && <Navbar />}

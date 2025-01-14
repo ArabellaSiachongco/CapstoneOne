@@ -1,66 +1,68 @@
 import React from 'react';
 import Footer from './Footer';
-import { Tilt } from "react-tilt";
+import Navbar from './Navbar';
 import { motion } from "framer-motion";
 import { styles } from "../../styles";
-import { userLink } from "../../constants";
 import { fadeIn, textVariant } from "../../utility/motion";
 import { SectionWrapper } from "../../wrapper";
-import PropTypes from "prop-types";
 
-const HeaderCard = ({ index, title, icon }) => {
-      return (
-        <Tilt
-          options={{ max: 45, scale: 1, speed: 450 }}
-          className="w-full sm:w-[300px] md:w-[350px] lg:w-[400px]"
-        >
-          <motion.div
-            variants={fadeIn("right", "spring", 0.5 * index, 0.75)}
-            className="w-full orange-gradient p-[1px] rounded-[20px] shadow-card"
-          >
-            <div className="bg-black rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col">
-              <img src={icon} alt={title} className="w-25 h-25 object-contain" loading="lazy" />
-              <h3 className="text-white text-[20px] font-bold text-center">
-                {title}
-              </h3>
-            </div>
-          </motion.div>
-        </Tilt>
-      );
+const Header = () => {
+  function showAppointments(lawyerName) {
+    const appointments = {
+      Evasco: ['Meeting on Jan 15', 'Review documents on Jan 20'],
+      Noel: [],
+      Palmer: ['Call on Feb 1']
     };
-    
-    HeaderCard.propTypes = {
-      index: PropTypes.number.isRequired, 
-      title: PropTypes.string.isRequired,
-      icon: PropTypes.string.isRequired,
-    };
-    
-    const Header = () => {
-      return (
-        <>
-          <motion.div variants={textVariant()}>
-            <p id="user" className={styles.paragraphSubText}>Our Target</p>
-            <h2 className={`${styles.headText} highlight-border`}>
-              <span className="title-with-line">User</span>
-            </h2>
-          </motion.div>
-    
-          <motion.p
-            variants={fadeIn("", "", 0.1, 1)}
-            className="text-secondary text-[17px] max-w-3xl leading-[30px] tracking-wide"
-          >
-            Empowering lawyers with tools to simplify their practice and assisting students in navigating their academic and legal journeys.
-          </motion.p>
-    
-    
-          <div className="mt-20 flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-14">
-            {userLink.map((user, index) => (
-              <HeaderCard key={user.title} index={index} {...user} />
-            ))}
-          </div>
-          <Footer/>
-        </>    
+
+    const appointmentDisplay = document.getElementById('appointmentDisplay');
+    const lawyerAppointments = appointments[lawyerName];
+
+    if (lawyerAppointments.length > 0) {
+      appointmentDisplay.innerHTML = `Appointments for ${lawyerName}:<ul>` +
+        lawyerAppointments.map(appt => `<li>${appt}</li>`).join('') +
+        '</ul>';
+    } else {
+      appointmentDisplay.innerText = 'No appointment has been made';
+    }
+  }
+  return (
+    <>
+      <Navbar />
+      <motion.div variants={textVariant()}>
+        {/* <p id="#lawyers" className={styles.paragraphSubText}>List of</p> */}
+        <h2 className={`${styles.headText} highlight-border`}>
+          <span className="title-with-line">Lawyers</span>
+        </h2>
+      </motion.div>
+
+      <motion.p
+        variants={fadeIn("", "", 0.1, 1)}
+        className="text-secondary text-[17px] max-w-3xl leading-[30px] tracking-wide"
+      >
+        Quis ullamco sit Lorem est id consequat proident ad est nisi cillum.
+      </motion.p>
+
+      {/* Table */}
+      <div className="flex">
+        {/* Sidebar */}
+        <div className={`${styles.paragraphSubTextLower} p-4 border-r`}>
+          <ul>
+            <li className="cursor-pointer mb-1 hover:bg-slate-700" onClick={() => showAppointments('Evasco')}>Evasco</li>                
+            <li className="cursor-pointer mb-1 hover:bg-slate-700" onClick={() => showAppointments('Noel')}>Noel</li>
+            <li className="cursor-pointer mb-1 hover:bg-slate-700" onClick={() => showAppointments('Palmer')}>Palmer</li>
+          </ul>
+        </div>
+
+        {/* Content */}
+        <div className="w-3/4 p-4">
+          <h3 className="text-lg font-bold">Appointments</h3>
+          <div id="appointmentDisplay">No appointment has been made</div>
+        </div>
+      </div>
+
+      <Footer />
+    </>
   );
 };
 
-export default SectionWrapper (Header);
+export default SectionWrapper(Header);
