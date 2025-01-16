@@ -14,6 +14,7 @@ import Navbar from "./components/user_dashboard/Navbar";
 import Lawyer from "./components/user_dashboard/about_lawyers/Lawyer";
 import Helena from "./components/canvas/Helena";
 import NavbarTop from "./components/user_dashboard/NavbarTop";
+import Message from "./components/user_dashboard/Message";
 
 // palmer 
 import AppointmentLawyer1 from "./components/user_dashboard/about_lawyers/palmer_schedule/PalmerAppointment";
@@ -70,7 +71,7 @@ import ChapterTwelve from "./components/pages/peoples_rights_content/ChapterTwel
 const NavbarWrapper = ({ children }) => {
   const location = useLocation();
   const showNavbar = location.pathname.startsWith("/articleOne") || location.pathname.startsWith("/chapterOne");
-  const showNavbarTop = location.pathname.startsWith("/helena") || location.pathname.startsWith("/lawyer-status") || location.pathname.startsWith("/appointment");
+  const showNavbarTop = location.pathname.startsWith("/helena") || location.pathname.startsWith("/lawyer-status") || location.pathname.startsWith("/appointment") || location.pathname.startsWith("/lawyer-appoinments");
   return (
     <>
       {showNavbar && <Navbar />}
@@ -129,6 +130,7 @@ const App = () => {
             <Route path="/main" element={<MainLayout />} />
             {/* User-Specific Routes & atty */}
             <Route path="/lawyer-status" element={<Lawyer />} />
+            <Route path="/lawyer-appoinments" element={<Message />} />
             <Route path="/appointmentLawyer1" element={<AppointmentLawyer1 />} />
             <Route path="/appointmentTableLawyer1" element={<AppointmentTableLawyer1 />} />
             <Route path="/appointmentResultLawyer1" element={<AppointmentResultLawyer1 />} />

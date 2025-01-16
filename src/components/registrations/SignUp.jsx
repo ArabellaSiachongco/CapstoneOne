@@ -20,6 +20,8 @@ const SignUp = () => {
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -58,6 +60,7 @@ const SignUp = () => {
         lastName,
         age: parseInt(age, 10),
         email,
+        role,
         createdAt: new Date(),
       });
 
@@ -169,17 +172,29 @@ const SignUp = () => {
                         />
                         {showPassword ? (
                           <FaRegEye
-                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
+                            className="absolute right-3 top-1/3 transform -translate-y-1/2 text-gray-500 cursor-pointer"
                             onClick={togglePasswordVisibility}
                           />
                         ) : (
                           <FaRegEyeSlash
-                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
+                            className="absolute right-3 top-1/3 transform -translate-y-1/2 text-gray-500 cursor-pointer"
                             onClick={togglePasswordVisibility}
                           />
                         )}
                       </div>
                     </div>
+                    <div>
+                      <label htmlFor="role">Role</label>
+                      <input
+                        type="text"
+                        id="role"
+                        className="text-input"
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                        required
+                      />
+                    </div>
+
                     {error && <p className="error-message text-red-500">{error}</p>}
                     <button type="submit" className="primary-btn">
                       Sign Up

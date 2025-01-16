@@ -27,6 +27,10 @@ const navLinks = [
         id: "lawyer-status",
         title: "LEGAL MATCH",
     },
+    {
+        id: "lawyer-appoinments",
+        title: "APPOINTMENT",
+    },
 ];
 
 const userLink = [
@@ -73,28 +77,7 @@ const features = [
         color: "green-text-gradient",
         btn: "/lawyer-status",
         image: lawyers,
-        // tags: [
-        //     {
-        //         name: "5 years",
-        //         color: "blue-text-gradient",
-        //         btn:"",
-        //     },
-        //     {
-        //         name: "Bullying",
-        //         color: "green-text-gradient",
-        //         btn:"",
-        //     },
-        //     {
-        //         name: "Discrimination",
-        //         color: "pink-text-gradient",
-        //         btn:"",
-        //     },
-        //     {
-        //         name: "Harassment",
-        //         color: "blue-text-gradient",
-        //         btn:"",
-        //     },
-        // ],
+      
     },
     {
         title: "Helena",

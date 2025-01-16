@@ -5,6 +5,8 @@ import { SectionWrapper } from "../../../../wrapper/index.js";
 import { styles } from "../../../../styles.js";
 import emailjs from "@emailjs/browser";
 import { lawyerProfiles } from "../../../../constants/index.js";
+import { db } from "../../../database/firebase.js";
+import { doc, setDoc } from "firebase/firestore";
 
 const AppointmentModal = ({ formData, isOpen, onClose }) => {
   const navigate = useNavigate();
@@ -59,38 +61,55 @@ const EvascoAppointmentResult = () => {
     navigate("/appointmentTableLawyer3");
   };
 
-  const handleConfirmClick = () => {
+  const handleConfirmClick = async () => {
     if (!formData) {
       alert("No appointment details found.");
       return;
     }
 
-    // Send the email using EmailJS
-    emailjs
-      .send(
-        "service_f8p4u88", //  service ID
-        "template_rtaqjfs", //  template ID
+    try {
+      // Save appointment to Firestore
+      const appointmentRef = doc(db, "appointments", `${formData.email}_${formData.date}_${formData.time}`);
+      await setDoc(appointmentRef, {
+        firstName: formData.firstName,
+        middleName: formData.middleName || "",
+        lastName: formData.lastName,
+        email: formData.email,
+        date: formData.date,
+        time: formData.time,
+        reasons: formData.reasons || "No reason selected",
+        lawyer: {
+          name: lawyerProfiles[2].name,
+          title: lawyerProfiles[2].title,
+          address: "Insular Life Building, Legarda Street, corner Abanao extension, Baguio, 2660 Benguet",
+        },
+        timestamp: new Date(), // Add timestamp for reference
+      });
+
+      // Send the email using EmailJS
+      await emailjs.send(
+        "service_f8p4u88", // Service ID
+        "template_rtaqjfs", // Template ID
         {
           from_name: `${formData.firstName} ${formData.lastName}`,
-          to_name: "Siabell", // The recipient name
+          to_name: "Siabell", // Recipient name
           from_email: formData.email,
           message: `Appointment confirmed for ${formData.firstName} ${formData.lastName} on ${formData.date} at ${formData.time}.`,
         },
-        "Z-JlpUZqWVtTdl2mp" // public key
-      )
-      .then(() => {
-        setIsModalOpen(true); // Open modal if email is sent successfully
-      })
-      .catch((error) => {
-        console.error("Error sending email:", error);
-        alert("Something went wrong, please try again.");
-      });
+        "Z-JlpUZqWVtTdl2mp" // Public key
+      );
+
+      setIsModalOpen(true); // Open modal if email is sent successfully
+    } catch (error) {
+      console.error("Error saving appointment or sending email:", error);
+      alert("Something went wrong, please try again.");
+    }
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
+  
   if (!formData) {
     return (
       <div className="text-center mt-10">
@@ -159,7 +178,7 @@ const EvascoAppointmentResult = () => {
                 Selected Reasons
               </td>
               <td className="w-2/3 px-4 py-3 border border-gray-300">
-                {formData.time}
+              {formData.reasons || "No reason selected"}
               </td>
             </tr>
           </tbody>
@@ -193,7 +212,7 @@ const EvascoAppointmentResult = () => {
                 Name
               </td>
               <td className="w-2/3 px-4 py-3 border border-gray-300">
-                {lawyerProfiles[1].name}
+                {lawyerProfiles[2].name}
               </td>
             </tr>
             <tr>

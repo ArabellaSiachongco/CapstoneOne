@@ -114,7 +114,7 @@ const PalmerAppointmentTable = () => {
   const goToPreviousMonth = () => {
     setCurrentMonth((prev) => {
       const newMonth = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
-      return newMonth < new Date() ? prev : newMonth;
+      return newMonth < new Date(2024, 0, 1) ? prev : newMonth;
     });
   };
 
@@ -139,40 +139,40 @@ const PalmerAppointmentTable = () => {
 
   const getCalendarDayClass = (date) => {
     if (!date) return "bg-dark"; // Empty slots
-    if (isHoliday(date) || date.getDay() === 0 || date.getDay() === 6) return "bg-gray-700"; // Weekend or holiday
-    if (isPastDate(date)) return "bg-gray-700"; // Past date
-    if (selectedDate?.toDateString() === date?.toDateString()) return "bg-orange-900"; // Selected date
-    if (new Date().toDateString() === date.toDateString()) return "bg-orange-950"; // Today
+    if (isHoliday(date) || date.getDay() === 0 || date.getDay() === 6) return "bg-gray-800"; // Weekend or holiday
+    if (isPastDate(date)) return "bg-gray-800"; // Past date
+    if (selectedDate?.toDateString() === date?.toDateString()) return "bg-orange-800"; // Selected date
+    if (new Date().toDateString() === date.toDateString()) return "border"; // Today
     return "hover:bg-orange-900 cursor-pointer"; // Default class
   };
-  
-    const [selectedReason, setSelectedReason] = useState("");
-    const [otherReason, setOtherReason] = useState("");
-  
-    const reasons = [
-      "Legal consultation for personal matters",
-      "Business-related legal advice",
-      "Assistance with document preparation",
-      "Representation in a court case",
-      "Other reasons"
-    ];
-    const handleReasonChange = (reason) => {
-      setSelectedReason(reason);
+
+  const [selectedReason, setSelectedReason] = useState("");
+  const [otherReason, setOtherReason] = useState("");
+
+  const reasons = [
+    "Legal consultation for personal matters",
+    "Business-related legal advice",
+    "Assistance with document preparation",
+    "Representation in a court case",
+    "Other reasons"
+  ];
+  const handleReasonChange = (reason) => {
+    setSelectedReason(reason);
+    setFormData((prev) => ({
+      ...prev,
+      reasons: reason === "Other reasons" ? otherReason : reason,
+    }));
+  };
+
+  const handleOtherReasonChange = (value) => {
+    setOtherReason(value);
+    if (selectedReason === "Other reasons") {
       setFormData((prev) => ({
         ...prev,
-        reasons: reason === "Other reasons" ? otherReason : reason,
+        reasons: value,
       }));
-    };
-  
-    const handleOtherReasonChange = (value) => {
-      setOtherReason(value);
-      if (selectedReason === "Other reasons") {
-        setFormData((prev) => ({
-          ...prev,
-          reasons: value,
-        }));
-      }
-    };
+    }
+  };
 
   return (
     <>
@@ -252,8 +252,8 @@ const PalmerAppointmentTable = () => {
               required
             />
           </div>
-          <br /> 
-          
+          <br />
+
           {/* Reasons */}
           <label className="text-white font-medium mb-2" htmlFor="reason">
             Select a Reason
@@ -290,7 +290,7 @@ const PalmerAppointmentTable = () => {
               </tbody>
             </table>
           </div>
-          
+
           <br /><br />
           {/* Calendar */}
           <div className="mb-4">
@@ -339,8 +339,8 @@ const PalmerAppointmentTable = () => {
                   type="button"
                   onClick={() => handleTimeSelect(slot.start, slot.end)}
                   className={`w-full py-2 text-white rounded-lg border ${formData.time === `${slot.start} - ${slot.end}`
-                      ? "bg-orange-900"
-                      : "bg-gray-700"
+                    ? "bg-orange-800"
+                    : "bg-gray-800"
                     }`}
                 >
                   {slot.start} - {slot.end}
