@@ -115,7 +115,7 @@ const EvascoAppointmentTable = () => {
   const goToPreviousMonth = () => {
     setCurrentMonth((prev) => {
       const newMonth = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
-      return newMonth < new Date() ? prev : newMonth;
+      return newMonth < new Date(2024, 0, 1) ? prev : newMonth;
     });
   };
 
@@ -140,10 +140,10 @@ const EvascoAppointmentTable = () => {
 
   const getCalendarDayClass = (date) => {
     if (!date) return "bg-dark"; // Empty slots
-    if (isHoliday(date) || date.getDay() === 0 || date.getDay() === 6) return "bg-gray-700"; // Weekend or holiday
-    if (isPastDate(date)) return "bg-gray-700"; // Past date
-    if (selectedDate?.toDateString() === date?.toDateString()) return "bg-orange-900"; // Selected date
-    if (new Date().toDateString() === date.toDateString()) return "bg-orange-950"; // Today
+    if (isHoliday(date) || date.getDay() === 0 || date.getDay() === 6) return "bg-gray-800"; // Weekend or holiday
+    if (isPastDate(date)) return "bg-gray-800"; // Past date
+    if (selectedDate?.toDateString() === date?.toDateString()) return "bg-orange-800"; // Selected date
+    if (new Date().toDateString() === date.toDateString()) return "border"; // Today
     return "hover:bg-orange-900 cursor-pointer"; // Default class
   };
 
@@ -341,7 +341,7 @@ const EvascoAppointmentTable = () => {
                   onClick={() => handleTimeSelect(slot.start, slot.end)}
                   className={`w-full py-2 text-white rounded-lg border ${formData.time === `${slot.start} - ${slot.end}`
                     ? "bg-orange-900"
-                    : "bg-gray-700"
+                    : "bg-gray-800"
                     }`}
                 >
                   {slot.start} - {slot.end}
