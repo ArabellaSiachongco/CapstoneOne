@@ -4,6 +4,8 @@ import { VscListSelection } from "react-icons/vsc";
 import { FiX } from "react-icons/fi";
 import { table_of_content_constitution } from "../../constants/table_of_content.js";
 import { table_of_content_RA12066 } from "../../constants/table_of_content.js";
+import { VscSignOut } from "react-icons/vsc";
+
 
 const Navbar = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
@@ -43,7 +45,7 @@ const Navbar = () => {
           <VscListSelection className="text-white w-6 h-6" />
         )}
       </button>
-     
+
       {/* Overlay */}
       {isNavbarVisible && (
         <div
@@ -56,9 +58,8 @@ const Navbar = () => {
       {/* Navbar */}
       <div
         id="navbar"
-        className={`fixed top-0 left-0 h-full w-64 bg-primary dark:bg-gray-800 transform transition-transform duration-300 ease-in-out z-20 ${
-          isNavbarVisible ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed top-0 left-0 h-full w-64 bg-primary dark:bg-gray-800 transform transition-transform duration-300 ease-in-out z-20 ${isNavbarVisible ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="flex flex-col h-full">
           {/* Logo Section */}
@@ -72,36 +73,37 @@ const Navbar = () => {
               <p className="text-white dark:text-gray-200 text-lg font-bold highlight-border">
                 Karapatan Ko
               </p>
-             
+
             </Link>
           </div>
 
           {/* Navigation Links */}
           <nav className="flex-1 py-4 overflow-y-auto">
-          <ul className="px-4 space-y-2">
-            {table_of_content.length > 0 ? (
-              table_of_content.map((nav) => (
-                <li key={nav.href} className="group text-white">
-                  <Link
-                    to={nav.href}
-                    className={`block p-3 rounded-lg text-lg transition-colors duration-200 ${
-                      active === nav.topic
-                        ? "bg-secondary/20 dark:bg-gray-700/30 text-white"
-                        : "text-secondary dark:text-gray-300"
-                    }`}
-                    onClick={() => handleNavClick(nav.topic)}
-                  >
-                    {nav.topic}
-                  </Link>
-                </li>
-              ))
-            ) : (
-              <li className="text-center text-secondary dark:text-gray-400">
-                No links available
-              </li>
-            )}
-          </ul>
-        </nav>
+            <ul className="px-4 space-y-2">
+              {table_of_content.length > 0 ? (
+                table_of_content.map((nav) => (
+                  <li key={nav.href} className="group text-white">
+                    <Link
+                      to={nav.href}
+                      className={`block p-3 rounded-lg text-lg transition-colors duration-200 ${active === nav.topic
+                          ? "bg-secondary/20 dark:bg-gray-700/30 text-white"
+                          : "text-secondary dark:text-gray-300"
+                        }`}
+                      onClick={() => handleNavClick(nav.topic)}
+                    >
+                      {nav.topic}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <Link to="/" className="text-center text-secondary dark:text-gray-400 bg-transparent border-0 p-0 cursor-pointer flex items-center gap-2">
+                  <VscSignOut
+                  className="text-secondary dark:text-gray-400 w-5 h-5" />
+                  SIGN OUT
+                </Link>
+              )}
+            </ul>
+          </nav>
         </div>
       </div>
     </div>
