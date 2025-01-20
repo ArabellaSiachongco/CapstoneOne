@@ -1,57 +1,171 @@
-import React, { useState } from 'react';
-import Books from './Books';
-import Navbar from './Navbar';
+import React, { useState, useEffect } from "react";
+import Navbar from "./Navbar";
 import { motion } from "framer-motion";
 import { styles } from "../../styles";
 import { fadeIn, textVariant } from "../../utility/motion";
 import { SectionWrapper } from "../../wrapper";
+import { db } from "../database/firebase"; // Ensure this points to your Firebase config
+import { doc, deleteDoc, Timestamp, collection, onSnapshot, addDoc, serverTimestamp, query, where } from "firebase/firestore";
 
-// if alphabetically yung labas ng schedule niya 
+
+// Predefined lawyer details
+const lawyers = {
+  "Noel Magalgalit": {
+    name: "Noel Magalgalit",
+    title: "Civil Law",
+    address: "Insular Life Building, Legarda Street, corner Abanao extension, Baguio, 2660 Benguet",
+  },
+  "Palmer Fagyan Bugtong": {
+    name: "Palmer Fagyan Bugtong",
+    title: "Criminal Law",
+    address: "Insular Life Building, Legarda Street, corner Abanao extension, Baguio, 2660 Benguet",
+  },
+  "Jess B. Evasco": {
+    name: "Jess B. Evasco",
+    title: "Criminal Law",
+    address: "Insular Life Building, Legarda Street, corner Abanao extension, Baguio, 2660 Benguet",
+  },
+};
+
+
 const Header = () => {
-  const initialAppointments = {
-    Evasco: ['Meeting on Jan 15', 'Review documents on Jan 20'],
-    Noel: [],
-    Palmer: ['Call on Feb 1'],
-  };
-
-  const [appointments, setAppointments] = useState(initialAppointments);
+  const [appointments, setAppointments] = useState({});
   const [selectedLawyer, setSelectedLawyer] = useState(null);
   const [chatAppointment, setChatAppointment] = useState(null);
   const [chatMessage, setChatMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    const appointmentsRef = collection(db, "appointments");
+
+    const unsubscribe = onSnapshot(appointmentsRef, (snapshot) => {
+      const appointmentsData = {};
+
+      snapshot.forEach((doc) => {
+        const appointment = doc.data();
+        const lawyerName = appointment.lawyer?.name || "Unknown Lawyer";
+
+        if (!lawyers[lawyerName]) {
+          return;
+        }
+
+        if (!appointmentsData[lawyerName]) {
+          appointmentsData[lawyerName] = [];
+        }
+
+        const appointmentDate =
+          appointment.date instanceof Timestamp
+            ? appointment.date.toDate().toLocaleDateString()
+            : appointment.date;
+
+        const currentDate = new Date();
+        const appointmentDateObj = new Date(appointment.date);
+        if (appointmentDateObj >= currentDate) {
+          appointmentsData[lawyerName].push({
+            id: doc.id,
+            date: appointmentDate || "No date provided",
+            time: appointment.time || "No time provided",
+            reasons: appointment.reasons || "No reasons provided",
+            client: `${appointment.firstName || ""} ${appointment.lastName || ""}` || "Unknown Client",
+          });
+        }
+      });
+
+      const sortedAppointmentsData = Object.keys(appointmentsData)
+        .sort()
+        .reduce((acc, lawyerName) => {
+          acc[lawyerName] = appointmentsData[lawyerName];
+          return acc;
+        }, {});
+
+      setAppointments(sortedAppointmentsData);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (!chatAppointment) return;
+
+    const messagesRef = collection(db, "messages");
+    const q = query(messagesRef, where("appointmentId", "==", chatAppointment.id));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const messagesData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setMessages(messagesData);
+    });
+
+    return () => unsubscribe();
+  }, [chatAppointment]);
 
   const handleShowAppointments = (lawyerName) => {
     setSelectedLawyer(lawyerName);
   };
 
-  const handleSendMessage = () => {
-    alert(`Message sent: ${chatMessage}`);
-    setChatMessage("");
-    setChatAppointment(null); // Close the chat box after sending
+  const handleSendMessage = async () => {
+    if (!chatAppointment || !chatMessage.trim()) {
+      alert("Message cannot be empty.");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "messages"), {
+        date: serverTimestamp(),
+        details: chatMessage.trim(),
+        sender: "admin", // Add a sender field
+        userId: chatAppointment.clientId || "Unknown",
+        lawyerName: selectedLawyer || "Unknown Lawyer",
+        appointmentId: chatAppointment.id,
+      });
+      alert("Message sent successfully!");
+      setChatMessage("");
+      setChatAppointment(null);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("Failed to send the message. Please try again.");
+    }
   };
 
-  const rejectAppointment = (lawyerName, appointmentIndex) => {
-    setAppointments((prev) => ({
-      ...prev,
-      [lawyerName]: prev[lawyerName].filter((_, index) => index !== appointmentIndex),
-    }));
+
+  const deleteAppointment = async (appointmentId, lawyerName) => {
+    try {
+      const appointmentRef = doc(db, "appointments", appointmentId);
+      await deleteDoc(appointmentRef);
+
+      setAppointments((prevAppointments) => {
+        const updatedAppointments = { ...prevAppointments };
+        updatedAppointments[lawyerName] = updatedAppointments[lawyerName].filter(
+          (appointment) => appointment.id !== appointmentId
+        );
+        return updatedAppointments;
+      });
+
+      alert("Appointment deleted successfully.");
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+      alert("Failed to delete the appointment. Please try again.");
+    }
   };
 
-  const lawyerAppointments = selectedLawyer ? appointments[selectedLawyer] : [];
+  const lawyerAppointments = selectedLawyer ? appointments[selectedLawyer] || [] : [];
 
   return (
     <>
       <Navbar />
       <motion.div variants={textVariant()}>
-        <h2 id='admin_appointment' className={`${styles.headText} highlight-border`}>
-          <span className="title-with-line">Appointment</span>
+        <h2 id="admin_appointment" className={`${styles.headText} highlight-border`}>
+          <span className="title-with-line">Appointments</span>
         </h2>
       </motion.div>
 
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
-        className="text-secondary text-[17px] max-w-3xl leading-[30px] tracking-wide mb-5"
+        className="text-secondary text-[17px] max-w-3xl leading-[30px] tracking-wide mb-5 mt-2"
       >
-        Select a lawyer to view their appointments.
+        Message, Delete, and see the appointments the lawyer has.
       </motion.p>
 
       <div className="flex">
@@ -59,32 +173,46 @@ const Header = () => {
           <table>
             <thead>
               <tr>
-                <th>Lawyers Name</th>
+                <th>Lawyer Name</th>
               </tr>
             </thead>
             <tbody>
               {Object.keys(appointments).map((lawyer, index) => (
                 <tr key={lawyer} onClick={() => handleShowAppointments(lawyer)}>
-                  <td className="cursor-pointer mb-1 hover:text-orange-700 p-2">{index + 1}. {lawyer}</td>
+                  <td className="cursor-pointer mb-1 hover:text-orange-700 p-2">
+                    {index + 1}. {lawyer}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        {/* Content */}
         <div className="w-3/4 p-4">
-          <h3 className="text-lg font-bold mt-3 mb-3">Scheduled Appointments</h3>
+          <h3 className="text-lg font-bold mt-3 mb-3">Scheduled Future Appointments</h3>
           <div className="space-y-4">
             {lawyerAppointments.length === 0 ? (
-              <p>No appointment has been made</p>
+              <p>Select a lawyer to view their future appointments.</p>
             ) : (
               lawyerAppointments.map((appointment, index) => (
                 <div
                   key={index}
                   className="flex items-center justify-between border p-2 mt-2 rounded shadow-md"
                 >
-                  <span>{appointment}</span>
+                  <div>
+                    <p>
+                      <strong>Date:</strong> {appointment.date}
+                    </p>
+                    <p>
+                      <strong>Time:</strong> {appointment.time}
+                    </p>
+                    <p>
+                      <strong>Client:</strong> {appointment.client}
+                    </p>
+                    <p>
+                      <strong>Reason:</strong> {appointment.reasons}
+                    </p>
+                  </div>
                   <div className="flex space-x-2">
                     <button
                       className="px-3 py-1 text-orange-400 rounded hover:text-orange-900"
@@ -94,7 +222,7 @@ const Header = () => {
                     </button>
                     <button
                       className="px-2 text-red-600 hover:text-red-800"
-                      onClick={() => rejectAppointment(selectedLawyer, index)}
+                      onClick={() => deleteAppointment(appointment.id, selectedLawyer)}
                     >
                       ✖
                     </button>
@@ -106,14 +234,35 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Chat Box */}
       {chatAppointment && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-black border border-2 rounded-lg p-4 w-1/3 shadow-lg">
-            <h3 className={`${styles.paragraphSubText} highlight-border mb-4`}> <b>Chat about: {chatAppointment} </b></h3>
+          <div className="bg-white border border-2 rounded-lg p-4 w-1/3 shadow-lg">
+            <h6 className="text-black mb-4">
+              <b>Chat with:</b> {chatAppointment.firstName} {chatAppointment.lastName}
+            </h6>
+            <div className="mb-4 p-2 bg-gray-100 h-40 overflow-y-scroll text-black">
+              {messages.length > 0 ? (
+                messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`mb-2 ${message.sender === "admin" ? "text-right" : "text-left"}`}
+                  >
+                    <p>
+                      <strong>{message.sender === "admin" ? "Admin" : message.userId}</strong>: {message.details}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {message.date ? new Date(message.date.toDate()).toLocaleString() : ""}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">No messages yet.</p>
+              )}
+            </div>
+
             <textarea
-              className="w-full p-2 bg-slate-600 rounded mb-4"
-              rows="5"
+              className="w-full p-2 bg-gray-200 rounded mb-4 text-black"
+              rows="3"
               value={chatMessage}
               onChange={(e) => setChatMessage(e.target.value)}
               placeholder="Type your message here..."
@@ -135,11 +284,8 @@ const Header = () => {
           </div>
         </div>
       )}
-      {/* <div className="mt-44">
-        <Books />
-      </div> */}
     </>
   );
 };
 
-export default SectionWrapper(Header);
+export default SectionWrapper(Header, "header");

@@ -70,7 +70,7 @@ import ChapterTwelve from "./components/pages/peoples_rights_content/ChapterTwel
 
 const NavbarWrapper = ({ children }) => {
   const location = useLocation();
-  const showNavbar = location.pathname.startsWith("/articleOne") || location.pathname.startsWith("/chapterOne");
+  const showNavbar = location.pathname.startsWith("/articleOne") || location.pathname.startsWith("/chapterOne") || location.pathname.startsWith("/main");
   const showNavbarTop = location.pathname.startsWith("/helena") || location.pathname.startsWith("/lawyer-status") || location.pathname.startsWith("/appointment") || location.pathname.startsWith("/lawyer-appoinments");
   return (
     <>
