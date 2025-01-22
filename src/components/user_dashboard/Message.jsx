@@ -258,7 +258,7 @@ const Message = () => {
             {/* Chat Popup */}
             {chatAppointment && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="bg-white border border-2 rounded-lg p-4 w-1/3 shadow-lg">
+                    <div className="bg-white border border-2 rounded-lg p-4 shadow-lg">
                         <h6 className="text-black mb-4">
                             <b>Chat with:</b> {chatAppointment.firstName} {chatAppointment.lastName}
                         </h6>
@@ -283,7 +283,7 @@ const Message = () => {
                         </div>
 
                         <textarea
-                            className="w-full p-2 bg-gray-200 rounded mb-4 text-black"
+                            className="p-2 w-full bg-gray-200 rounded mb-4 text-black"
                             rows="3"
                             value={chatMessage}
                             onChange={(e) => setChatMessage(e.target.value)}
