@@ -9,7 +9,7 @@ const MainLayout = () => {
       <div className='bg-hero-pattern bg-cover bg-no-repeat bg-center'>
         <Header />
       </div>
-      <User />
+      {/* <User /> */}
       <Features />
       <Testimonials />
       <Footer />
