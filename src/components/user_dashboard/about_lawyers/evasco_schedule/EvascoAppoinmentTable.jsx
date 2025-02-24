@@ -3,56 +3,70 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { GoTriangleRight, GoTriangleLeft } from "react-icons/go";
 import { SectionWrapper } from "../../../../wrapper";
 import { styles } from "../../../../styles";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore"; 
 
 const EvascoAppointmentTable = () => {
   const navigate = useNavigate();
-  const { state } = useLocation(); // Get the state passed from the sign-up page
-  const { name, email } = state || {}; // Destructure name and email
-
-  const [formData, setFormData] = useState({
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    email: "",
-    date: "",
-    time: "",
-    reasons: "",
-  });
-
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(null);
-
-  // List of unavailable dates in YYYY-MM-DD format (for 2024-2025)
-  const unavailable = [
-    "2024-12-24", "2024-12-25", "2024-12-30",
-    "2025-01-01", "2025-04-09", "2025-04-17", "2025-04-19", "2025-05-01",
-    "2025-06-12", "2025-08-21", "2025-08-25", "2025-11-01", "2025-11-30",
-    "2025-12-08", "2025-12-24", "2025-12-25", "2025-12-30", "2025-12-31"
-  ];
-
-  useEffect(() => {
-    // Pre-fill the form with the name and email passed from the sign-up form
-    if (name && email) {
+    const { state } = useLocation(); // Get the state passed from the sign-up page
+    const { name, email } = state || {}; // Destructure name and email
+  
+    const [formData, setFormData] = useState({
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      email: "",
+      date: "",
+      time: "", // Default time slot
+    });
+  
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(null);
+  
+    // List of unavailable dates in YYYY-MM-DD format (for 2024-2025)
+    const unavailable = [
+      "2024-12-24", "2024-12-25", "2024-12-30",
+      "2025-01-01", "2025-04-09", "2025-04-17", "2025-04-19", "2025-05-01",
+      "2025-06-12", "2025-08-21", "2025-08-25", "2025-11-01", "2025-11-30",
+      "2025-12-08", "2025-12-24", "2025-12-25", "2025-12-30", "2025-12-31"
+    ];
+  
+  
+    useEffect(() => {
+      const auth = getAuth();
+      const db = getFirestore();
+  
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const userRef = doc(db, "users", user.uid); // Reference Firestore document
+          const userSnap = await getDoc(userRef); // Fetch document
+  
+          if (userSnap.exists()) {
+            const userData = userSnap.data();
+            setFormData((prev) => ({
+              ...prev,
+              firstName: userData.firstName || "",
+              middleName: userData.middleName || "",
+              lastName: userData.lastName || "",
+              email: userData.email || user.email, // Fallback to auth email
+            }));
+          }
+        }
+      });
+  
+      return () => unsubscribe();
+    }, []);
+    const handlePrevArticleClick = () => {
+      navigate("/appointmentLawyer2");
+    };
+  
+    // Handle changes to form fields
+    const handleChange = (key, value) => {
       setFormData((prev) => ({
         ...prev,
-        firstName: name.split(" ")[0],
-        lastName: name.split(" ")[1], // Adjust if necessary
-        email: email,
+        [key]: value,
       }));
-    }
-  }, [name, email]);
-
-  const handlePrevArticleClick = () => {
-    navigate("/appointmentLawyer3");
-  };
-
-  // Handle changes to form fields
-  const handleChange = (key, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
+    };
 
   // Validate form before submitting
   const validateForm = () => {
@@ -285,7 +299,7 @@ const EvascoAppointmentTable = () => {
                     placeholder="Please specify your reason"
                     value={otherReason}
                     onChange={(e) => handleOtherReasonChange(e.target.value)}
-                    className="w-full mt-2 p-6 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-700"
+                    className="w-full mt-2 p-6 focus:ring-2 focus:ring-orange-700"
                   />
                 )}
               </tbody>
@@ -332,7 +346,7 @@ const EvascoAppointmentTable = () => {
 
           {/* Time Slots */}
           <div className="mb-4">
-            <h3 className="text-white font-medium mb-4">Choose a Time Slot</h3>
+          <h3 className="text-white font-medium mb-4">These are the available time slots:</h3> 
             <div className="grid grid-cols-3 gap-4">
               {timeSlots.map((slot) => (
                 <button
@@ -364,7 +378,7 @@ const EvascoAppointmentTable = () => {
               type="submit"
               className="px-6 py-2 border-2 border-orange-700 text-white rounded-lg hover:bg-gray-500"
             >
-              Confirm Appointment
+              Confirm
             </button>
           </div>
         </form>
