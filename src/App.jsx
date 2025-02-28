@@ -12,7 +12,7 @@ import Admin from "./components/admin_dashboard/Header";
 
 import Navbar from "./components/user_dashboard/Navbar";
 import Lawyer from "./components/user_dashboard/about_lawyers/Lawyer";
-import Helena from "./components/canvas/Helena";
+import AI from "./components/user_dashboard/AI/Main/Main";
 import NavbarTop from "./components/user_dashboard/NavbarTop";
 import Message from "./components/user_dashboard/Message";
 
@@ -71,7 +71,8 @@ import ChapterTwelve from "./components/pages/peoples_rights_content/ChapterTwel
 const NavbarWrapper = ({ children }) => {
   const location = useLocation();
   const showNavbar = location.pathname.startsWith("/articleOne") || location.pathname.startsWith("/chapterOne") || location.pathname.startsWith("/main");
-  const showNavbarTop = location.pathname.startsWith("/helena") || location.pathname.startsWith("/lawyer-status") || location.pathname.startsWith("/appointment") || location.pathname.startsWith("/lawyer-appoinments");
+  // const showNavbarTop = location.pathname.startsWith("/ai") || location.pathname.startsWith("/lawyer-status") || location.pathname.startsWith("/appointment") || location.pathname.startsWith("/lawyer-appoinments");
+  const showNavbarTop = location.pathname.startsWith("/lawyer-status") || location.pathname.startsWith("/appointment") || location.pathname.startsWith("/lawyer-appoinments");
   return (
     <>
       {showNavbar && <Navbar />}
@@ -143,7 +144,7 @@ const App = () => {
             <Route path="/appointmentTableLawyer3" element={<AppointmentTableLawyer3 />} />
             <Route path="/appointmentResultLawyer3" element={<AppointmentResultLawyer3 />} />
 
-            <Route path="/helena" element={<Helena />} />
+            <Route path="/ai" element={<AI />} />
             <Route path="/constitution" element={<Constitution />} />
             <Route path="/RA_8371" element={<RA_12066 />} />
 

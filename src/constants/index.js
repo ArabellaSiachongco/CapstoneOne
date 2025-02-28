@@ -20,7 +20,7 @@ import {
 
 const navLinks = [
     {
-        id: "helena",
+        id: "ai",
         title: "HELENA AI",
     },
     {
@@ -41,7 +41,7 @@ const userLink = [
     {
         title: "STUDENT",
         icon: userStudents,
-    },,
+    },
 ];
 
 const features = [
@@ -86,7 +86,7 @@ const features = [
         iconBg: "#383E56",
         // born: "Born in November 2024",
         color: "pink-text-gradient",
-        btn: "/helena",
+        btn: "/ai",
         image: AiRobot,
     },
 ];
