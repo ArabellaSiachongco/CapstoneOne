@@ -14,12 +14,25 @@
     margin: 10px 10px;
 }
 
-.Ai_sidebar .Ai_menu {
+.Ai_sidebar .Ai_menu img {
     display: block;
     margin-left: 10px;
     align-items: center;
     cursor: pointer;
     max-width: 100%;
+}
+
+.Ai_sidebar .Ai_menu {
+    margin-top: 60px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 17px;
+    /* background-color: #e6eaf1; */
+    border-radius: 50px;
+    font-size: 14px;
+    color: black;
+    cursor: pointer;
 }
 
 .Ai_sidebar .Ai_new-chat {
@@ -89,8 +102,11 @@
 .dark-mode .Ai_sidebar,
 .dark-mode .Ai_sidebar-container {
     background-color: #1e1e1e;
+    color: white;
 }
-
+.dark-mode .Ai_sidebar .Ai_menu {
+    color: white;
+}
 .dark-mode .Ai_bottom-item {
     background-color: #252525;
     color: #ffffff;
@@ -140,3 +156,4 @@ input:checked + .slider {
 input:checked + .slider:before {
     transform: translateX(20px);
 }
+

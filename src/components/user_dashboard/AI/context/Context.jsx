@@ -10,36 +10,45 @@ const ContextProvider = (props) => {
     const [showResult, setShowResult] = useState(false);
     const [loading, setLoading] = useState(false);
     const [resultData, setResultData] = useState("");
-    const [darkMode, setDarkMode] = useState ( localStorage.getItem("darkMode") === "true");
+    const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true");
 
     const delayParameter = (index, nextWord) => {
         setTimeout(function () {
             setResultData(prev => prev + nextWord);
         }, 75 * index)
     }
-    
-    const newChat =  () => {
+
+    const newChat = () => {
         setLoading(false);
         setShowResult(false);
     }
+    
+    let lastRequestTime = 0;
+    const REQUEST_INTERVAL = 5000;
 
     const onSent = async (prompt) => {
+        const currentTime = Date.now();
+        if (currentTime - lastRequestTime <REQUEST_INTERVAL) {
+            alert("Please wait a few seconds. Thank you!");
+            return;
+        }
+        lastRequestTime = currentTime;
         setResultData("");
         setLoading(true);
         setShowResult(true);
+                
         let response;
         if (prompt != undefined) {
             response = await run(prompt)
             setRecentPrompt(prompt)
         } else {
-            setPrevPrompts(prev=>[...prev, input])
+            setPrevPrompts(prev => [...prev, input])
             setRecentPrompt(input)
             response = await run(input)
         }
         let responseArray = response.split("**")
         let newResponse = "";
-        for (let i = 0; i < responseArray.length; i++) 
-        {
+        for (let i = 0; i < responseArray.length; i++) {
             if (i === 0 || i % 2 !== 1) {
                 newResponse += responseArray[i]
             } else {
@@ -73,8 +82,8 @@ const ContextProvider = (props) => {
         darkMode,
         setDarkMode,
     };
-    
-    useEffect(()=> {
+
+    useEffect(() => {
         localStorage.setItem("darkMode", darkMode);
     }, [darkMode]);
 

@@ -17,12 +17,14 @@ const Sidebar = ({ children }) => {
             {/* Sidebar Section */}
             <div className={`Ai_sidebar ${extended ? 'extended' : ''}`}>
                 <div className='top'>
-                    <img
-                        onClick={() => setExtended(prev => !prev)}
-                        src={assets.menu_icon}
-                        className='Ai_menu'
-                        alt='menu_icon'
-                    />
+                    <div className='Ai_menu'>
+                        <img
+                            onClick={() => setExtended(prev => !prev)}
+                            src={assets.menu_icon}
+                            alt='menu_icon'
+                        />
+                        {extended && <p onClick={() => setExtended(prev => !prev)}>Menu</p>}
+                    </div>
                     <div onClick={() => newChat()} className="Ai_new-chat">
                         <img src={assets.plus_icon} alt="plus_icon" />
                         {extended && <p>New chat</p>}
@@ -44,8 +46,8 @@ const Sidebar = ({ children }) => {
                 {/* Sidebar Bottom Section */}
                 <div className='Ai_bottom'>
                     <div className="Ai_bottom-item Ai_recent-entry">
-                        <img
-                         src={assets.question_icon} alt="question_icon" />
+                        <img onClick={() => window.open("https://gemini.google.com/faq", "_blank")}
+                            src={assets.question_icon} alt="question_icon" />
                         {extended && <p onClick={() => window.open("https://gemini.google.com/faq", "_blank")}>Help</p>}
                     </div>
                     <div className="Ai_bottom-item Ai_recent-entry">
