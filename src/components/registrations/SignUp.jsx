@@ -20,7 +20,7 @@ const SignUp = () => {
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  const [role] = useState("user"); // Pre-filled role
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -185,16 +185,8 @@ const SignUp = () => {
                     </div>
                     <div>
                       <label htmlFor="role">Role</label>
-                      <input
-                        type="text"
-                        id="role"
-                        className="text-input"
-                        value={role}
-                        onChange={(e) => setRole(e.target.value)}
-                        required
-                      />
+                      <input type="text" id="role" className="text-input" value={role} disabled />
                     </div>
-
                     {error && <p className="error-message text-red-500">{error}</p>}
                     <button type="submit" className="primary-btn">
                       Sign Up

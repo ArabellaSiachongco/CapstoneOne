@@ -236,3 +236,11 @@
     background-color: #252525;
     color: #ffffff;
 }
+
+.dark-mode .Ai_result-data{
+    color: white;
+}
+
+.dark-mode .Ai_result-title {
+    color: white;
+}

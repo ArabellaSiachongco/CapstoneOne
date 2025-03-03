@@ -101,3 +101,7 @@ TILT ng LOGO hahaha
 one week ( NAGLIPAT, NAGMOVIE, NAG TAMBAY HAHA   ) trying to find the bug, sabi nga nila dont fall silently. haha
 
 database ng  AI, settings
+
+
+Uncaught InvalidStateError: Failed to execute 'start' on 'SpeechRecognition': recognition has already started.
+-This error occurs because mic.start() is called multiple times when isListening is true, causing the SpeechRecognition API to throw an InvalidStateError.
