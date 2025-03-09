@@ -11,6 +11,7 @@ const ContextProvider = (props) => {
     const [loading, setLoading] = useState(false);
     const [resultData, setResultData] = useState("");
     const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true");
+    const [selectedMessage, setSelectedMessage] = useState(null);
 
     const delayParameter = (index, nextWord) => {
         setTimeout(function () {
@@ -81,6 +82,8 @@ const ContextProvider = (props) => {
         newChat,
         darkMode,
         setDarkMode,
+        selectedMessage,
+        setSelectedMessage
     };
 
     useEffect(() => {

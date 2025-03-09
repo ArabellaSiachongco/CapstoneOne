@@ -1,16 +1,41 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Sidebar.css';
 import { assets } from '../../../../assets/AI/assets.js';
 import { Context } from '../context/Context';
+import { getFirestore, collection, query, orderBy, limit, getDocs } from "firebase/firestore";
 
 const Sidebar = ({ children }) => {
     const [extended, setExtended] = useState(false);
-    const { onSent, prevPrompts, setRecentPrompt, newChat, darkMode, setDarkMode } = useContext(Context);
+    const { newChat, darkMode, setDarkMode } = useContext(Context);
+    const [recentMessages, setRecentMessages] = useState([]);
+    const { setSelectedMessage } = useContext(Context);
 
-    const loadPrompt = async (prompt) => {
-        setRecentPrompt(prompt);
-        await onSent(prompt);
+
+    const db = getFirestore();
+
+    const loadPrompt = (message, response) => {
+        setSelectedMessage({ message, response });
     };
+    // Fetch the most recent messages and responses
+    useEffect(() => {
+        const fetchRecentMessages = async () => {
+            const q = query(
+                collection(db, "Ai_Message"),
+                orderBy("timestamp", "desc"),
+                limit(5) // Get the last 5 messages
+            );
+
+            const querySnapshot = await getDocs(q);
+            const messages = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+            setRecentMessages(messages);
+        };
+
+        fetchRecentMessages();
+    }, []);
 
     return (
         <div className={`Ai_sidebar-container ${darkMode ? "dark-mode" : ""}`}>
@@ -32,49 +57,43 @@ const Sidebar = ({ children }) => {
 
                     {extended && (
                         <div className="Ai_recent">
-                            <p className="Ai_recent-title">Recent</p>
-                            {prevPrompts?.map((item, index) => (
-                                <div key={index} onClick={() => loadPrompt(item)} className="Ai_recent-entry">
+                            <p className="Ai_recent-title">Recent Messages</p>
+                            {recentMessages.map((item) => (
+                                <div key={item.id} className="Ai_recent-entry" onClick={() => loadPrompt(item.message, item.response)}>
                                     <img src={assets.message_icon} alt="message_icon" />
-                                    <p>{item.substring(0, 18)}...</p>
+                                    <p>{item.message.substring(0, 18)}...</p>
                                 </div>
                             ))}
                         </div>
-                    )}
-                </div>
+                    )} 
 
-                {/* Sidebar Bottom Section */}
-                <div className='Ai_bottom'>
-                    <div className="Ai_bottom-item Ai_recent-entry">
-                        <img onClick={() => window.open("https://gemini.google.com/faq", "_blank")}
-                            src={assets.question_icon} alt="question_icon" />
-                        {extended && <p onClick={() => window.open("https://gemini.google.com/faq", "_blank")}>Help</p>}
-                    </div>
-                    <div className="Ai_bottom-item Ai_recent-entry">
-                        <img src={assets.history_icon} alt="history_icon" />
-                        {extended && <p>Activity</p>}
-                    </div>
-                    <div className="Ai_bottom-item Ai_recent-entry">
-                        <img src={assets.setting_icon} alt="setting_icon" />
-                        {extended && (
-                            <div className="settings">
-                                <label className="toggle-switch">
-                                    <input type="checkbox" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
-                                    <span className="slider"></span>
-                                </label>
-                                <p>{darkMode ? "Dark Mode On" : "Dark Mode Off"}</p>
-                            </div>
-                        )}
+                    {/* Sidebar Bottom Section */}
+                    <div className='Ai_bottom'>
+                        <div className="Ai_bottom-item Ai_recent-entry">
+                            <img onClick={() => window.open("https://gemini.google.com/faq", "_blank")}
+                                src={assets.question_icon} alt="question_icon" />
+                            {extended && <p onClick={() => window.open("https://gemini.google.com/faq", "_blank")}>Help</p>}
+                        </div>
+                        <div className="Ai_bottom-item Ai_recent-entry">
+                            <img src={assets.history_icon} alt="history_icon" />
+                            {extended && <p>Activity</p>}
+                        </div>
+                        <div className="Ai_bottom-item Ai_recent-entry">
+                            <img src={assets.setting_icon} alt="setting_icon" />
+                            {extended && (
+                                <div className="settings">
+                                    <label className="toggle-switch">
+                                        <input type="checkbox" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
+                                        <span className="slider"></span>
+                                    </label>
+                                    <p>{darkMode ? "Dark Mode On" : "Dark Mode Off"}</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            {/* Main Content Wrapper */}
-            <div className="Ai_main-content">
-                {children}
             </div>
         </div>
-    );
+    )
 };
-
-export default (Sidebar);
+export default Sidebar;
