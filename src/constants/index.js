@@ -181,7 +181,7 @@ const lawyerProfiles = [
         currentPoints: "5 years lawyer",
         stats: { strength: 6, endurance: 8, agility: 9 },
         talent: "Persuasion",
-        tagline: "The Fast Talker and the Faster Thinker", 
+        tagline: "The Fast Talker and the Thinker", 
         address: "Liaison Officer at Magalgalit Law Office",
         btn: "/appointmentLawyer3",
     },

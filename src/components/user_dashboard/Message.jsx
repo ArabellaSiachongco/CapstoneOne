@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { SectionWrapper } from "../../wrapper/index.js";
 import { styles } from "../../styles.js";
 import { db } from "../database/firebase.js"; // Ensure this points to your Firebase config
-import { collection, query, where, orderBy, onSnapshot, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, query, where, orderBy, onSnapshot, addDoc, serverTimestamp, doc, getDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth"; // Import Firebase Auth to get the current user
 
 // Predefined lawyer details
@@ -38,29 +38,40 @@ const Message = () => {
             alert("Message cannot be empty.");
             return;
         }
-
-        // Get the current user ID from Firebase Auth as a fallback
+    
         const user = auth.currentUser;
-
+    
+        if (!user) {
+            alert("User is not authenticated.");
+            return;
+        }
+    
         try {
+            // Fetch user details from Firestore
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+    
+            let userName = user.displayName || "Unknown User"; // Default to Firebase displayName
+    
+            if (userSnap.exists()) {
+                userName = userSnap.data().firstName + " " + userSnap.data().lastName; // Get full name
+            }
+    
             await addDoc(collection(db, "messages"), {
                 date: serverTimestamp(),
                 details: chatMessage.trim(),
-                sender: "user", // Mark sender as 'user'
-                userId: chatAppointment.clientId || user?.uid || "Unknown",
+                sender: userName, // Store actual user's name
+                userId: user.uid,
                 appointmentId: chatAppointment.id,
             });
-            alert("Message sent successfully!");
+    
             setChatMessage("");
-            setChatAppointment(null);
         } catch (error) {
             console.error("Error sending message:", error);
             alert("Failed to send the message. Please try again.");
         }
     };
-
-
-
+    
 
     useEffect(() => {
         if (!chatAppointment) return;
@@ -258,27 +269,32 @@ const Message = () => {
             {/* Chat Popup */}
             {chatAppointment && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="bg-white border border-2 rounded-lg p-4 shadow-lg">
+                    <div className="bg-white border border-2 rounded-lg p-4 shadow-lg w-8/12">
                         <h6 className="text-black mb-4">
-                            <b>Chat with:</b> {chatAppointment.firstName} {chatAppointment.lastName}
+                            <b>Chat with:</b> {chatAppointment?.lawyer?.name}
                         </h6>
-                        <div className="mb-4 p-2 bg-gray-100 h-40 overflow-y-scroll text-black">
+                        <div className="mb-4 p-2 h-40 overflow-y-scroll text-black">
                             {messages.length > 0 ? (
-                                    messages.map((message) => (
-                                        <div
-                                            key={message.id}
-                                            className={`mb-2 ${message.sender === "admin" ? "text-right" : "text-left"}`}
-                                        >
-                                            <p>
-                                                <strong>{message.sender === "admin" ? "Admin" : message.userId || "User"}</strong>: {message.details}
-                                            </p>
-                                            <p className="text-xs text-gray-500">
-                                                {message.date ? new Date(message.date.toDate()).toLocaleString() : ""}
-                                            </p>
-                                        </div>
-                                    ))
+                                messages.map((message) => (
+                                    <div
+                                        key={message.id}
+                                        className={`mb-2 ${message.sender === "admin" ? "text-right" : "text-left"}`}
+                                    >
+                                        <p>
+                                            <strong>
+                                                {message.sender === "admin"
+                                                    ? "Admin"
+                                                    : message.sender || "User"}
+                                            </strong>
+                                            : {message.details}
+                                        </p>
+                                        <p className="text-xs text-gray-500">
+                                            {message.date ? new Date(message.date.toDate()).toLocaleString() : ""}
+                                        </p>
+                                    </div>
+                                ))
                             ) : (
-                                <p className="text-gray-500">No messages yet.</p>
+                                <p className="text-gray-500 text-center p-12">No messages yet.</p>
                             )}
                         </div>
 

@@ -14,6 +14,18 @@
     margin: 10px 10px;
 }
 
+.Ai_sidebar .Ai_menu {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 17px;
+    border-radius: 50px;
+    font-size: 14px;
+    color: black;
+    cursor: pointer;
+}
+
 .Ai_sidebar .Ai_menu img {
     display: block;
     margin-left: 10px;
@@ -22,21 +34,8 @@
     max-width: 100%;
 }
 
-.Ai_sidebar .Ai_menu {
-    margin-top: 60px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 17px;
-    /* background-color: #e6eaf1; */
-    border-radius: 50px;
-    font-size: 14px;
-    color: black;
-    cursor: pointer;
-}
-
 .Ai_sidebar .Ai_new-chat {
-    margin-top: 60px;
+    margin-top: 30px;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -80,7 +79,7 @@
 }
 
 .Ai_sidebar .Ai_bottom {
-    display: flex;
+    display: relative;
     flex-direction: column;
 }
 
@@ -88,7 +87,7 @@
     padding-right: 10px;
     cursor: pointer;
 }
-
+  
 @media (max-width: 600px) {
     .Ai_sidebar {
         display: none;

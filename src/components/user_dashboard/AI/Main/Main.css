@@ -85,14 +85,14 @@
 }
 
 .Ai_main-bottom {
-    position: fixed;
+    position: flex;
     width: 100%;
     max-width: 900px;
     padding: 0px 20px;
     margin: auto;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);  
+    /* left: 50%; */
+    /* transform: translateX(-50%);   */
 }
 
 .Ai_search-box {

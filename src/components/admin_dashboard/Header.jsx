@@ -5,7 +5,7 @@ import { styles } from "../../styles";
 import { fadeIn, textVariant } from "../../utility/motion";
 import { SectionWrapper } from "../../wrapper";
 import { db } from "../database/firebase";
-import { doc, deleteDoc, Timestamp, collection, onSnapshot, addDoc, serverTimestamp, query, where } from "firebase/firestore";
+import { doc, deleteDoc, Timestamp, collection, onSnapshot } from "firebase/firestore";
 
 const lawyers = {
   "Noel Magalgalit": {
@@ -29,9 +29,6 @@ const Header = () => {
   const [appointments, setAppointments] = useState({});
   const [pastAppointments, setPastAppointments] = useState({});
   const [selectedLawyer, setSelectedLawyer] = useState(null);
-  const [chatAppointment, setChatAppointment] = useState(null);
-  const [chatMessage, setChatMessage] = useState("");
-  const [messages, setMessages] = useState([]);
   const [showPastAppointments, setShowPastAppointments] = useState(false);
 
   useEffect(() => {

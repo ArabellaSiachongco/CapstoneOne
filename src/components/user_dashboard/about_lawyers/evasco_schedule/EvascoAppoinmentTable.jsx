@@ -122,9 +122,14 @@ const EvascoAppointmentTable = () => {
   const handleDateClick = (date) => {
     if (isDateSelectable(date)) {
       setSelectedDate(date);
-      handleChange("date", formatDate(date));
+      setFormData((prev) => ({
+        ...prev,
+        date: formatDate(date),
+        time: "", // Reset time selection when a new date is clicked
+      }));
     }
   };
+  
 
   const goToPreviousMonth = () => {
     setCurrentMonth((prev) => {
@@ -137,20 +142,53 @@ const EvascoAppointmentTable = () => {
     setCurrentMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
   };
 
-  // Time slots for appointment with start and end time
   const timeSlots = [
     { id: 1, start: "8:00 am", end: "9:00 am" },
     { id: 2, start: "9:00 am", end: "10:00 am" },
     { id: 3, start: "10:00 am", end: "11:00 am" },
   ];
-
+  
+  const isPastTime = (startTime) => {
+    const now = new Date();
+    const today = new Date().setHours(0, 0, 0, 0); // Today's start
+  
+    const [time, modifier] = startTime.split(" ");
+    let [hours, minutes] = time.split(":").map(Number);
+  
+    if (modifier === "pm" && hours !== 12) {
+      hours += 12;
+    } else if (modifier === "am" && hours === 12) {
+      hours = 0;
+    }
+  
+    const slotTime = new Date(today).setHours(hours, minutes, 0, 0);
+  
+    return slotTime < now; // True if the time slot is in the past
+  };
+  
+  
   const handleTimeSelect = (start, end) => {
+    if (selectedDate && selectedDate.toDateString() !== new Date().toDateString()) {
+      // If the selected date is not today, allow all slots
+    } else if (isPastTime(start)) {
+      return; // Prevent past time selection
+    }
+  
     const selectedTime = `${start} - ${end}`;
     setFormData((prev) => ({
       ...prev,
       time: prev.time === selectedTime ? "" : selectedTime,
     }));
   };
+  
+  // Example usage
+  timeSlots.forEach((slot) => {
+    console.log(
+      `Time Slot: ${slot.start} - Disabled: ${isPastTime(slot.start)}`
+    );
+  });
+  
+
 
   const getCalendarDayClass = (date) => {
     if (!date) return "bg-dark"; // Empty slots
