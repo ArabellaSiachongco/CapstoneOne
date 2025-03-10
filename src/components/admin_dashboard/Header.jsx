@@ -5,7 +5,7 @@ import { styles } from "../../styles";
 import { fadeIn, textVariant } from "../../utility/motion";
 import { SectionWrapper } from "../../wrapper";
 import { db } from "../database/firebase";
-import { doc, deleteDoc, Timestamp, collection, onSnapshot } from "firebase/firestore";
+import { Timestamp, collection, onSnapshot, getDocs } from "firebase/firestore";
 
 const lawyers = {
   "Noel Magalgalit": {
@@ -30,6 +30,8 @@ const Header = () => {
   const [pastAppointments, setPastAppointments] = useState({});
   const [selectedLawyer, setSelectedLawyer] = useState(null);
   const [showPastAppointments, setShowPastAppointments] = useState(false);
+  const [showArchivedAppointments, setShowArchivedAppointments] = useState(false);
+  const [archivedAppointments, setArchivedAppointments] = useState([]);
 
   useEffect(() => {
     const appointmentsRef = collection(db, "appointments");
@@ -69,15 +71,21 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
-  const deleteAppointment = async (appointmentId, lawyerName) => {
+  const fetchArchivedAppointments = async () => {
+    if (showArchivedAppointments) {
+      setShowArchivedAppointments(false);
+      return;
+    }
+
     try {
-      await deleteDoc(doc(db, "appointments", appointmentId));
-      setAppointments((prev) => ({
-        ...prev,
-        [lawyerName]: prev[lawyerName].filter((a) => a.id !== appointmentId),
-      }));
+      const archivedRef = collection(db, "archived_appointments");
+      const snapshot = await getDocs(archivedRef);
+      const archives = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setArchivedAppointments(archives);
+      setShowArchivedAppointments(true);
+      setShowPastAppointments(false); // Hide past appointments
     } catch (error) {
-      console.error("Error deleting appointment:", error);
+      console.error("Error fetching archived appointments:", error);
     }
   };
 
@@ -106,27 +114,80 @@ const Header = () => {
                   <td className="cursor-pointer mb-1 hover:text-orange-700 p-2">{index + 1}. {lawyer}</td>
                 </tr>
               ))}
+              <br /><br /><hr /><br />
+              <button
+                className="cursor-pointer mb-1 text-orange-400 rounded hover:text-orange-900"
+                onClick={fetchArchivedAppointments}
+              >
+                {showArchivedAppointments ? "Hide Archived" : "Show Archived"}
+              </button>
             </tbody>
           </table>
         </div>
 
-        <div className="w-3/4 p-4"> {/* Main Content */}
+        <div className="w-3/4 p-4">
           {selectedLawyer && (
             <>
               <h3 className="text-lg font-bold">Appointments for {selectedLawyer}</h3>
-              <button className="px-4 py-2 text-orange-400 rounded hover:text-orange-900" onClick={() => setShowPastAppointments(!showPastAppointments)}>
-                {showPastAppointments ? 'Show Current Appointments' : 'Show Past Appointments'}
+
+              {/* Toggle Past Appointments */}
+              <button
+                className="px-4 py-2 text-orange-400 rounded hover:text-orange-900 ml-2"
+                onClick={() => {
+                  setShowPastAppointments(!showPastAppointments);
+                  setShowArchivedAppointments(false); // Hide archived when showing past appointments
+                }}
+              >
+                {showPastAppointments ? "Show Current Appointments" : "Show Past Appointments"}
               </button>
 
-              {(showPastAppointments ? pastAppointments[selectedLawyer] : appointments[selectedLawyer])?.map((appointment, index) => (
+              {/* Title for Current Appointments */}
+              {!showPastAppointments && !showArchivedAppointments && (
+                <h3 className="mt-4 text-lg font-bold">Current Appointments</h3>
+              )}
+
+              {/* Show Regular Appointments (Only if archives are hidden) */}
+              {!showPastAppointments && !showArchivedAppointments &&
+                appointments[selectedLawyer]?.map((appointment, index) => (
+                  <div key={index} className="border p-2 mt-2 rounded shadow-md">
+                    <p><strong>Date:</strong> {appointment.date}</p>
+                    <p><strong>Time:</strong> {appointment.time}</p>
+                    <p><strong>Client:</strong> {appointment.client}</p>
+                    <p><strong>Reason:</strong> {appointment.reasons}</p>
+                    <button className="text-red-600 hover:text-red-800" onClick={() => setArchivedAppointments(appointment.id, selectedLawyer)}>Archive</button>
+                  </div>
+                ))
+              }
+
+              {/* Title for Past Appointments */}
+              {showPastAppointments && <h3 className="mt-4 text-lg font-bold">Past Appointments</h3>}
+
+              {/* Show Past Appointments */}
+              {showPastAppointments && pastAppointments[selectedLawyer]?.map((appointment, index) => (
                 <div key={index} className="border p-2 mt-2 rounded shadow-md">
                   <p><strong>Date:</strong> {appointment.date}</p>
                   <p><strong>Time:</strong> {appointment.time}</p>
                   <p><strong>Client:</strong> {appointment.client}</p>
                   <p><strong>Reason:</strong> {appointment.reasons}</p>
-                  <button className="text-red-600 hover:text-red-800" onClick={() => deleteAppointment(appointment.id, selectedLawyer)}>✖</button>
                 </div>
               ))}
+
+              {/* Show Archived Appointments */}
+              {showArchivedAppointments && archivedAppointments.length > 0 ? (
+                <div className="mt-2 p-2 shadow-md">
+                  <h3 className="text-lg font-bold">Archived Appointments</h3>
+                  {archivedAppointments.map((appointment, index) => (
+                    <div key={index} className="border p-2 mt-2 rounded shadow-md">
+                      <p><strong>Date:</strong> {appointment.date}</p>
+                      <p><strong>Time:</strong> {appointment.time}</p>
+                      <p><strong>Client:</strong> {appointment.client}</p>
+                      <p><strong>Reason:</strong> {appointment.reasons}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                showArchivedAppointments && <p>No archived appointments found.</p>
+              )}
             </>
           )}
         </div>
