@@ -109,7 +109,7 @@ const EvascoAppointmentResult = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-  
+
   if (!formData) {
     return (
       <div className="text-center mt-10">
@@ -178,7 +178,7 @@ const EvascoAppointmentResult = () => {
                 Selected Reasons
               </td>
               <td className="w-2/3 px-4 py-3 border border-gray-300">
-              {formData.reasons || "No reason selected"}
+                {formData.reasons || "No reason selected"}
               </td>
             </tr>
           </tbody>
@@ -234,25 +234,7 @@ const EvascoAppointmentResult = () => {
           </tbody>
         </table>
       </div>
-
-      {/* Embedded Map */}
-      <div className="mt-8">
-        <h3 className={`${styles.paragraphSubText} mb-3`}>Office Location</h3>
-        <div className="overflow-hidden rounded-lg border-2 border-gray-700">
-          <iframe
-            src="https://maps.app.goo.gl/H6XYGse1jVNK42J46"
-            width="100%"
-            height="450"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Office Location"
-          />
-
-        </div>
-      </div>
-
+      
       <div className="mt-10 text-center flex justify-between">
         <button
           onClick={handlePrevArticleClick}

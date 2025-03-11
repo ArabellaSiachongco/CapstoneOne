@@ -235,22 +235,6 @@ const PalmerAppointmentResult = () => {
           </table>
         </div>
 
-        {/* Embedded Map */}
-        <div className="mt-8">
-          <h3 className={`${styles.paragraphSubText} mb-3`}>Office Location</h3>
-          <div className="overflow-hidden rounded-lg border-2 border-gray-700">
-            <iframe src="https://maps.app.goo.gl/H6XYGse1jVNK42J46"
-              width="100%"
-              height="450"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              
-            ></iframe>
-          </div>
-        </div>
-
         <div className="mt-10 text-center flex justify-between">
           <button
             onClick={handlePrevArticleClick}

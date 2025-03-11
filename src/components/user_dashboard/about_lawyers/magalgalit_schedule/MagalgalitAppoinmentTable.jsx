@@ -84,7 +84,7 @@ const MagalgalitAppointmentTable = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
       if (validateForm()) {
-        navigate("/appointmentResultLawyer3", { state: { formData } });
+        navigate("/appointmentResultLawyer2", { state: { formData } });
       }
     };
   

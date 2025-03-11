@@ -84,7 +84,7 @@ const PalmerAppointmentTable = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
       if (validateForm()) {
-        navigate("/appointmentResultLawyer3", { state: { formData } });
+        navigate("/appointmentResultLawyer1", { state: { formData } });
       }
     };
   

@@ -51,18 +51,14 @@ const LawyerStatusCard = ({ LawyerProfile }) => {
         )}
 
         {/* Stats */}
-        <div className="grid grid-cols-2 gap-4 text-xs">
-          <div>
-            <p className="font-semibold">STATS</p>
-            <p>Strength: {LawyerProfile.stats.strength}</p>
-            <p>Endurance: {LawyerProfile.stats.endurance}</p>
-            <p>Agility: {LawyerProfile.stats.agility}</p>
-          </div>
+        <div className="grid grid-cols-1 gap-4 text-xs">
           <div>
             <p className="font-semibold">TALENT</p>
-            <p>{LawyerProfile.talent}</p>
+            <p className="text-center tracking-wide text-sm text-white mb-4">{LawyerProfile.talent}</p>
+          </div>
+          <div>
             <p className="font-semibold mt-2">ADDRESS:</p>
-            <p>{LawyerProfile.address}</p>
+            <p className="text-center tracking-wide text-sm text-white mb-4">{LawyerProfile.address}</p>
           </div>
         </div>
 
@@ -92,11 +88,6 @@ LawyerStatusCard.propTypes = {
     title: PropTypes.string.isRequired,
     currentSP: PropTypes.string.isRequired,
     currentPoints: PropTypes.string.isRequired,
-    stats: PropTypes.shape({
-      strength: PropTypes.number.isRequired,
-      endurance: PropTypes.number.isRequired,
-      agility: PropTypes.number.isRequired,
-    }).isRequired,
     talent: PropTypes.string.isRequired,
     tagline: PropTypes.string,
     address: PropTypes.string.isRequired,

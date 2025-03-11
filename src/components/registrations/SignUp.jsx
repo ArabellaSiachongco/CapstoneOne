@@ -183,7 +183,7 @@ const SignUp = () => {
                         )}
                       </div>
                     </div>
-                    <div>
+                    <div style={{ display: "none" }}>
                       <label htmlFor="role">Role</label>
                       <input type="text" id="role" className="text-input" value={role} disabled />
                     </div>
