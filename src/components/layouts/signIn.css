@@ -69,26 +69,6 @@
   font-size: 0.9rem;
 }
 
-/* google */
-/* #signin .links a {
-  display: flex;
-  align-items: center; 
-  justify-content: center;
-  color: #fff;
-  text-decoration: none;
-  text-align: center;
-  font-size: 0.9rem;
-  margin-top: 10px;
-  border: 1px solid #f4f4f4;
-  height: 50px;
-}
-
-#signin .links a svg {
-  margin-right: 8px;
-  font-size: 1.2rem; 
-} */
-
-
 #signin .or {
   display: flex;
   flex-direction: row;
@@ -128,7 +108,6 @@
   width: 60%;
   margin: auto;
 }
-
 
 .button-grid {
   display: grid;

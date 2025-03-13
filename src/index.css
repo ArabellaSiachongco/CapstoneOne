@@ -125,14 +125,14 @@ canvas {
 
 .image-border-lawyer {
   border: 40px solid;
-  border-image-source: url("./assets/border.png");
+  border-image-source: url("/assets/border.png");
   border-image-slice: 100;
   border-image-width: 50px;
 }
 
 .image-border-table {
   border: 40px solid;
-  border-image-source: url("./assets/table_of_content_border.png");
+  border-image-source: url("/assets/table_of_content_border.png");
   border-image-slice: 100;
   border-image-width: 50px;
 }
