@@ -1,23 +1,3 @@
-// this index are for the links, connected to different Files, for easier editting.
-// finalize the user
-// update: icons, text
-
-import {
-    userLawyer,
-    userStudents,
-    senior,
-    book,
-    Ai,
-    lawyerIcon,
-    AiRobot,
-    lawyers,
-    lawbook,
-    profile,
-    profile1,
-    profile2,
-    testimonial1,
-} from "../assets";
-
 const navLinks = [
     {
         id: "ai",
@@ -36,11 +16,11 @@ const navLinks = [
 const userLink = [
     {
         title: "LAWYER",
-        icon: userLawyer,
+        icon: "/assets/userLawyer.png",
     },
     {
         title: "STUDENT",
-        icon: userStudents,
+        icon: "/assets/userStudents.png",
     },
 ];
 
@@ -48,7 +28,7 @@ const features = [
     {
         title: "Law books",
         subtitle: "Simply highlight any word in our law books to instantly fetch its definition.",
-        icon: book,
+        icon: "/assets/book.png",
         iconBg: "#383E56",
         // overview: "An in-depth look at legal texts in the Philippines.",
         color: "blue-text-gradient",
@@ -65,29 +45,29 @@ const features = [
                 li:"/RA_8371",
             },
         ],
-        image: lawbook,
+        image: "/assets/lawbook.png",
         span: "More law books to come"
     },
     {
         title: "Legal Matching",
         subtitle: "Connecting You with the Right Expertise, Every Time.",
-        icon: lawyerIcon,
+        icon: "/assets/lawyerIcon.png",
         iconBg: "#383E56",
         // update: "Last Updated: November 19, 2024",
         color: "green-text-gradient",
         btn: "/lawyer-status",
-        image: lawyers,
+        image: "/assets/lawyerIcon.png",
       
     },
     {
         title: "Helena",
         subtitle: "Your Smart Guide for Legal Books",
-        icon: Ai,
+        icon:"/assets/Ai.png",
         iconBg: "#383E56",
         // born: "Born in November 2024",
         color: "pink-text-gradient",
         btn: "/ai",
-        image: AiRobot,
+        image: "/assets/AiRobot.png",
     },
 ];
 
@@ -95,25 +75,24 @@ const legalMatch = [
     {
         title: "Legal Matching",
         subtitle: "Connecting You with the Right Expertise, Every Time.",
-        icon: senior,
+        icon: "/assets/senior.png",
         iconBg: "#383E56",
         date: "August 31 - December 7",
-        image: "https://randomuser.me/api/portraits/women/4.jpg",
     },
 ];
 
 const partnerships = [
     {
         name: "Non-government organization",
-        icon: senior,
+        icon: "/assets/senior.png",
     },
     {
         name: "Professional Lawyer",
-        icon: senior,
+        icon: "/assets/senior.png",
     },
     {
         name: "Department of Justice",
-        icon: senior,
+        icon: "/assets/senior.png",
     },
 ];
 
@@ -124,7 +103,7 @@ const testimonials = [
         name: "Jamil Al Amin",
         designation: "Student",
         company: "University of the Cordilleras",
-        image: testimonial1,
+        image: "/assets/testimonial1.png",
     },
     {
         testimonial:
@@ -132,7 +111,7 @@ const testimonials = [
         name: "Lina An-an",
         designation: "Student",
         company: "University of the Cordilleras",
-        image: profile2,
+        image: "/assets/profile2.png",
     },
     {
         testimonial:
@@ -140,13 +119,13 @@ const testimonials = [
         name: "Palmer Bugtong",
         designation: "Lawyer",
         company: "Magalgalit Law Office",
-        image: profile1,
+        image: "/assets/profile1.png",
     },
 ];
 
 const lawyerProfiles = [
     {
-      image: profile1,
+      image: "/assets/profile1.png",
       name: "Palmer Fagyan Bugtong",
       nickname:"Atty. Palmer",
       title: "Criminal Law",
@@ -159,7 +138,7 @@ const lawyerProfiles = [
     },
     // No. 7, 2/F Israel Bldg., Gibraltar Road, Baguio City 2600
     {
-        image: profile,
+        image: "/assets/profile.png",
         name: "Noel Magalgalit",
         nickname:"Atty. Magalgalit",
         title: "Civil Law",
@@ -171,7 +150,7 @@ const lawyerProfiles = [
         btn: "/appointmentLawyer2",
     },
     {
-        image: profile1,
+        image: "/assets/profile1.png",
         name: "Jess B. Evasco",
         nickname:"Atty. Evasco",
         title: "Criminal Law",
@@ -193,5 +172,4 @@ export {
     partnerships,
     testimonials,
     lawyerProfiles,
-    // tags,
 };

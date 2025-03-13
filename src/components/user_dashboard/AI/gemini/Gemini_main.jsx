@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import './Main.css';
-import { assets } from '../../../../assets/AI/assets.js';
-import { Context } from '../context/Context';
+import './gemini.css';
+import { Context } from '../context/Context.jsx';
 import Sidebar from '../Sidebar/Sidebar.jsx';
 import Signout from '../Signout/Signout.jsx';
 import { getAuth } from "firebase/auth";
@@ -14,7 +13,7 @@ mic.continuous = true;
 mic.interimResults = true;
 mic.lang = 'en-US';
 
-const Main = () => {
+const Ai_Main = () => {
     const { onSent, recentPrompt, showResult, loading, resultData, setInput, input, darkMode } = useContext(Context);
     const [userData, setUserData] = useState(null);
     const [showSignout, setShowSignout] = useState(false);
@@ -133,7 +132,7 @@ const Main = () => {
             <div className='Ai_main'>
                 <div className="Ai_nav">
                     <p id='helena'>Karapatan Ko</p>
-                    <img onClick={() => setShowSignout(!showSignout)} src={assets.user_icon} alt="user_icon" />
+                    <img onClick={() => setShowSignout(!showSignout)} src="/assets/user_icon.png" alt="user_icon" />
                     {showSignout && <div className="navbar-popup"><Signout /></div>}
                 </div>
     
@@ -148,11 +147,11 @@ const Main = () => {
                     ) : (
                         <div className="Ai_result">
                             <div className="Ai_result-title">
-                                <img src={assets.user_icon} alt="user_icon" />
+                                <img src="/assets/user_icon.png" alt="user_icon" />
                                 <p>{selectedMessage.message}</p>
                             </div>
                             <div className="Ai_result-data">
-                                <img src={assets.gemini_icon} alt="" />
+                                <img src="/assets/gemini_icon.png" alt="gemini_icon" />
                                 <p dangerouslySetInnerHTML={{ __html: selectedMessage.response }}></p>
                             </div>
                         </div>
@@ -169,13 +168,13 @@ const Main = () => {
                             />
                             <div>
                                 <img
-                                    src={assets.mic_icon}
+                                    src="/assets/mic_icon.png"
                                     alt="mic_icon"
                                     style={{ cursor: 'pointer' }}
                                     onMouseDown={() => setIsListening(true)}
                                     onMouseUp={() => stopListeningAndSend()}
                                 />
-                                {input ? <img onClick={handleSendMessage} src={assets.send_icon} alt="send_icon" /> : null}
+                                {input ? <img onClick={handleSendMessage} src="/assets/send_icon.png" alt="send_icon" /> : null}
                             </div>
                         </div>
     
@@ -193,4 +192,4 @@ const Main = () => {
     );    
 };
 
-export default Main;
+export default Ai_Main;

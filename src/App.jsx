@@ -12,7 +12,7 @@ import Admin from "./components/admin_dashboard/Header";
 
 import Navbar from "./components/user_dashboard/Navbar";
 import Lawyer from "./components/user_dashboard/about_lawyers/Lawyer";
-import AI from "./components/user_dashboard/AI/Main/Main";
+import AI from "./components/user_dashboard/AI/gemini/Gemini_main";
 import NavbarTop from "./components/user_dashboard/NavbarTop";
 import Message from "./components/user_dashboard/Message";
 

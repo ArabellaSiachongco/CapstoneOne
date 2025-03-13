@@ -1,26 +1,24 @@
 import { motion } from "framer-motion";
 import { styles } from "../../styles";
-import { sunflower, blindfold_woman } from "../../assets";
-// import { ScaleCanvas } from "../components/canvas";
 
 const Header = () => {
   return (
     <section id="home" className={`relative w-full h-screen mx-auto`}>
       <div className="relative w-full h-full">
         <img
-          src={sunflower}
+          src="/assets/sunflower.png"
           alt="Sunflower"
           className="absolute inset-0 w-full h-full object-cover z-0"
           loading="lazy"
         />
         <img
-          src={blindfold_woman}
+          src="/assets/blindfold_woman.png"
           alt="Blindfold Woman"
           className="absolute inset-0 w-full h-full object-cover z-0"
           loading="lazy"
         />
       </div>
-      
+
       <div className="fixed inset-0 bg-slate-800/20" />
 
       <div
@@ -41,8 +39,6 @@ const Header = () => {
           </p>
         </div>
       </div>
-      {/* calling the 3d image  */}
-      {/* <ScaleCanvas /> */}
 
       <div className="absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center">
         {/* link for about page */}

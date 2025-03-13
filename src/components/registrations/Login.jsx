@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "../layouts/signIn.css";
 import { motion } from "framer-motion";
 import { SectionWrapper } from "../../wrapper";
-import logoLandscape from "../../assets/icon/logoLandscape.png";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Loader";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
@@ -79,7 +78,7 @@ const Login = () => {
             <div id="left">
               <div id="signin">
                 <div className="logo">
-                  <img src={logoLandscape} alt="Karapatan ko" />
+                  <img src="/assets/logoLandscape.png" alt="Karapatan ko" />
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
