@@ -14,16 +14,17 @@ mic.interimResults = true;
 mic.lang = 'en-US';
 
 const Ai_Main = () => {
-    const { onSent, recentPrompt, showResult, loading, resultData, setInput, input, darkMode } = useContext(Context);
+    const { onSent, recentPrompt, showResult, loading, resultData, setInput, input, darkMode, selectedMessage, setSelectedMessage } = useContext(Context);
+    
     const [userData, setUserData] = useState(null);
     const [showSignout, setShowSignout] = useState(false);
     const [isListening, setIsListening] = useState(false);
     const [responseSaved, setResponseSaved] = useState(false);
     const [messageId, setMessageId] = useState(null);
-    const { selectedMessage } = useContext(Context);
 
     const db = getFirestore();
 
+    /** Fetch user data */
     useEffect(() => {
         const fetchUserData = async () => {
             const auth = getAuth();
@@ -41,6 +42,7 @@ const Ai_Main = () => {
         fetchUserData();
     }, []);
 
+    /** Handle Speech Recognition */
     useEffect(() => {
         if (isListening) {
             mic.start();
@@ -58,12 +60,14 @@ const Ai_Main = () => {
         mic.onerror = (event) => console.error(event.error);
     }, [isListening]);
 
+    /** Handle Enter Key Press */
     const handleKeyDown = (event) => {
         if (event.key === "Enter" && input.trim()) {
             handleSendMessage();
         }
-    }
+    };
 
+    /** Stop Listening & Send Message */
     const stopListeningAndSend = () => {
         setIsListening(false);
         mic.stop();
@@ -72,20 +76,18 @@ const Ai_Main = () => {
             if (input.trim()) {
                 handleSendMessage();
             }
-        }, 500); // Small delay to ensure transcript is captured
+        }, 500);
     };
 
-
+    /** Handle Sending a Message */
     const handleSendMessage = async () => {
         if (!input.trim()) return;
 
         const auth = getAuth();
         const user = auth.currentUser;
-        const db = getFirestore();
 
         if (user) {
             try {
-                // Step 1: Save the user's message first and get the document reference
                 const messageRef = await addDoc(collection(db, "Ai_Message"), {
                     userId: user.uid,
                     message: input,
@@ -93,38 +95,42 @@ const Ai_Main = () => {
                     timestamp: serverTimestamp(),
                 });
 
-                const messageId = messageRef.id; // Get the ID of the saved message
-                onSent(); // Trigger AI response generation
-
-                // Step 2: Store messageId in state for updating later
+                const newMessageId = messageRef.id; // Get Message ID
+                setMessageId(newMessageId);
                 setResponseSaved(false);
-                setMessageId(messageId); // Store message ID for response update
+                onSent(); // Trigger AI Response Generation
+
+                console.log("Message saved with ID:", newMessageId);
             } catch (error) {
                 console.error("Error saving message:", error);
             }
         }
     };
 
+    /** Update Firestore with AI Response */
     useEffect(() => {
-        const updateAIResponse = async () => {
-            if (!messageId || !resultData || responseSaved) return; // Ensure valid data and avoid duplicates
+        if (!messageId || !resultData || responseSaved) return;
 
-            // Small delay to ensure full response is available
-            setTimeout(async () => {
-                try {
-                    await updateDoc(doc(db, "Ai_Message", messageId), {
-                        response: resultData, // Save complete AI response
-                    });
+        console.log("Updating AI response for message:", messageId);
 
-                    setResponseSaved(true); // Prevent multiple updates
-                } catch (updateError) {
-                    console.error("Error updating AI response:", updateError);
-                }
-            }, 120000); // Wait 1 second before saving to ensure full response
-        };
+        setTimeout(async () => {
+            try {
+                await updateDoc(doc(db, "Ai_Message", messageId), {
+                    response: resultData,
+                });
 
-        updateAIResponse();
-    }, [resultData]); // Runs when AI response updates
+                setResponseSaved(true);
+                setSelectedMessage(prev => ({
+                    ...prev,
+                    response: resultData // Ensure UI Updates
+                }));
+
+                console.log("Response updated in Firestore successfully");
+            } catch (updateError) {
+                console.error("Error updating AI response:", updateError);
+            }
+        }, 2000);
+    }, [resultData]);
 
     return (
         <div className={`Ai_layout ${darkMode ? "dark-mode" : ""}`}>
@@ -135,16 +141,10 @@ const Ai_Main = () => {
                     <img onClick={() => setShowSignout(!showSignout)} src="/assets/user_icon.png" alt="user_icon" />
                     {showSignout && <div className="navbar-popup"><Signout /></div>}
                 </div>
-    
+
                 <div className="Ai_main-container">
-                    {!selectedMessage ? (
-                        <>
-                            <div className="Ai_greet">
-                                <p><span>Hello, {userData ? `${userData.firstName}` : "User"}</span></p>
-                                <p>How can I help you today?</p>
-                            </div>
-                        </>
-                    ) : (
+                    {/* Display AI Response */}
+                    {selectedMessage && selectedMessage.response && selectedMessage.response.trim() !== "" ? (
                         <div className="Ai_result">
                             <div className="Ai_result-title">
                                 <img src="/assets/user_icon.png" alt="user_icon" />
@@ -155,9 +155,15 @@ const Ai_Main = () => {
                                 <p dangerouslySetInnerHTML={{ __html: selectedMessage.response }}></p>
                             </div>
                         </div>
+                    ) : (
+                        <div className="Ai_greet">
+                            <p><span>Hello, {userData ? `${userData.firstName}` : "User"}</span></p>
+                            <p>How can I help you today?</p>
+                        </div>
                     )}
-    
+
                     <div className="Ai_main-bottom">
+                        {/* Input Box */}
                         <div className="Ai_search-box">
                             <input 
                                 onChange={(e) => setInput(e.target.value)}
@@ -172,16 +178,18 @@ const Ai_Main = () => {
                                     alt="mic_icon"
                                     style={{ cursor: 'pointer' }}
                                     onMouseDown={() => setIsListening(true)}
-                                    onMouseUp={() => stopListeningAndSend()}
+                                    onMouseUp={stopListeningAndSend}
                                 />
                                 {input ? <img onClick={handleSendMessage} src="/assets/send_icon.png" alt="send_icon" /> : null}
                             </div>
                         </div>
-    
+
+                        {/* Microphone Indicator */}
                         <div className="mic-container text-black">
                             {isListening ? <span>🎙️ Listening...</span> : null}
                         </div>
-    
+
+                        {/* Disclaimer */}
                         <p className="Ai_bottom-info">
                             Gemini may display inaccurate info, including about people, so double-check its responses.
                         </p>

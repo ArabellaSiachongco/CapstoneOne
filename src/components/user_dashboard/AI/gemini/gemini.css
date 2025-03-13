@@ -6,7 +6,7 @@
     font-family: Outfit;
     animation: fadeIn 1.5s;
     /* overflow: hidden; */
-    background-color: #fff;
+    color-scheme: dark;
 }
 
 .Ai_main {
@@ -22,7 +22,7 @@
     justify-content: space-between;
     font-size: 22px;
     padding: 20px;
-    color: #585858;
+    color: white;
 }
 
 .Ai_main .Ai_nav img {
@@ -46,7 +46,7 @@
 }
 
 .Ai_main .Ai_greet span {
-    background: -webkit-linear-gradient(16deg, #4b90ff, #ff5546);
+    background: -webkit-linear-gradient(16deg, #ffd84b, #ff5546);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -76,7 +76,7 @@
 }
 
 .Ai_main .Ai_card p {
-    color: #585858;
+    color: white;
     font-size: 17px;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .Ai_main-bottom {
-    position: flex;
+    position: absolute;
     width: 100%;
     max-width: 900px;
     padding: 0px 20px;
@@ -131,14 +131,14 @@
   margin: 15px auto;
   text-align: center;
   font-weight: 300;
-  color: black;
+  color: white;
 }
 
 .Ai_result {
     padding: 0px 5%;
     max-height: 70vh;
     overflow-y: scroll;
-    color: black;
+    color: white;
 }
 
 .Ai_result::-webkit-scrollbar{
@@ -174,7 +174,7 @@
     border-radius:4px ;
     border: none;
     background-color: #f6f7f8;
-    background: linear-gradient(to right, #9ed7ff, #ffffff, #9ed7ff);
+    background: -webkit-linear-gradient(16deg, #ffd84b, #ff5546);
     background-size: 800px 50px;
     height: 20px;
     animation: Ai_loader 3s infinite linear;
@@ -222,19 +222,14 @@
 }
 
 .dark-mode {
-    background-color: #121212;
+    background-color: white;
     color: #ffffff;
 }
 
 .dark-mode .Ai_main,
 .dark-mode .Ai_layout {
-    background-color: #1e1e1e;
+    background-color: white;
     color: white;
-}
-
-.dark-mode .Ai_cards {
-    background-color: #252525;
-    color: #ffffff;
 }
 
 .dark-mode .Ai_result-data{

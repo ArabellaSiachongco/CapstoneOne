@@ -4,228 +4,228 @@ import { GoTriangleRight, GoTriangleLeft } from "react-icons/go";
 import { SectionWrapper } from "../../../../wrapper";
 import { styles } from "../../../../styles";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore"; 
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
 const MagalgalitAppointmentTable = () => {
   const navigate = useNavigate();
   const { state } = useLocation(); // Get the state passed from the sign-up page
   const { name, email } = state || {}; // Destructure name and email
 
-      const [formData, setFormData] = useState({
-        firstName: "",
-        middleName: "",
-        lastName: "",
-        email: "",
-        date: "",
-        time: "", // Default time slot
-      });
-    
-      const [currentMonth, setCurrentMonth] = useState(new Date());
-      const [selectedDate, setSelectedDate] = useState(null);
-    
-      // List of unavailable dates in YYYY-MM-DD format (for 2024-2025)
-      const unavailable = [
-        "2024-12-24", "2024-12-25", "2024-12-30",
-        "2025-01-01", "2025-04-09", "2025-04-17", "2025-04-19", "2025-05-01",
-        "2025-06-12", "2025-08-21", "2025-08-25", "2025-11-01", "2025-11-30",
-        "2025-12-08", "2025-12-24", "2025-12-25", "2025-12-30", "2025-12-31"
-      ];
-    
-    
-      useEffect(() => {
-        const auth = getAuth();
-        const db = getFirestore();
-    
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-          if (user) {
-            const userRef = doc(db, "users", user.uid); // Reference Firestore document
-            const userSnap = await getDoc(userRef); // Fetch document
-    
-            if (userSnap.exists()) {
-              const userData = userSnap.data();
-              setFormData((prev) => ({
-                ...prev,
-                firstName: userData.firstName || "",
-                middleName: userData.middleName || "",
-                lastName: userData.lastName || "",
-                email: userData.email || user.email, // Fallback to auth email
-              }));
-            }
-          }
-        });
-    
-        return () => unsubscribe();
-      }, []);
-      const handlePrevArticleClick = () => {
-        navigate("/appointmentLawyer2");
-      };
-    
-      // Handle changes to form fields
-      const handleChange = (key, value) => {
-        setFormData((prev) => ({
-          ...prev,
-          [key]: value,
-        }));
-      };
-  
-    // Validate form before submitting
-    const validateForm = () => {
-      if (!formData.firstName || !formData.lastName || !formData.email) {
-        alert("Please fill in all required fields!");
-        return false;
+  const [formData, setFormData] = useState({
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    email: "",
+    date: "",
+    time: "", // Default time slot
+  });
+
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  // List of unavailable dates in YYYY-MM-DD format (for 2024-2025)
+  const unavailable = [
+    "2024-12-24", "2024-12-25", "2024-12-30",
+    "2025-01-01", "2025-04-09", "2025-04-17", "2025-04-19", "2025-05-01",
+    "2025-06-12", "2025-08-21", "2025-08-25", "2025-11-01", "2025-11-30",
+    "2025-12-08", "2025-12-24", "2025-12-25", "2025-12-30", "2025-12-31"
+  ];
+
+
+  useEffect(() => {
+    const auth = getAuth();
+    const db = getFirestore();
+
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userRef = doc(db, "users", user.uid); // Reference Firestore document
+        const userSnap = await getDoc(userRef); // Fetch document
+
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          setFormData((prev) => ({
+            ...prev,
+            firstName: userData.firstName || "",
+            middleName: userData.middleName || "",
+            lastName: userData.lastName || "",
+            email: userData.email || user.email, // Fallback to auth email
+          }));
+        }
       }
-      if (!formData.date || !formData.time) {
-        alert("Please select a valid date and time slot!");
-        return false;
-      }
-      return true;
-    };
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if (validateForm()) {
-        navigate("/appointmentResultLawyer2", { state: { formData } });
-      }
-    };
-  
-    // Helper functions to check date exclusions
-    const isPastDate = (date) => date < new Date().setHours(0, 0, 0, 0);
-    const isHoliday = (date) => unavailable.includes(formatDate(date));
-    const isDateSelectable = (date) =>
-      !isPastDate(date) && date.getDay() !== 0 && date.getDay() !== 6 && !isHoliday(date);
-  
-    const getFirstDayOfMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1).getDay();
-    const getDaysInMonth = (date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-  
-    const renderCalendarDays = () => {
-      const firstDay = getFirstDayOfMonth(currentMonth);
-      const daysInMonth = getDaysInMonth(currentMonth);
-      const days = [];
-      for (let i = 0; i < firstDay; i++) {
-        days.push(null); // Empty slots for days before the first day
-      }
-      for (let day = 1; day <= daysInMonth; day++) {
-        const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
-        days.push(date);
-      }
-      return days;
-    };
-  
-    // Format date to YYYY-MM-DD
-    const formatDate = (date) => {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed
-      const day = String(date.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
-    };
-  
-    const handleDateClick = (date) => {
-      if (isDateSelectable(date)) {
-        setSelectedDate(date);
-        setFormData((prev) => ({
-          ...prev,
-          date: formatDate(date),
-          time: "", // Reset time selection when a new date is clicked
-        }));
-      }
-    };
-    
-  
-    const goToPreviousMonth = () => {
-      setCurrentMonth((prev) => {
-        const newMonth = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
-        return newMonth < new Date(2024, 0, 1) ? prev : newMonth;
-      });
-    };
-  
-    const goToNextMonth = () => {
-      setCurrentMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
-    };
-  
-    const timeSlots = [
-      { id: 1, start: "8:00 am", end: "9:00 am" },
-      { id: 2, start: "9:00 am", end: "10:00 am" },
-      { id: 3, start: "10:00 am", end: "11:00 am" },
-    ];
-    
-    const isPastTime = (startTime) => {
-      const now = new Date();
-      const today = new Date().setHours(0, 0, 0, 0); // Today's start
-    
-      const [time, modifier] = startTime.split(" ");
-      let [hours, minutes] = time.split(":").map(Number);
-    
-      if (modifier === "pm" && hours !== 12) {
-        hours += 12;
-      } else if (modifier === "am" && hours === 12) {
-        hours = 0;
-      }
-    
-      const slotTime = new Date(today).setHours(hours, minutes, 0, 0);
-    
-      return slotTime < now; // True if the time slot is in the past
-    };
-    
-    
-    const handleTimeSelect = (start, end) => {
-      if (selectedDate && selectedDate.toDateString() !== new Date().toDateString()) {
-        // If the selected date is not today, allow all slots
-      } else if (isPastTime(start)) {
-        return; // Prevent past time selection
-      }
-    
-      const selectedTime = `${start} - ${end}`;
-      setFormData((prev) => ({
-        ...prev,
-        time: prev.time === selectedTime ? "" : selectedTime,
-      }));
-    };
-    
-    // Example usage
-    timeSlots.forEach((slot) => {
-      console.log(
-        `Time Slot: ${slot.start} - Disabled: ${isPastTime(slot.start)}`
-      );
     });
-    
-  
-  
-    const getCalendarDayClass = (date) => {
-      if (!date) return "bg-dark"; // Empty slots
-      if (isHoliday(date) || date.getDay() === 0 || date.getDay() === 6) return "bg-gray-800"; // Weekend or holiday
-      if (isPastDate(date)) return "bg-gray-800"; // Past date
-      if (selectedDate?.toDateString() === date?.toDateString()) return "bg-orange-800"; // Selected date
-      if (new Date().toDateString() === date.toDateString()) return "border"; // Today
-      return "hover:bg-orange-900 cursor-pointer"; // Default class
-    };
-  
-    const [selectedReason, setSelectedReason] = useState("");
-    const [otherReason, setOtherReason] = useState("");
-  
-    const reasons = [
-      "Legal consultation for personal matters",
-      "Business-related legal advice",
-      "Assistance with document preparation",
-      "Representation in a court case",
-      "Other reasons"
-    ];
-    const handleReasonChange = (reason) => {
-      setSelectedReason(reason);
+
+    return () => unsubscribe();
+  }, []);
+  const handlePrevArticleClick = () => {
+    navigate("/appointmentLawyer2");
+  };
+
+  // Handle changes to form fields
+  const handleChange = (key, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  // Validate form before submitting
+  const validateForm = () => {
+    if (!formData.firstName || !formData.lastName || !formData.email) {
+      alert("Please fill in all required fields!");
+      return false;
+    }
+    if (!formData.date || !formData.time) {
+      alert("Please select a valid date and time slot!");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      navigate("/appointmentResultLawyer2", { state: { formData } });
+    }
+  };
+
+  // Helper functions to check date exclusions
+  const isPastDate = (date) => date < new Date().setHours(0, 0, 0, 0);
+  const isHoliday = (date) => unavailable.includes(formatDate(date));
+  const isDateSelectable = (date) =>
+    !isPastDate(date) && date.getDay() !== 0 && date.getDay() !== 6 && !isHoliday(date);
+
+  const getFirstDayOfMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+  const getDaysInMonth = (date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+
+  const renderCalendarDays = () => {
+    const firstDay = getFirstDayOfMonth(currentMonth);
+    const daysInMonth = getDaysInMonth(currentMonth);
+    const days = [];
+    for (let i = 0; i < firstDay; i++) {
+      days.push(null); // Empty slots for days before the first day
+    }
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+      days.push(date);
+    }
+    return days;
+  };
+
+  // Format date to YYYY-MM-DD
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const handleDateClick = (date) => {
+    if (isDateSelectable(date)) {
+      setSelectedDate(date);
       setFormData((prev) => ({
         ...prev,
-        reasons: reason === "Other reasons" ? otherReason : reason,
+        date: formatDate(date),
+        time: "", // Reset time selection when a new date is clicked
       }));
-    };
-  
-    const handleOtherReasonChange = (value) => {
-      setOtherReason(value);
-      if (selectedReason === "Other reasons") {
-        setFormData((prev) => ({
-          ...prev,
-          reasons: value,
-        }));
-      }
-    };
+    }
+  };
+
+
+  const goToPreviousMonth = () => {
+    setCurrentMonth((prev) => {
+      const newMonth = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
+      return newMonth < new Date(2024, 0, 1) ? prev : newMonth;
+    });
+  };
+
+  const goToNextMonth = () => {
+    setCurrentMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+  };
+
+  const timeSlots = [
+    { id: 1, start: "8:00 am", end: "9:00 am" },
+    { id: 2, start: "9:00 am", end: "10:00 am" },
+    { id: 3, start: "10:00 am", end: "11:00 am" },
+  ];
+
+  const isPastTime = (startTime) => {
+    const now = new Date();
+    const today = new Date().setHours(0, 0, 0, 0); // Today's start
+
+    const [time, modifier] = startTime.split(" ");
+    let [hours, minutes] = time.split(":").map(Number);
+
+    if (modifier === "pm" && hours !== 12) {
+      hours += 12;
+    } else if (modifier === "am" && hours === 12) {
+      hours = 0;
+    }
+
+    const slotTime = new Date(today).setHours(hours, minutes, 0, 0);
+
+    return slotTime < now; // True if the time slot is in the past
+  };
+
+
+  const handleTimeSelect = (start, end) => {
+    if (selectedDate && selectedDate.toDateString() !== new Date().toDateString()) {
+      // If the selected date is not today, allow all slots
+    } else if (isPastTime(start)) {
+      return; // Prevent past time selection
+    }
+
+    const selectedTime = `${start} - ${end}`;
+    setFormData((prev) => ({
+      ...prev,
+      time: prev.time === selectedTime ? "" : selectedTime,
+    }));
+  };
+
+  // Example usage
+  timeSlots.forEach((slot) => {
+    console.log(
+      `Time Slot: ${slot.start} - Disabled: ${isPastTime(slot.start)}`
+    );
+  });
+
+
+
+  const getCalendarDayClass = (date) => {
+    if (!date) return "bg-dark"; // Empty slots
+    if (isHoliday(date) || date.getDay() === 0 || date.getDay() === 6) return "bg-gray-800"; // Weekend or holiday
+    if (isPastDate(date)) return "bg-gray-800"; // Past date
+    if (selectedDate?.toDateString() === date?.toDateString()) return "bg-orange-800"; // Selected date
+    if (new Date().toDateString() === date.toDateString()) return "border"; // Today
+    return "hover:bg-orange-900 cursor-pointer"; // Default class
+  };
+
+  const [selectedReason, setSelectedReason] = useState("");
+  const [otherReason, setOtherReason] = useState("");
+
+  const reasons = [
+    "Legal consultation for personal matters",
+    "Business-related legal advice",
+    "Assistance with document preparation",
+    "Representation in a court case",
+    "Other reasons"
+  ];
+  const handleReasonChange = (reason) => {
+    setSelectedReason(reason);
+    setFormData((prev) => ({
+      ...prev,
+      reasons: reason === "Other reasons" ? otherReason : reason,
+    }));
+  };
+
+  const handleOtherReasonChange = (value) => {
+    setOtherReason(value);
+    if (selectedReason === "Other reasons") {
+      setFormData((prev) => ({
+        ...prev,
+        reasons: value,
+      }));
+    }
+  };
 
   return (
     <>
@@ -306,7 +306,7 @@ const MagalgalitAppointmentTable = () => {
             />
           </div>
           <br />
-          
+
           {/* Reasons */}
           <label className="text-white font-medium mb-2" htmlFor="reason">
             Select a Reason
@@ -343,7 +343,7 @@ const MagalgalitAppointmentTable = () => {
               </tbody>
             </table>
           </div>
-          
+
           <br /><br />
           {/* Calendar */}
           <div className="mb-4">
@@ -366,12 +366,22 @@ const MagalgalitAppointmentTable = () => {
                 <GoTriangleRight size={30} />
               </button>
             </div>
+
+            {/* Weekday Labels */}
+            <div className="grid grid-cols-7 gap-2 text-center font-bold text-white mb-2">
+              {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map((day, index) => (
+                <div key={index} className="py-2 bg-gray-700 rounded-lg">
+                  {day}
+                </div>
+              ))}
+            </div>
+
+            {/* Calendar Days */}
             <div className="grid grid-cols-7 gap-2 text-center">
               {renderCalendarDays().map((date, index) => (
                 <div
                   key={index}
-                  className={`py-2 px-4 rounded-lg cursor-pointer ${getCalendarDayClass(date)
-                    }`}
+                  className={`py-2 px-4 rounded-lg cursor-pointer ${getCalendarDayClass(date)}`}
                   onClick={() => date && handleDateClick(date)}
                 >
                   {date ? date.getDate() : ""}
@@ -380,20 +390,20 @@ const MagalgalitAppointmentTable = () => {
             </div>
           </div>
 
-          <br /><br /><br />
+          <br /><br />
 
           {/* Time Slots */}
           <div className="mb-4">
-          <h3 className="text-white font-medium mb-4">These are the available time slots:</h3> 
-          <div className="grid grid-cols-3 gap-4">
+            <h3 className="text-white font-medium mb-4">These are the available time slots:</h3>
+            <div className="grid grid-cols-3 gap-4">
               {timeSlots.map((slot) => (
                 <button
                   key={slot.id}
                   type="button"
                   onClick={() => handleTimeSelect(slot.start, slot.end)}
                   className={`w-full py-2 text-white rounded-lg border ${formData.time === `${slot.start} - ${slot.end}`
-                      ? "bg-orange-900"
-                      : "bg-gray-800"
+                    ? "bg-orange-900"
+                    : "bg-gray-800"
                     }`}
                 >
                   {slot.start} - {slot.end}

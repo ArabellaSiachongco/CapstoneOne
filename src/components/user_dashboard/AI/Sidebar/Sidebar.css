@@ -4,9 +4,17 @@
     display: inline-flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #f0f4f9;
+    color-scheme: dark;
     padding: 25px 15px;
     align-items:center ;
+    color: white;
+}
+
+.Ai_sidebar .top {
+    flex-grow: 1;
+    overflow-y: auto; 
+    max-height: calc(100vh - 80px); 
+    padding-bottom: 10px;
 }
 
 .Ai_sidebar img {
@@ -22,8 +30,9 @@
     padding: 8px 17px;
     border-radius: 50px;
     font-size: 14px;
-    color: black;
+    color: white;
     cursor: pointer;
+    
 }
 
 .Ai_sidebar .Ai_menu img {
@@ -40,11 +49,12 @@
     align-items: center;
     gap: 10px;
     padding: 8px 17px;
-    background-color: #e6eaf1;
-    border-radius: 50px;
+    background: rgb(224, 224, 224);
+    border-radius: 20px;
     font-size: 14px;
-    color: grey;
+    color: white;
     cursor: pointer;
+    width: 100%;
 }
 
 .Ai_sidebar .Ai_new-chat img{
@@ -55,7 +65,7 @@
     display: flex;
     flex-direction: column;
     animation: fadeIn 1.5s;
-    color: black;
+    color: white;
 }
 
 .Ai_sidebar .Ai_recent-title {
@@ -70,17 +80,22 @@
     padding: 15px;
     padding-right: 40px;
     border-radius: 20px;
-    color: #282828;
+    color: white;
     cursor: pointer;
 }
 
 .Ai_sidebar .Ai_recent-entry:hover {
-    background-color: #e2e6e2;
+    background-color: rgb(171, 171, 171);
+    color: black;
 }
 
 .Ai_sidebar .Ai_bottom {
-    display: relative;
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    bottom: 0;
     flex-direction: column;
+    justify-content: end;
 }
 
 .Ai_sidebar .Ai_bottom-item {
@@ -94,21 +109,34 @@
     }
 }
 .dark-mode {
-    background-color: #121212;
+    background-color: #ffffff;
     color: #ffffff;
 }
 
 .dark-mode .Ai_sidebar,
 .dark-mode .Ai_sidebar-container {
-    background-color: #1e1e1e;
-    color: white;
+    background-color: #fbfbfb;
+    color: black;
 }
 .dark-mode .Ai_sidebar .Ai_menu {
-    color: white;
+    color: black;
 }
 .dark-mode .Ai_bottom-item {
-    background-color: #252525;
-    color: #ffffff;
+    background-color: whitesmoke;
+    color: black;
+}
+.dark-mode .Ai_recent {
+    color: black;
+}
+.dark-mode .Ai_recent-entry {
+    color: black;
+}
+.dark-mode .Ai_new-chat{
+    color: black;
+}
+.dark-mode .Ai_recent-entry:hover {
+    background-color: rgb(118, 117, 117);
+    color: white;
 }
 
 .toggle-switch {
@@ -131,13 +159,13 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: black;
     transition: 0.4s;
     border-radius: 10px;
 }
 
 input:checked + .slider {
-    background: -webkit-linear-gradient(16deg, #4b90ff, #ff5546);
+    background: -webkit-linear-gradient(16deg, #ffd84b, #ff5546);
 }
 
 .slider:before {

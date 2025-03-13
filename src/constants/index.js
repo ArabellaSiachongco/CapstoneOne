@@ -51,7 +51,7 @@ const features = [
     {
         title: "Legal Matching",
         subtitle: "Connecting You with the Right Expertise, Every Time.",
-        icon: "/assets/lawyerIcon.png",
+        icon: "/assets/lawyerIcon2.png",
         iconBg: "#383E56",
         // update: "Last Updated: November 19, 2024",
         color: "green-text-gradient",

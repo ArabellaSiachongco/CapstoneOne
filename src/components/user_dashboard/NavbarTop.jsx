@@ -42,7 +42,7 @@ const Navbar = () => {
           className="flex items-center gap-2"
           onClick={() => handleNavigation("/")}
         >
-          <img className="w-9 h-9 object-contain" src="/assets/logo.png" alt="Logo" />
+          <img className="w-9 h-9 object-contain" src="/assets/logo2.png" alt="Logo" />
           <p className="text-white text-[18px] font-bold cursor-pointer flex">
             Karapatan &nbsp;
             <span className="sm:block hidden">Ko</span>

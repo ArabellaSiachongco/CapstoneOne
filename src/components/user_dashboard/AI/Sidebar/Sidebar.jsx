@@ -85,7 +85,7 @@ const Sidebar = ({ children }) => {
                                         <input type="checkbox" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
                                         <span className="slider"></span>
                                     </label>
-                                    <p>{darkMode ? "Dark Mode On" : "Dark Mode Off"}</p>
+                                    <p>{darkMode ? "Lights On" : "Lights Off"}</p>
                                 </div>
                             )}
                         </div>
