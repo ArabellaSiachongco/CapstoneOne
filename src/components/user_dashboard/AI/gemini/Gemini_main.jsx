@@ -14,8 +14,11 @@ mic.interimResults = true;
 mic.lang = 'en-US';
 
 const Ai_Main = () => {
-    const { onSent, recentPrompt, showResult, loading, resultData, setInput, input, darkMode, selectedMessage, setSelectedMessage } = useContext(Context);
-    
+    const {
+        onSent, recentPrompt, showResult, loading, resultData,
+        setInput, input, darkMode, selectedMessage, setSelectedMessage
+    } = useContext(Context);
+
     const [userData, setUserData] = useState(null);
     const [showSignout, setShowSignout] = useState(false);
     const [isListening, setIsListening] = useState(false);
@@ -88,6 +91,8 @@ const Ai_Main = () => {
 
         if (user) {
             try {
+                console.log("✉️ Sending message to AI:", input);
+
                 const messageRef = await addDoc(collection(db, "Ai_Message"), {
                     userId: user.uid,
                     message: input,
@@ -98,20 +103,23 @@ const Ai_Main = () => {
                 const newMessageId = messageRef.id; // Get Message ID
                 setMessageId(newMessageId);
                 setResponseSaved(false);
-                onSent(); // Trigger AI Response Generation
 
-                console.log("Message saved with ID:", newMessageId);
+                onSent(); // This triggers the AI response
+
+                console.log("✅ Message saved with ID:", newMessageId);
             } catch (error) {
-                console.error("Error saving message:", error);
+                console.error("❌ Error saving message:", error);
             }
         }
     };
+
 
     /** Update Firestore with AI Response */
     useEffect(() => {
         if (!messageId || !resultData || responseSaved) return;
 
-        console.log("Updating AI response for message:", messageId);
+        console.log("🔄 Updating AI response for message:", messageId);
+        console.log("💬 AI Response Received:", resultData);
 
         setTimeout(async () => {
             try {
@@ -120,14 +128,17 @@ const Ai_Main = () => {
                 });
 
                 setResponseSaved(true);
-                setSelectedMessage(prev => ({
-                    ...prev,
-                    response: resultData // Ensure UI Updates
-                }));
 
-                console.log("Response updated in Firestore successfully");
+                setSelectedMessage({
+                    message: input,   // Store the input question
+                    response: resultData // Store the AI-generated response
+                });
+
+                console.log("✅ Response updated in Firestore successfully");
+                console.log("🖥️ Selected Message Updated:", { message: input, response: resultData });
+
             } catch (updateError) {
-                console.error("Error updating AI response:", updateError);
+                console.error("❌ Error updating AI response:", updateError);
             }
         }, 2000);
     }, [resultData]);
@@ -144,7 +155,7 @@ const Ai_Main = () => {
 
                 <div className="Ai_main-container">
                     {/* Display AI Response */}
-                    {selectedMessage && selectedMessage.response && selectedMessage.response.trim() !== "" ? (
+                    {selectedMessage && typeof selectedMessage.response === "string" && selectedMessage.response.trim() !== "" ? (
                         <div className="Ai_result">
                             <div className="Ai_result-title">
                                 <img src="/assets/user_icon.png" alt="user_icon" />
@@ -159,18 +170,20 @@ const Ai_Main = () => {
                         <div className="Ai_greet">
                             <p><span>Hello, {userData ? `${userData.firstName}` : "User"}</span></p>
                             <p>How can I help you today?</p>
+                            <p>📢 Debug: {JSON.stringify(selectedMessage)}</p>  {/* Debug Line */}
                         </div>
                     )}
+
 
                     <div className="Ai_main-bottom">
                         {/* Input Box */}
                         <div className="Ai_search-box">
-                            <input 
+                            <input
                                 onChange={(e) => setInput(e.target.value)}
                                 value={input}
                                 type="text"
                                 placeholder='Enter a prompt here'
-                                onKeyDown={handleKeyDown} 
+                                onKeyDown={handleKeyDown}
                             />
                             <div>
                                 <img
@@ -197,7 +210,7 @@ const Ai_Main = () => {
                 </div>
             </div>
         </div>
-    );    
+    );
 };
 
 export default Ai_Main;
