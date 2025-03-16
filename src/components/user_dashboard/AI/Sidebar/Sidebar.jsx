@@ -73,10 +73,10 @@ const Sidebar = ({ children }) => {
                                 src="/assets/question_icon.png" alt="question_icon" />
                             {extended && <p onClick={() => window.open("https://gemini.google.com/faq", "_blank")}>Help</p>}
                         </div>
-                        <div className="Ai_bottom-item Ai_recent-entry">
+                        {/* <div className="Ai_bottom-item Ai_recent-entry">
                             <img src="/assets/history_icon.png" alt="history_icon" />
                             {extended && <p>Activity</p>}
-                        </div>
+                        </div> */}
                         <div className="Ai_bottom-item Ai_recent-entry">
                             <img src="/assets/setting_icon.png" alt="setting_icon" />
                             {extended && (

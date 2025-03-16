@@ -1,5 +1,5 @@
-import { createContext, useState, useEffect } from "react";
-import fetchPhilippineLaws from "../config/wikimedia.js";  // Import Wikimedia API function
+import { createContext, useState } from "react";
+import run from "../config/gemini";
 
 export const Context = createContext();
 
@@ -10,52 +10,71 @@ const ContextProvider = (props) => {
     const [showResult, setShowResult] = useState(false);
     const [loading, setLoading] = useState(false);
     const [resultData, setResultData] = useState("");
-    const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true");
-    const [selectedMessage, setSelectedMessage] = useState(null);
+    const [selectedMessage, setSelectedMessage] = useState(null); 
 
+    const delayParameter = (index, nextWord) => {
+        setTimeout(function () {
+            setResultData(prev => {
+                console.log("🔄 Updating Response:", prev + nextWord); // Debugging log
+                return prev + nextWord;
+            });
+        }, 300000 * index);
+    };    
+    
     const newChat = () => {
         setLoading(false);
         setShowResult(false);
-    }
-
-    let lastRequestTime = 0;
-    const REQUEST_INTERVAL = 5000;
+    };
 
     const onSent = async (prompt) => {
-        const currentTime = Date.now();
-        if (currentTime - lastRequestTime < REQUEST_INTERVAL) {
-            alert("Please wait a few seconds. Thank you!");
-            return;
-        }
-        lastRequestTime = currentTime;
-
-        setResultData([]);
+        setResultData("");  // Reset previous data
         setLoading(true);
         setShowResult(true);
-
+    
         let response;
         if (prompt !== undefined) {
-            response = await fetchPhilippineLaws(prompt);
+            response = await run(prompt);
             setRecentPrompt(prompt);
         } else {
-            setPrevPrompts((prev) => [...prev, input]);
+            setPrevPrompts(prev => [...prev, input]);
             setRecentPrompt(input);
-            response = await fetchPhilippineLaws(input);
+            response = await run(input);
         }
-
-        // Ensure response is properly formatted
-        let formattedResponse = "";
-
-        if (Array.isArray(response.response)) {
-            formattedResponse = response.response.map(item => `🔹 **${item.title}**: ${item.snippet}`).join("\n\n");
-        } else {
-            formattedResponse = "No relevant legal information found.";
+    
+        console.log("💬 AI Response Received:", response); // Debugging log
+    
+        if (!response || response.trim() === "") {
+            console.error("❌ No response received from AI!");
+            setLoading(false); 
+            return;
         }
-
-        setResultData(formattedResponse);
+    
+        let responseArray = response.split("**");
+        let newResponse = "";
+        for (let i = 0; i < responseArray.length; i++) {
+            if (i === 0 || i % 2 !== 1) {
+                newResponse += responseArray[i];
+            } else {
+                newResponse += "<b>" + responseArray[i] + "</b>";
+            }
+        }
+    
+        let newResponse2 = newResponse.split("*").join("</br>");
+        let newResponseArray = newResponse2.split(" ");
+    
+        for (let i = 0; i < newResponseArray.length; i++) {
+            const nextWord = newResponseArray[i];
+            delayParameter(i, nextWord + " ");
+        }
+        
+        setSelectedMessage({
+            message: prompt || input,
+            response: newResponse2,
+        });
+    
         setLoading(false);
         setInput("");
-    };
+    };    
 
     const contextValue = {
         prevPrompts,
@@ -69,15 +88,9 @@ const ContextProvider = (props) => {
         input,
         setInput,
         newChat,
-        darkMode,
-        setDarkMode,
-        selectedMessage,
+        selectedMessage, 
         setSelectedMessage,
     };
-
-    useEffect(() => {
-        localStorage.setItem("darkMode", darkMode);
-    }, [darkMode]);
 
     return (
         <Context.Provider value={contextValue}>

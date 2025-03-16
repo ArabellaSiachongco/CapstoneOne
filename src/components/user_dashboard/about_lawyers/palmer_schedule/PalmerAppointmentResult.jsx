@@ -81,7 +81,7 @@ const PalmerAppointmentResult = () => {
         lawyer: {
           name: lawyerProfiles[0].name,
           title: lawyerProfiles[0].title,
-          address: "Insular Life Building, Legarda Street, corner Abanao extension, Baguio, 2660 Benguet",
+          address: "Insular Life Building, Legarda Street, corner Abanao extension, Baguio, 2600 Benguet",
         },
         timestamp: new Date(), // Add timestamp for reference
       });
@@ -228,7 +228,7 @@ const PalmerAppointmentResult = () => {
                   Address
                 </td>
                 <td className="w-2/3 px-4 py-3 border border-gray-300">
-                  Insular Life Building, Legarda Street, corner Abanao extension, Baguio, 2660 Benguet
+                  Insular Life Building, Legarda Street, corner Abanao extension, Baguio, 2600 Benguet
                 </td>
               </tr>
             </tbody>

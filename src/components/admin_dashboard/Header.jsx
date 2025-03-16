@@ -11,7 +11,7 @@ const lawyers = {
   "Noel Magalgalit": {
     name: "Noel Magalgalit",
     title: "Civil Law",
-    address: "Insular Life Building, Legarda Street, corner Abanao extension, Baguio, 2660 Benguet",
+    address: "Insular Life Building, Legarda Street, corner Abanao extension, Baguio, 2600 Benguet",
   },
   "Palmer Fagyan Bugtong": {
     name: "Palmer Fagyan Bugtong",
