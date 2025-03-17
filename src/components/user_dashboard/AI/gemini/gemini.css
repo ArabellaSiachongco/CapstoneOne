@@ -158,6 +158,22 @@
     }
 }
 
+/* Add this to your CSS file */
+@keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  
+  .typing-effect {
+    overflow: hidden; /* Hide overflow */
+    white-space: nowrap; /* Keep text in one line */
+    animation: typing 3s steps(40, end); /* Adjust duration as needed */
+  }
+
 .Ai_result-data p {
     font-size: 17px;
     font-weight: 300;
@@ -210,4 +226,8 @@
 
 .dark-mode .Ai_result-title {
     color: white;
+}
+
+.dark-mode .Ai_bottom-info {
+    color: black;
 }

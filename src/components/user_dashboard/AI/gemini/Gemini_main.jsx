@@ -4,7 +4,15 @@ import { Context } from "../context/Context.jsx";
 import Sidebar from "../Sidebar/Sidebar.jsx";
 import Signout from "../Signout/Signout.jsx";
 import { getAuth } from "firebase/auth";
-import { getFirestore, doc, getDoc, collection, addDoc, serverTimestamp, updateDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  collection,
+  addDoc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -15,15 +23,25 @@ mic.interimResults = true;
 mic.lang = "en-US";
 
 const Gemini_main = () => {
-  const { onSent, recentPrompt, showResult, loading, resultData, setInput, input, darkMode, selectedMessage, setSelectedMessage } = useContext(Context);
+  const {
+    onSent,
+    setRecentPrompt,
+    showResult,
+    loading,
+    setLoading,
+    resultData,
+    setInput,
+    input,
+    selectedMessage,
+    setSelectedMessage,
+    darkMode,
+  } = useContext(Context);
 
   const [userData, setUserData] = useState(null);
   const [showSignout, setShowSignout] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [responseSaved, setResponseSaved] = useState(false);
   const [messageId, setMessageId] = useState(null);
-  // const {darkMode} = useContext(false);
-  
   const db = getFirestore();
 
   /** Fetch user data */
@@ -83,7 +101,13 @@ const Gemini_main = () => {
 
   // Function to handle chatbot responses
   const handleUserInput = (userMessage) => {
-    const keywords = [ "appointment", "schedule", "lumapit sa lawyer", "get a lawyer", "consult"];
+    const keywords = [
+      "appointment",
+      "schedule",
+      "lumapit sa lawyer",
+      "get a lawyer",
+      "consult",
+    ];
 
     if (keywords.some((word) => userMessage.toLowerCase().includes(word))) {
       setSelectedMessage({
@@ -94,9 +118,10 @@ const Gemini_main = () => {
           By proceeding, you agree to our 
           <a href="/privacy-policy" style="color: #007bff; text-decoration: underline;">Privacy Policy</a> and 
           <a href="/terms-of-service" style="color: #007bff; text-decoration: underline;">Terms of Service</a>.`,
-        });
-        showResult(true); 
+      });
+      showResult(true);
     } else {
+      setLoading(true);
       onSent(); // Call AI response function if not about an appointment
     }
   };
@@ -127,8 +152,7 @@ const Gemini_main = () => {
 
         // Handle user input before sending to AI
         handleUserInput(input);
-        recentPrompt(input);
-
+        setRecentPrompt(input);
       } catch (error) {
         console.error("❌ Error saving message:", error);
       }
@@ -139,7 +163,7 @@ const Gemini_main = () => {
   useEffect(() => {
     if (!messageId || !resultData || responseSaved) return;
 
-    const isResponseComplete = resultData.trim().lenght > 0 && !loading;
+    const isResponseComplete = resultData.trim().length > 0 && !loading;
     if (isResponseComplete) {
       console.log("Updating AI response for messages: ", messageId);
 
@@ -189,11 +213,24 @@ const Gemini_main = () => {
                 <img src="/assets/user_icon.png" alt="user_icon" />
                 <p>{selectedMessage.message}</p>
               </div>
-              <div className="Ai_result-data">
-                <img src="/assets/gemini_icon.png" alt="gemini_icon" />
-                <p
-                  dangerouslySetInnerHTML={{ __html: selectedMessage.response }}
-                ></p>
+              <div className="result-data">
+                {loading ? (
+                  <div className="Ai_loader">
+                    <hr />
+                    <hr />
+                    <hr />
+                  </div>
+                ) : selectedMessage?.response?.trim() !== "" ? (
+                  <div className="typing-effect">
+                  <p 
+                    dangerouslySetInnerHTML={{
+                      __html: resultData,
+                    }}
+                  ></p>
+                  </div>
+                ) : (
+                  <p>Generating response...</p>
+                )}
               </div>
             </div>
           ) : (

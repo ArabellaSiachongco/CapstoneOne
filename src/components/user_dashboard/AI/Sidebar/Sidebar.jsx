@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './Sidebar.css';
 import { Context } from '../context/Context';
-import { getFirestore, collection, query, orderBy, limit, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, orderBy, limit, onSnapshot } from "firebase/firestore";
 
 const Sidebar = ({ children }) => {
     const [extended, setExtended] = useState(false);
@@ -9,31 +9,28 @@ const Sidebar = ({ children }) => {
     const [recentMessages, setRecentMessages] = useState([]);
     const { setSelectedMessage } = useContext(Context);
 
-
     const db = getFirestore();
 
     const loadPrompt = (message, response) => {
         setSelectedMessage({ message, response });
     };
-    // Fetch the most recent messages and responses
     useEffect(() => {
-        const fetchRecentMessages = async () => {
-            const q = query(
-                collection(db, "Ai_Message"),
-                orderBy("timestamp", "desc"),
-                limit(5) // Get the last 5 messages
-            );
+        const q = query(
+            collection(db, "Ai_Message"),
+            orderBy("timestamp", "desc"),
+            limit(5)
+        );
 
-            const querySnapshot = await getDocs(q);
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const messages = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }));
 
             setRecentMessages(messages);
-        };
+        });
 
-        fetchRecentMessages();
+        return () => unsubscribe(); // Cleanup listener on unmount
     }, []);
 
     return (
@@ -64,7 +61,7 @@ const Sidebar = ({ children }) => {
                                 </div>
                             ))}
                         </div>
-                    )} 
+                    )}
 
                     {/* Sidebar Bottom Section */}
                     <div className='Ai_bottom'>
@@ -73,10 +70,6 @@ const Sidebar = ({ children }) => {
                                 src="/assets/question_icon.png" alt="question_icon" />
                             {extended && <p onClick={() => window.open("https://gemini.google.com/faq", "_blank")}>Help</p>}
                         </div>
-                        {/* <div className="Ai_bottom-item Ai_recent-entry">
-                            <img src="/assets/history_icon.png" alt="history_icon" />
-                            {extended && <p>Activity</p>}
-                        </div> */}
                         <div className="Ai_bottom-item Ai_recent-entry">
                             <img src="/assets/setting_icon.png" alt="setting_icon" />
                             {extended && (
@@ -95,4 +88,5 @@ const Sidebar = ({ children }) => {
         </div>
     )
 };
+
 export default Sidebar;

@@ -68,7 +68,8 @@ async function run(userQuery) {
       - **Republic Acts, Presidential Decrees, Executive Orders**  
   - Summarize laws **without copying exact text**.  
   - Do NOT provide information on **local ordinances** (users should check with their local government).  
-
+  - Add Line Spaces to better readability.
+  
   **User's Legal Question:** ${userQuery}
 `;
 
