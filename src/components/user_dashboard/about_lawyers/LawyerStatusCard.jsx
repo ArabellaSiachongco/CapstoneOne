@@ -17,7 +17,7 @@ const LawyerStatusCard = ({ LawyerProfile }) => {
           <img
             src={LawyerProfile.image}
             alt={LawyerProfile.name}
-            className="w-24 h-24 rounded-lg border-2 bg-white shadow-md"
+            className="rounded-lg border-2 bg-white shadow-md"
             width={96}
             height={96}
             loading="lazy"
@@ -51,14 +51,22 @@ const LawyerStatusCard = ({ LawyerProfile }) => {
         )}
 
         {/* Stats */}
-        <div className="grid grid-cols-1 gap-4 text-xs">
+        <div className="grid grid-cols-1 gap-1 text-xs">
           <div>
             <p className="font-semibold">TALENT</p>
-            <p className="text-center tracking-wide text-sm text-white mb-4">{LawyerProfile.talent}</p>
+            <p className="text-left tracking-wide text-sm text-white mb-2">{LawyerProfile.talent}</p>
+          </div>
+          <div>
+            <p className="font-semibold">CONTACT NUMBER:</p>
+            <p className="text-left tracking-wide text-sm text-white mb-2">{LawyerProfile.contact}</p>
+          </div>
+          <div>
+            <p className="font-semibold">GMAIL:</p>
+            <p className="text-left tracking-wide text-sm text-white mb-2">{LawyerProfile.gmail}</p>
           </div>
           <div>
             <p className="font-semibold mt-2">ADDRESS:</p>
-            <p className="text-center tracking-wide text-sm text-white mb-4">{LawyerProfile.address}</p>
+            <p className="text-left tracking-wide text-sm text-white mb-2">{LawyerProfile.address}</p>
           </div>
         </div>
 

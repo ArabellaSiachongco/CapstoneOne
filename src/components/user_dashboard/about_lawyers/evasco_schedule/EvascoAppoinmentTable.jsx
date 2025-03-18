@@ -4,7 +4,7 @@ import { GoTriangleRight, GoTriangleLeft } from "react-icons/go";
 import { SectionWrapper } from "../../../../wrapper";
 import { styles } from "../../../../styles";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, collection, query, where, getDocs, addDoc, getDoc } from "firebase/firestore";
 
 const EvascoAppointmentTable = () => {
   const navigate = useNavigate();
@@ -80,12 +80,33 @@ const EvascoAppointmentTable = () => {
     return true;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      navigate("/appointmentResultLawyer3", { state: { formData } });
-    }
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  if (!validateForm()) return;
+
+  const db = getFirestore();
+  const appointmentsRef = collection(db, "appointments");
+
+  // Query Firestore for existing appointments by email, date, and time
+  const appointmentQuery = query(
+    appointmentsRef,
+    where("email", "==", formData.email),
+    where("date", "==", formData.date),
+    where("time", "==", formData.time)
+  );
+
+  const querySnapshot = await getDocs(appointmentQuery);
+
+  if (!querySnapshot.empty) {
+    alert("You already have an appointment scheduled at this time. Please choose a different time.");
+    return;
+  }
+
+  // If no existing appointment, proceed to confirm
+  await addDoc(appointmentsRef, formData); // Save appointment
+  navigate("/appointmentResultLawyer3", { state: { formData } });
+};
 
   // Helper functions to check date exclusions
   const isPastDate = (date) => date < new Date().setHours(0, 0, 0, 0);
@@ -128,7 +149,6 @@ const EvascoAppointmentTable = () => {
       }));
     }
   };
-
 
   const goToPreviousMonth = () => {
     setCurrentMonth((prev) => {
@@ -186,8 +206,6 @@ const EvascoAppointmentTable = () => {
       `Time Slot: ${slot.start} - Disabled: ${isPastTime(slot.start)}`
     );
   });
-
-
 
   const getCalendarDayClass = (date) => {
     if (!date) return "bg-dark"; // Empty slots

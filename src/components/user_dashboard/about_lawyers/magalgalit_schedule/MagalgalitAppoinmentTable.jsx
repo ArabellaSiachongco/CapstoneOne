@@ -4,7 +4,7 @@ import { GoTriangleRight, GoTriangleLeft } from "react-icons/go";
 import { SectionWrapper } from "../../../../wrapper";
 import { styles } from "../../../../styles";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, collection, query, where, getDocs, addDoc, getDoc } from "firebase/firestore";
 
 const MagalgalitAppointmentTable = () => {
   const navigate = useNavigate();
@@ -30,7 +30,6 @@ const MagalgalitAppointmentTable = () => {
     "2025-06-12", "2025-08-21", "2025-08-25", "2025-11-01", "2025-11-30",
     "2025-12-08", "2025-12-24", "2025-12-25", "2025-12-30", "2025-12-31"
   ];
-
 
   useEffect(() => {
     const auth = getAuth();
@@ -80,13 +79,34 @@ const MagalgalitAppointmentTable = () => {
     }
     return true;
   };
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  if (!validateForm()) return;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      navigate("/appointmentResultLawyer2", { state: { formData } });
-    }
-  };
+  const db = getFirestore();
+  const appointmentsRef = collection(db, "appointments");
+
+  // Query Firestore for existing appointments by email, date, and time
+  const appointmentQuery = query(
+    appointmentsRef,
+    where("email", "==", formData.email),
+    where("date", "==", formData.date),
+    where("time", "==", formData.time)
+  );
+
+  const querySnapshot = await getDocs(appointmentQuery);
+
+  if (!querySnapshot.empty) {
+    alert("You already have an appointment scheduled at this time. Please choose a different time.");
+    return;
+  }
+
+  // If no existing appointment, proceed to confirm
+  await addDoc(appointmentsRef, formData); // Save appointment
+  navigate("/appointmentResultLawyer2", { state: { formData } });
+};
 
   // Helper functions to check date exclusions
   const isPastDate = (date) => date < new Date().setHours(0, 0, 0, 0);
@@ -187,9 +207,7 @@ const MagalgalitAppointmentTable = () => {
       `Time Slot: ${slot.start} - Disabled: ${isPastTime(slot.start)}`
     );
   });
-
-
-
+  
   const getCalendarDayClass = (date) => {
     if (!date) return "bg-dark"; // Empty slots
     if (isHoliday(date) || date.getDay() === 0 || date.getDay() === 6) return "bg-gray-800"; // Weekend or holiday

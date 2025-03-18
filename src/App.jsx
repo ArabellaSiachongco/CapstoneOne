@@ -8,7 +8,10 @@ import SignUp from "./components/registrations/SignUp";
 import ForgotPass from "./components/registrations/ForgotPass";
 
 import MainLayout from "./MainLayout";
-import Admin from "./components/admin_dashboard/Header";
+// import Admin from "./components/admin_dashboard/Header";
+import Admin_Evasco from "./components/admin_dashboard/Admin_profile/Admin_Evasco";
+import Admin_Palmer from "./components/admin_dashboard/Admin_profile/Admin_Palmer";
+import Admin_Magalgalit from "./components/admin_dashboard/Admin_profile/Admin_Magalgalit";
 
 import Navbar from "./components/user_dashboard/Navbar";
 import Lawyer from "./components/user_dashboard/about_lawyers/Lawyer";
@@ -111,8 +114,7 @@ const App = () => {
       </div>
     );
   }
-
-
+  
   return (
     <NavbarWrapper>
       <Routes>
@@ -183,14 +185,14 @@ const App = () => {
             <Route path="/chapterTwelve" element={<Layout> <ChapterTwelve /></Layout>} />
           </>
         )}
-
-        {/* Admin Routes */}
-        {role === "admin" && (
-          <>
-            <Route path="/admin_main" element={<Admin />} />
-          </>
-        )}
-
+      {/* Admin Routes */}
+      {role === "admin" && (
+            <>
+              <Route path="/admin_palmer" element={<Admin_Palmer />} />
+              <Route path="/admin_evasco" element={<Admin_Evasco />} />
+              <Route path="/admin_magalgalit" element={<Admin_Magalgalit />} />
+            </>
+          )}
         {/* 404 Fallback */}
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>

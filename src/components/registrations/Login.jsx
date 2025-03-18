@@ -23,24 +23,32 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!email || !password) {
       setError("Both fields are required.");
       return;
     }
     setLoading(true);
-
+  
     try {
       // Firebase authentication
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
+  
       console.log("User logged in:", user);
-
-      // Fetch user's role
+  
+      // Fetch user's role correctly
       checkUserRole((role) => {
         if (role === "admin") {
-          navigate("/admin_main"); // Redirect admin to Admin Dashboard
+          if (user.email === "karapatanko@gmail.com") {
+            navigate("/admin_evasco");
+          } else if (user.email === "nbmagalgalit@gmail.com") {
+            navigate("/admin_magalgalit");
+          } else if (user.email === "amorsolo960@gmail.com") {
+            navigate("/admin_palmer");
+          } else {
+            navigate("/admin"); // Default admin page
+          }
         } else if (role === "user") {
           navigate("/main"); // Redirect user to User Dashboard
         } else {
@@ -57,7 +65,7 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
