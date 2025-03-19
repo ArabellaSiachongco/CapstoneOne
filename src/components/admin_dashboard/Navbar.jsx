@@ -60,15 +60,7 @@ const Navbar = () => {
           </button>
           <ul className={`admin-nav-links ${isMenuOpen ? "active" : ""}`} ref={navLinksRef}>
             <li>
-              <a href="" onClick={toggleMenu}>HOME</a>
-            </li>
-            <li>
-              {/* CONTACT, CALENDAR  */}
-              <a href="#admin_appointment">APPOINTMENT</a>
-            </li>
-            <li>
-            {/* CRUD  */}
-              <a href="#admin_books">BOOKS</a>
+              <a href="/login" onClick={toggleMenu} >HOME</a>
             </li>
           </ul>
         </div>

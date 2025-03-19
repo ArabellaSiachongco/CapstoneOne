@@ -111,34 +111,40 @@ const Admin_Magalgalit = () => {
       setShowArchivedAppointments(false);
       return;
     }
-
+  
     try {
-      const archivedRef = collection(db, "archived_appointments");
+      const archivedRef = query(
+        collection(db, "archived_appointments"),
+        where("lawyer.name", "==", MAGALGALIT_NAME) // 🔹 Filter for Evasco only
+      );
+  
       const snapshot = await getDocs(archivedRef);
       const archives = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
+  
       setArchivedAppointments(archives);
       setShowArchivedAppointments(true);
     } catch (error) {
       console.error("Error fetching archived appointments:", error);
     }
-  };
+  };  
 
   const fetchArchivedMessages = async () => {
     try {
-      const archivedMessagesRef = collection(db, "archived_messages");
+      const archivedMessagesRef = query(
+        collection(db, "archived_messages"),
+        where("lawyerName", "==", MAGALGALIT_NAME) // 🔹 Filter for Evasco only
+      );
+  
       const snapshot = await getDocs(archivedMessagesRef);
-
       const archivedMsgs = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-
-      setArchivedMessages(archivedMsgs); // Store in state
-
-      console.log("Fetched archived messages:", archivedMsgs);
+  
+      setArchivedMessages(archivedMsgs);
     } catch (error) {
       console.error("Error fetching archived messages:", error);
     }
@@ -171,6 +177,7 @@ const Admin_Magalgalit = () => {
     }
   
     try {
+      // Step 1: Fetch appointment data
       const appointmentRef = doc(db, "appointments", appointmentId);
       const appointmentSnap = await getDoc(appointmentRef);
   
@@ -179,23 +186,47 @@ const Admin_Magalgalit = () => {
         return;
       }
   
-      const appointmentData = appointmentSnap.data(); 
-      const archiveRef = doc(collection(db, "archived_appointments"), appointmentId);
-      await setDoc(archiveRef, {
+      const appointmentData = appointmentSnap.data();
+  
+      // Step 2: Move appointment to archived_appointments
+      const archiveAppointmentRef = doc(db, "archived_appointments", appointmentId);
+      await setDoc(archiveAppointmentRef, {
         ...appointmentData,
         archivedAt: new Date().toISOString(),
       });
   
+      // Step 3: Fetch related messages from "messages" collection
+      const messagesQuery = query(collection(db, "messages"), where("appointmentId", "==", appointmentId));
+      const messagesSnap = await getDocs(messagesQuery);
+  
+      // Step 4: Archive messages in "archived_messages" (flat structure)
+      for (const messageDoc of messagesSnap.docs) {
+        const messageData = messageDoc.data();
+        const archiveMessageRef = doc(collection(db, "archived_messages"), messageDoc.id);
+  
+        await setDoc(archiveMessageRef, {
+          ...messageData,
+          archivedAt: new Date().toISOString(),
+        });
+      }
+  
+      // Step 5: Delete original appointment and messages
       await deleteDoc(appointmentRef);
+      for (const messageDoc of messagesSnap.docs) {
+        await deleteDoc(doc(db, "messages", messageDoc.id)); // Remove original messages
+      }
+  
       console.log("Archived successfully:", appointmentId);
-      setAppointments((prev) => prev.filter((appointments) => appointments.id !== appointmentId));
-      setArchivedAppointments((prev) => [...prev, { id: appointmentId, ...appointmentData }]); 
+  
+      // Step 6: Update local state
+      setAppointments((prev) => prev.filter((appointment) => appointment.id !== appointmentId));
+      setArchivedAppointments((prev) => [...prev, { id: appointmentId, ...appointmentData }]);
   
     } catch (error) {
-      console.error("Error archiving appointment:", error);
+      console.error("Error archiving appointment and messages:", error);
     }
   };  
-
+  
   return (
     <>
       <Navbar />
@@ -325,10 +356,10 @@ const Admin_Magalgalit = () => {
                           "Unknown Client"}
                       </td>
                       <td className="border p-2">{appointment.reasons}</td>
-                      <td className="border p-2">
+                      <td className="border p-2 text-center">
                         <button
                           onClick={() => handleOpen(appointment.id)}
-                          className="text-blue-400 hover:text-blue-700"
+                          className="px-3 py-1 bg-blue-900 text-white rounded-lg"
                         >
                           View Messages
                         </button>

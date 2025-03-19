@@ -40,7 +40,7 @@ const Login = () => {
       // Fetch user's role correctly
       checkUserRole((role) => {
         if (role === "admin") {
-          if (user.email === "karapatanko@gmail.com") {
+          if (user.email === "evasco@gmail.com") {
             navigate("/admin_evasco");
           } else if (user.email === "nbmagalgalit@gmail.com") {
             navigate("/admin_magalgalit");
