@@ -10,11 +10,7 @@ import { VscSignOut } from "react-icons/vsc";
 const Navbar = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
   const [active, setActive] = useState("");
-  const location = useLocation(); // Get the current route
-
-  // console.log("Current Pathname:", location.pathname);
-
-  // Determine which table of content to display
+  const location = useLocation();
   const table_of_content = (() => {
     if (location.pathname.startsWith("/article")) {
       return table_of_content_constitution;

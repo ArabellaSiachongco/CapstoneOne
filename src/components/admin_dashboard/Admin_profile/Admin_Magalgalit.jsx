@@ -5,6 +5,7 @@ import { styles } from "../../../styles";
 import { fadeIn, textVariant } from "../../../utility/motion";
 import { SectionWrapper } from "../../../wrapper";
 import { db } from "../../database/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
   Timestamp,
   collection,
@@ -33,8 +34,10 @@ const Admin_Magalgalit = () => {
   const [chatMessage, setChatMessage] = useState("");
   const [archivedMessages, setArchivedMessages] = useState([]);
   const [open, setOpen] = useState(false);
-
   const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
+  const [notifications, setNotifications] = useState([]);
+  const [user, setUser] = useState(null);
+
   const handleOpen = async (appointmentId) => {
     setSelectedAppointmentId(appointmentId);
     await fetchArchivedMessages();
@@ -47,8 +50,11 @@ const Admin_Magalgalit = () => {
   };
 
   useEffect(() => {
-    const appointmentsRef = collection(db, "appointments");
-    const unsubscribe = onSnapshot(appointmentsRef, (snapshot) => {
+    const q = query(
+      collection(db, "appointments"),
+      where("lawyer.name", "==", MAGALGALIT_NAME)
+    );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
       const currentAppointments = [];
       const pastAppointmentsList = [];
       const currentDate = new Date();
@@ -60,7 +66,9 @@ const Admin_Magalgalit = () => {
         const appointmentDate =
           appointment.date instanceof Timestamp
             ? appointment.date.toDate()
-            : new Date(appointment.date);
+            : appointment.date instanceof Timestamp
+              ? appointment.date.toDate()
+              : new Date(appointment.date);
 
         const formattedAppointment = {
           id: doc.id,
@@ -111,25 +119,29 @@ const Admin_Magalgalit = () => {
       setShowArchivedAppointments(false);
       return;
     }
-  
+    if (archivedAppointments.length > 0) {
+      setShowArchivedAppointments(true);
+      return;
+    }
+
     try {
       const archivedRef = query(
         collection(db, "archived_appointments"),
-        where("lawyer.name", "==", MAGALGALIT_NAME) // 🔹 Filter for Evasco only
+        where("lawyer.name", "==", MAGALGALIT_NAME)
       );
-  
+
       const snapshot = await getDocs(archivedRef);
       const archives = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-  
+
       setArchivedAppointments(archives);
       setShowArchivedAppointments(true);
     } catch (error) {
       console.error("Error fetching archived appointments:", error);
     }
-  };  
+  };
 
   const fetchArchivedMessages = async () => {
     try {
@@ -137,13 +149,13 @@ const Admin_Magalgalit = () => {
         collection(db, "archived_messages"),
         where("lawyerName", "==", MAGALGALIT_NAME) // 🔹 Filter for Evasco only
       );
-  
+
       const snapshot = await getDocs(archivedMessagesRef);
       const archivedMsgs = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-  
+
       setArchivedMessages(archivedMsgs);
     } catch (error) {
       console.error("Error fetching archived messages:", error);
@@ -175,61 +187,84 @@ const Admin_Magalgalit = () => {
       console.error("Invalid ID received for deletion:", appointmentId);
       return;
     }
-  
+
     try {
       // Step 1: Fetch appointment data
       const appointmentRef = doc(db, "appointments", appointmentId);
       const appointmentSnap = await getDoc(appointmentRef);
-  
+
       if (!appointmentSnap.exists()) {
         console.error("Appointment not found:", appointmentId);
         return;
       }
-  
+
       const appointmentData = appointmentSnap.data();
-  
+
       // Step 2: Move appointment to archived_appointments
-      const archiveAppointmentRef = doc(db, "archived_appointments", appointmentId);
+      const archiveAppointmentRef = doc(
+        db,
+        "archived_appointments",
+        appointmentId
+      );
       await setDoc(archiveAppointmentRef, {
         ...appointmentData,
         archivedAt: new Date().toISOString(),
       });
-  
+
       // Step 3: Fetch related messages from "messages" collection
-      const messagesQuery = query(collection(db, "messages"), where("appointmentId", "==", appointmentId));
+      const messagesQuery = query(
+        collection(db, "messages"),
+        where("appointmentId", "==", appointmentId)
+      );
       const messagesSnap = await getDocs(messagesQuery);
-  
+
       // Step 4: Archive messages in "archived_messages" (flat structure)
       for (const messageDoc of messagesSnap.docs) {
         const messageData = messageDoc.data();
-        const archiveMessageRef = doc(collection(db, "archived_messages"), messageDoc.id);
-  
+        const archiveMessageRef = doc(
+          collection(db, "archived_messages"),
+          messageDoc.id
+        );
+
         await setDoc(archiveMessageRef, {
           ...messageData,
           archivedAt: new Date().toISOString(),
         });
       }
-  
+
       // Step 5: Delete original appointment and messages
       await deleteDoc(appointmentRef);
       for (const messageDoc of messagesSnap.docs) {
         await deleteDoc(doc(db, "messages", messageDoc.id)); // Remove original messages
       }
-  
+
       console.log("Archived successfully:", appointmentId);
-  
+
       // Step 6: Update local state
-      setAppointments((prev) => prev.filter((appointment) => appointment.id !== appointmentId));
-      setArchivedAppointments((prev) => [...prev, { id: appointmentId, ...appointmentData }]);
-  
+      setAppointments((prev) =>
+        prev.filter((appointment) => appointment.id !== appointmentId)
+      );
+      setArchivedAppointments((prev) => [
+        ...prev,
+        { id: appointmentId, ...appointmentData },
+      ]);
     } catch (error) {
       console.error("Error archiving appointment and messages:", error);
     }
-  };  
-  
+  };
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser); // ✅ Store authenticated user
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <>
-      <Navbar />
+      <Navbar notifications={notifications} />
       <motion.div variants={textVariant()}>
         <h2
           id="admin_appointment"

@@ -51,39 +51,50 @@ const Message = () => {
       alert("Message cannot be empty.");
       return;
     }
-
+  
     const user = auth.currentUser;
-
+  
     if (!user) {
       alert("User is not authenticated.");
       return;
     }
-
+  
     try {
       // Fetch user details from Firestore
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
-
+  
       let userName = user.displayName || "Unknown User"; // Default to Firebase displayName
-
+  
       if (userSnap.exists()) {
         userName = userSnap.data().firstName + " " + userSnap.data().lastName; // Get full name
       }
-
+  
+      // Add message to Firestore
       await addDoc(collection(db, "messages"), {
         date: serverTimestamp(),
         details: chatMessage.trim(),
-        sender: userName, // Store actual user's name
+        sender: userName,
         userId: user.uid,
         appointmentId: chatAppointment.id,
       });
-
+  
+      // Create a notification for the recipient
+      await addDoc(collection(db, "notifications"), {
+        userId: chatAppointment.lawyer?.id || "admin", // Notify the lawyer or admin
+        message: `New message from ${userName}`,
+        details: chatMessage.trim(),
+        read: false,
+        timestamp: serverTimestamp(),
+      });
+  
       setChatMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
       alert("Failed to send the message. Please try again.");
     }
   };
+  
 
   useEffect(() => {
     if (!chatAppointment) return;
