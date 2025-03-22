@@ -21,7 +21,7 @@ const AppointmentModal = ({ formData, isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-        <h2 className="text-xl font-semibold mb-4 text-center text-orange-700">
+        <h2 className="text-xl font-bold mb-4 text-center text-green-700">
           Appointment Confirmed!
         </h2>
         <p className="text-gray-700 text-center">
@@ -32,7 +32,7 @@ const AppointmentModal = ({ formData, isOpen, onClose }) => {
         <div className="mt-6 flex justify-center">
           <button
             onClick={handleClose} // Call handleClose on button click
-            className="px-4 py-2 border-2 border-orange-700 text-black rounded hover:bg-gray-500 transition"
+            className="px-4 py-2 border-2 border-orange-700 text-black rounded hover:bg-slate-300 transition"
           >
             Close
           </button>
@@ -238,15 +238,15 @@ const EvascoAppointmentResult = () => {
       <div className="mt-10 text-center flex justify-between">
         <button
           onClick={handlePrevArticleClick}
-          className="px-6 py-2 border-2 border-orange-700 text-white rounded-lg hover:bg-gray-500"
+          className="px-6 py-2 border-2 border-white text-white rounded-lg hover:bg-red-900"
         >
           Go back
         </button>
 
         <button
           onClick={handleConfirmClick}
-          className="px-6 py-2 border-2 border-orange-700 hover:bg-slate-700 text-white rounded-lg text-sm font-semibold flex items-center"
-        >
+          className="px-6 py-2 border-2 border-white text-white rounded-lg hover:bg-teal-900"
+          >
           Confirm
         </button>
       </div>

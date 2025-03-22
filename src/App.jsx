@@ -8,6 +8,10 @@ import SignUp from "./components/registrations/SignUp";
 import ForgotPass from "./components/registrations/ForgotPass";
 
 import MainLayout from "./MainLayout";
+import TermsAndConditions_evasco from "./components/user_dashboard/about_lawyers/evasco_schedule/TermsAndConditions_evasco";
+import TermsAndConditions_magalgalit from "./components/user_dashboard/about_lawyers/magalgalit_schedule/TermsAndConditions_magalgalit";
+import TermsAndConditions_palmer from "./components/user_dashboard/about_lawyers/palmer_schedule/TermsAndConditions_palmer";
+
 // import Admin from "./components/admin_dashboard/Header";
 import Admin_Evasco from "./components/admin_dashboard/Admin_profile/Admin_Evasco";
 import Admin_Palmer from "./components/admin_dashboard/Admin_profile/Admin_Palmer";
@@ -131,6 +135,10 @@ const App = () => {
         {role === "user" && (
           <>
             <Route path="/main" element={<MainLayout />} />
+            <Route path="/terms-and-conditions" element={<TermsAndConditions_evasco/>} />
+            <Route path="/terms-and-conditions" element={<TermsAndConditions_magalgalit/>} />
+            <Route path="/terms-and-conditions" element={<TermsAndConditions_palmer/>} />
+            
             {/* User-Specific Routes & atty */}
             <Route path="/lawyer-status" element={<Lawyer />} />
             <Route path="/lawyer-appoinments" element={<Message />} />

@@ -56,7 +56,7 @@ const EvascoAppointmentTable = () => {
     return () => unsubscribe();
   }, []);
   const handlePrevArticleClick = () => {
-    navigate("/appointmentLawyer2");
+    navigate("/appointmentLawyer3");
   };
 
   // Handle changes to form fields
@@ -211,9 +211,9 @@ const handleSubmit = async (e) => {
     if (!date) return "bg-dark"; // Empty slots
     if (isHoliday(date) || date.getDay() === 0 || date.getDay() === 6) return "bg-gray-800"; // Weekend or holiday
     if (isPastDate(date)) return "bg-gray-800"; // Past date
-    if (selectedDate?.toDateString() === date?.toDateString()) return "bg-orange-800"; // Selected date
+    if (selectedDate?.toDateString() === date?.toDateString()) return "bg-green-800"; // Selected date
     if (new Date().toDateString() === date.toDateString()) return "border"; // Today
-    return "hover:bg-orange-900 cursor-pointer"; // Default class
+    return "hover:bg-green-900 cursor-pointer"; // Default class
   };
 
   const [selectedReason, setSelectedReason] = useState("");
@@ -342,6 +342,7 @@ const handleSubmit = async (e) => {
                           checked={selectedReason === reason}
                           onChange={(e) => handleReasonChange(e.target.value)}
                           className="w-4 h-4"
+                          required
                         />
                         <span className="text-white">{reason}</span>
                       </label>
@@ -354,7 +355,7 @@ const handleSubmit = async (e) => {
                     placeholder="Please specify your reason"
                     value={otherReason}
                     onChange={(e) => handleOtherReasonChange(e.target.value)}
-                    className="w-full mt-2 p-6 focus:ring-2 focus:ring-orange-700"
+                    className="w-full mt-2 p-6 focus:ring-2 focus:ring-orange-700" required
                   />
                 )}
               </tbody>
@@ -419,7 +420,7 @@ const handleSubmit = async (e) => {
                   type="button"
                   onClick={() => handleTimeSelect(slot.start, slot.end)}
                   className={`w-full py-2 text-white rounded-lg border ${formData.time === `${slot.start} - ${slot.end}`
-                    ? "bg-orange-900"
+                    ? "bg-green-900"
                     : "bg-gray-800"
                     }`}
                 >
@@ -434,14 +435,14 @@ const handleSubmit = async (e) => {
           <div className="text-center flex justify-between">
             <button
               onClick={handlePrevArticleClick}
-              className="px-6 py-2 border-2 border-orange-700 text-white rounded-lg hover:bg-gray-500"
-            >
+              className="px-6 py-2 border-2 border-white text-white rounded-lg hover:bg-red-900"
+              >
               Go back
             </button>
 
             <button
               type="submit"
-              className="px-6 py-2 border-2 border-orange-700 text-white rounded-lg hover:bg-gray-500"
+              className="px-6 py-2 border-2 border-white text-white rounded-lg hover:bg-teal-900"
             >
               Confirm
             </button>

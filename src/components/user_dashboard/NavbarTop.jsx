@@ -48,11 +48,11 @@ const Navbar = () => {
 
     const notificationsRef = collection(db, "notifications");
     const q = query(
-      notificationsRef,
-      where("userId", "==", user.uid), // ✅ Match logged-in user's notifications
+      collection(db, "notifications"),
+      where("userId", "==", user.uid), // 🔹 Match logged-in user's notifications
       where("read", "==", false),
-      orderBy("timestamp", "desc") // Sort notifications
-    );
+      orderBy("timestamp", "desc")
+    );    
 
     const unsubscribeNotifications = onSnapshot(q, (snapshot) => {
       setUnreadCount(snapshot.docs.length);
@@ -96,7 +96,7 @@ const Navbar = () => {
       });
 
       await addDoc(collection(db, "notifications"), {
-        userId: chatAppointment.clientId, // ✅ Notify client
+        userId: chatAppointment.clientId,
         message: `New message from admin`,
         details: chatMessage.trim(),
         read: false,

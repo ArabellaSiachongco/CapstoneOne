@@ -14,6 +14,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth"; // Import Firebase Auth to get the current user
+import { FaBell } from "react-icons/fa";
 
 // Predefined lawyer details
 const lawyers = {
@@ -44,7 +45,9 @@ const Message = () => {
   const [messages, setMessages] = useState([]);
   const [chatMessage, setChatMessage] = useState("");
   const [loading, setLoading] = useState(true);
-  const auth = getAuth();
+  const auth = getAuth(); 
+  const [user, setUser] = useState(null);
+
 
   const handleSendMessage = async () => {
     if (!chatAppointment || !chatMessage.trim()) {
@@ -53,7 +56,6 @@ const Message = () => {
     }
   
     const user = auth.currentUser;
-  
     if (!user) {
       alert("User is not authenticated.");
       return;
@@ -64,24 +66,35 @@ const Message = () => {
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
   
-      let userName = user.displayName || "Unknown User"; // Default to Firebase displayName
-  
+      let firstName = "";
+      let lastName = "";
       if (userSnap.exists()) {
-        userName = userSnap.data().firstName + " " + userSnap.data().lastName; // Get full name
+        firstName = userSnap.data()?.firstName || "";
+        lastName = userSnap.data()?.lastName || "";
+      }
+      const userName = firstName && lastName ? `${firstName} ${lastName}` : user.displayName || "Unknown User";
+  
+      // Ensure recipient (lawyer) is defined
+      const recipientId = chatAppointment.lawyer?.uid; // Use unique ID
+      if (!recipientId) {
+        console.error("❌ Error: Recipient ID is undefined.");
+        alert("Recipient not found.");
+        return;
       }
   
       // Add message to Firestore
       await addDoc(collection(db, "messages"), {
-        date: serverTimestamp(),
-        details: chatMessage.trim(),
-        sender: userName,
-        userId: user.uid,
+        sender: "client",
+        recipient: recipientId,
         appointmentId: chatAppointment.id,
+        lawyerId: recipientId,
+        details: chatMessage,
+        date: serverTimestamp(),
       });
   
-      // Create a notification for the recipient
+      // Add notification for lawyer
       await addDoc(collection(db, "notifications"), {
-        userId: chatAppointment.lawyer?.id || "admin", // Notify the lawyer or admin
+        userId: recipientId,
         message: `New message from ${userName}`,
         details: chatMessage.trim(),
         read: false,
@@ -89,12 +102,12 @@ const Message = () => {
       });
   
       setChatMessage("");
+      console.log("✅ Message and notification sent!");
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error("❌ Error sending message:", error);
       alert("Failed to send the message. Please try again.");
     }
-  };
-  
+  };  
 
   useEffect(() => {
     if (!chatAppointment) return;
@@ -123,36 +136,69 @@ const Message = () => {
 
     unsubscribeFromAuth = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const fetchAppointments = () => {
-          const appointmentsRef = collection(db, "appointments");
-          const appointmentsQuery = query(
-            appointmentsRef,
-            where("email", "==", user.email),
-            orderBy("timestamp", "desc")
-          );
+        console.log("⚡ Fetching appointments for:", user.email);
 
-          unsubscribeFromSnapshot = onSnapshot(
-            appointmentsQuery,
-            (snapshot) => {
-              if (!snapshot.empty) {
-                const appointments = snapshot.docs.map((doc) => ({
-                  id: doc.id,
-                  ...doc.data(),
-                  lawyerInfo: lawyers[doc.data().lawyer?.name] || {},
-                }));
-                setRecentAppointment(appointments[0]);
-                setPastAppointments(appointments.slice(1));
-              } else {
-                setRecentAppointment(null);
-                setPastAppointments([]);
-              }
-              setLoading(false);
-            }
-          );
-        };
+        const appointmentsRef = collection(db, "appointments");
+        const appointmentsQuery = query(
+          appointmentsRef,
+          where("email", "==", user.email),
+          orderBy("timestamp", "desc") // Order by date descending
+        );
 
-        fetchAppointments();
+        unsubscribeFromSnapshot = onSnapshot(appointmentsQuery, (snapshot) => {
+          console.log("🔥 Firestore query executed!");
+          console.log("📜 Firestore Snapshot:", snapshot.docs.length);
+
+          if (!snapshot.empty) {
+            const now = new Date();
+            now.setHours(0, 0, 0, 0); // Ensure comparison ignores time
+
+            const appointments = snapshot.docs.map((doc) => {
+              const data = doc.data();
+              let appointmentDate = data.timestamp
+                ? data.timestamp.toDate()
+                : new Date(data.date);
+
+              appointmentDate.setHours(0, 0, 0, 0); // Normalize time
+
+              return {
+                id: doc.id,
+                ...data,
+                appointmentDate,
+                lawyerInfo: lawyers[data.lawyer] || { name: "Unknown Lawyer" }, // Ensure correct lawyer mapping
+              };
+            });
+
+            // Ensure proper categorization of past and upcoming appointments
+            const upcomingAppointments = appointments
+              .filter((appt) => appt.appointmentDate >= now) // Only appointments in the future
+              .sort((a, b) => a.appointmentDate - b.appointmentDate); // Sort by earliest date
+
+            const pastAppointments = appointments
+              .filter((appt) => appt.appointmentDate < now) // Only past appointments
+              .sort((a, b) => b.appointmentDate - a.appointmentDate); // Sort by most recent past date
+
+            console.log("📅 Current Date:", now);
+            console.log("🔜 Upcoming Appointments:", upcomingAppointments);
+            console.log("⏳ Past Appointments:", pastAppointments);
+
+            setRecentAppointment(upcomingAppointments);
+            setPastAppointments(pastAppointments);
+
+            console.log(
+              "✅ State updated - Recent:",
+              upcomingAppointments[0] || null
+            );
+            console.log("✅ State updated - Past:", pastAppointments);
+          } else {
+            console.warn("⚠ No appointments found for user.");
+            setRecentAppointment(null);
+            setPastAppointments([]);
+          }
+          setLoading(false);
+        });
       } else {
+        console.warn("⚠ No user authenticated.");
         setRecentAppointment(null);
         setPastAppointments([]);
         setLoading(false);
@@ -179,77 +225,81 @@ const Message = () => {
         <div className="mb-6">
           <h3 className="text-lg font-bold mt-3 mb-4">Recent Appointment</h3>
           <div className="space-y-4">
-            {recentAppointment ? (
-              <div
-                key={recentAppointment.id}
-                className="p-2 mt-2 rounded shadow-md border-gray-300 tracking-wide"
-              >
-                <table className="min-w-full table-auto border-collapse border border-gray-300 mb-14">
-                  <tbody>
-                    <tr>
-                      <td className="px-4 py-3 text-right border font-semibold">
-                        Name
-                      </td>
-                      <td className="px-4 py-3 text-left border">
-                        {recentAppointment.firstName}{" "}
-                        {recentAppointment.lastName}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-3 text-right border font-semibold">
-                        Email
-                      </td>
-                      <td className="px-4 py-3 text-left border">
-                        {recentAppointment.email}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-3 text-right border font-semibold">
-                        Date
-                      </td>
-                      <td className="px-4 py-3 text-left border">
-                        {recentAppointment.date}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-3 text-right border font-semibold">
-                        Time
-                      </td>
-                      <td className="px-4 py-3 text-left border">
-                        {recentAppointment.time}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-3 text-right border font-semibold">
-                        Reason
-                      </td>
-                      <td className="px-4 py-3 text-left border">
-                        {recentAppointment.reasons}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-3 text-right border font-semibold">
-                        Lawyer
-                      </td>
-                      <td className="px-4 py-3 text-left border">
-                        {recentAppointment.lawyerInfo?.name || "Unknown Lawyer"}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan="2" className="px-4 py-3 text-center border">
-                        <button
-                          className="px-3 py-1 text-orange-400 rounded hover:text-orange-900"
-                          onClick={() => setChatAppointment(recentAppointment)}
+            {recentAppointment.length > 0 ? (
+              recentAppointment.map((appt) => (
+                <div
+                  key={appt.id}
+                  className="p-2 mt-2 rounded shadow-md border-gray-300 tracking-wide"
+                >
+                  <table className="min-w-full table-auto border-collapse border border-gray-300 mb-14">
+                    <tbody>
+                      <tr>
+                        <td className="px-4 py-3 text-right border font-semibold">
+                          Name
+                        </td>
+                        <td className="px-4 py-3 text-left border">
+                          {appt.firstName} {appt.lastName}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-3 text-right border font-semibold">
+                          Email
+                        </td>
+                        <td className="px-4 py-3 text-left border">
+                          {appt.email}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-3 text-right border font-semibold">
+                          Date
+                        </td>
+                        <td className="px-4 py-3 text-left border">
+                          {appt.date}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-3 text-right border font-semibold">
+                          Time
+                        </td>
+                        <td className="px-4 py-3 text-left border">
+                          {appt.time}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-3 text-right border font-semibold">
+                          Reason
+                        </td>
+                        <td className="px-4 py-3 text-left border">
+                          {appt.reasons}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-3 text-right border font-semibold">
+                          Lawyer
+                        </td>
+                        <td className="px-4 py-3 text-left border">
+                          {appt.lawyer?.name || "Unknown Lawyer"}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          colSpan="2"
+                          className="px-4 py-3 text-center border"
                         >
-                          Message
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                          <button
+                            className="px-3 py-1 text-orange-400 rounded hover:text-orange-900"
+                            onClick={() => setChatAppointment(appt)}
+                          >
+                            Message
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              ))
             ) : (
-              <p className="text-gray-500">No recent appointments found.</p>
+              <p className="text-gray-500">No upcoming appointments found.</p>
             )}
           </div>
         </div>
@@ -311,7 +361,7 @@ const Message = () => {
                           Lawyer
                         </td>
                         <td className="px-4 py-3 text-left border">
-                          {appointment.lawyerInfo?.name || "Unknown Lawyer"}
+                          {appointment.lawyer?.name || "Unknown Lawyer"}
                         </td>
                       </tr>
                       <tr>
@@ -410,6 +460,44 @@ const Message = () => {
               </button>
             </div>
           </div>
+        </div>
+      )}
+      {/* Notification Bell */}
+      {user && (
+        <div className="relative cursor-pointer ml-auto">
+          <div onClick={() => setShowDropdown(!showDropdown)}>
+            <FaBell className="text-2xl text-white" />
+            {unreadCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                {unreadCount}
+              </span>
+            )}
+          </div>
+
+          {/* Notification Dropdown */}
+          {showDropdown && (
+            <div className="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg p-3">
+              <h3 className="font-semibold text-gray-700 border-b pb-2 flex justify-between">
+                Notifications
+                {notifications.length > 0 && (
+                  <button className="text-blue-500 text-sm" onClick={markAllAsRead}>
+                    Mark all as read
+                  </button>
+                )}
+              </h3>
+              {notifications.length > 0 ? notifications.map((notification) => (
+                <div key={notification.id} className="notification p-2 border-b cursor-pointer hover:bg-gray-100" onClick={() => markNotificationAsRead(notification.id)}>
+                  <p className="text-sm font-semibold">{notification.message}</p>
+                  {notification.details && <p className="text-xs text-gray-600 mt-1">{notification.details}</p>}
+                  <span className="text-xs text-gray-500">
+                    {notification.timestamp ? new Date(notification.timestamp.toDate()).toLocaleTimeString() : "Unknown time"}
+                  </span>
+                </div>
+              )) : (
+                <p className="text-sm text-gray-500 p-2">No new notifications</p>
+              )}
+            </div>
+          )}
         </div>
       )}
     </>

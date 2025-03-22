@@ -4,7 +4,16 @@ import { GoTriangleRight, GoTriangleLeft } from "react-icons/go";
 import { SectionWrapper } from "../../../../wrapper";
 import { styles } from "../../../../styles";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, collection, query, where, getDocs, addDoc, getDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  getDoc,
+} from "firebase/firestore";
 
 const MagalgalitAppointmentTable = () => {
   const navigate = useNavigate();
@@ -25,10 +34,24 @@ const MagalgalitAppointmentTable = () => {
 
   // List of unavailable dates in YYYY-MM-DD format (for 2024-2025)
   const unavailable = [
-    "2024-12-24", "2024-12-25", "2024-12-30",
-    "2025-01-01", "2025-04-09", "2025-04-17", "2025-04-19", "2025-05-01",
-    "2025-06-12", "2025-08-21", "2025-08-25", "2025-11-01", "2025-11-30",
-    "2025-12-08", "2025-12-24", "2025-12-25", "2025-12-30", "2025-12-31"
+    "2024-12-24",
+    "2024-12-25",
+    "2024-12-30",
+    "2025-01-01",
+    "2025-04-09",
+    "2025-04-17",
+    "2025-04-19",
+    "2025-05-01",
+    "2025-06-12",
+    "2025-08-21",
+    "2025-08-25",
+    "2025-11-01",
+    "2025-11-30",
+    "2025-12-08",
+    "2025-12-24",
+    "2025-12-25",
+    "2025-12-30",
+    "2025-12-31",
   ];
 
   useEffect(() => {
@@ -79,43 +102,50 @@ const MagalgalitAppointmentTable = () => {
     }
     return true;
   };
-  
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  if (!validateForm()) return;
 
-  const db = getFirestore();
-  const appointmentsRef = collection(db, "appointments");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  // Query Firestore for existing appointments by email, date, and time
-  const appointmentQuery = query(
-    appointmentsRef,
-    where("email", "==", formData.email),
-    where("date", "==", formData.date),
-    where("time", "==", formData.time)
-  );
+    if (!validateForm()) return;
 
-  const querySnapshot = await getDocs(appointmentQuery);
+    const db = getFirestore();
+    const appointmentsRef = collection(db, "appointments");
 
-  if (!querySnapshot.empty) {
-    alert("You already have an appointment scheduled at this time. Please choose a different time.");
-    return;
-  }
+    // Query Firestore for existing appointments by email, date, and time
+    const appointmentQuery = query(
+      appointmentsRef,
+      where("email", "==", formData.email),
+      where("date", "==", formData.date),
+      where("time", "==", formData.time)
+    );
 
-  // If no existing appointment, proceed to confirm
-  await addDoc(appointmentsRef, formData); // Save appointment
-  navigate("/appointmentResultLawyer2", { state: { formData } });
-};
+    const querySnapshot = await getDocs(appointmentQuery);
+
+    if (!querySnapshot.empty) {
+      alert(
+        "You already have an appointment scheduled at this time. Please choose a different time."
+      );
+      return;
+    }
+
+    // If no existing appointment, proceed to confirm
+    await addDoc(appointmentsRef, formData); // Save appointment
+    navigate("/appointmentResultLawyer2", { state: { formData } });
+  };
 
   // Helper functions to check date exclusions
   const isPastDate = (date) => date < new Date().setHours(0, 0, 0, 0);
   const isHoliday = (date) => unavailable.includes(formatDate(date));
   const isDateSelectable = (date) =>
-    !isPastDate(date) && date.getDay() !== 0 && date.getDay() !== 6 && !isHoliday(date);
+    !isPastDate(date) &&
+    date.getDay() !== 0 &&
+    date.getDay() !== 6 &&
+    !isHoliday(date);
 
-  const getFirstDayOfMonth = (date) => new Date(date.getFullYear(), date.getMonth(), 1).getDay();
-  const getDaysInMonth = (date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  const getFirstDayOfMonth = (date) =>
+    new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+  const getDaysInMonth = (date) =>
+    new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
   const renderCalendarDays = () => {
     const firstDay = getFirstDayOfMonth(currentMonth);
@@ -125,7 +155,11 @@ const handleSubmit = async (e) => {
       days.push(null); // Empty slots for days before the first day
     }
     for (let day = 1; day <= daysInMonth; day++) {
-      const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+      const date = new Date(
+        currentMonth.getFullYear(),
+        currentMonth.getMonth(),
+        day
+      );
       days.push(date);
     }
     return days;
@@ -150,7 +184,6 @@ const handleSubmit = async (e) => {
     }
   };
 
-
   const goToPreviousMonth = () => {
     setCurrentMonth((prev) => {
       const newMonth = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
@@ -159,7 +192,9 @@ const handleSubmit = async (e) => {
   };
 
   const goToNextMonth = () => {
-    setCurrentMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+    setCurrentMonth(
+      (prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1)
+    );
   };
 
   const timeSlots = [
@@ -186,9 +221,11 @@ const handleSubmit = async (e) => {
     return slotTime < now; // True if the time slot is in the past
   };
 
-
   const handleTimeSelect = (start, end) => {
-    if (selectedDate && selectedDate.toDateString() !== new Date().toDateString()) {
+    if (
+      selectedDate &&
+      selectedDate.toDateString() !== new Date().toDateString()
+    ) {
       // If the selected date is not today, allow all slots
     } else if (isPastTime(start)) {
       return; // Prevent past time selection
@@ -207,14 +244,16 @@ const handleSubmit = async (e) => {
       `Time Slot: ${slot.start} - Disabled: ${isPastTime(slot.start)}`
     );
   });
-  
+
   const getCalendarDayClass = (date) => {
     if (!date) return "bg-dark"; // Empty slots
-    if (isHoliday(date) || date.getDay() === 0 || date.getDay() === 6) return "bg-gray-800"; // Weekend or holiday
+    if (isHoliday(date) || date.getDay() === 0 || date.getDay() === 6)
+      return "bg-gray-800"; // Weekend or holiday
     if (isPastDate(date)) return "bg-gray-800"; // Past date
-    if (selectedDate?.toDateString() === date?.toDateString()) return "bg-orange-800"; // Selected date
+    if (selectedDate?.toDateString() === date?.toDateString())
+      return "bg-green-800"; // Selected date
     if (new Date().toDateString() === date.toDateString()) return "border"; // Today
-    return "hover:bg-orange-900 cursor-pointer"; // Default class
+    return "hover:bg-green-900 cursor-pointer"; // Default class
   };
 
   const [selectedReason, setSelectedReason] = useState("");
@@ -225,7 +264,7 @@ const handleSubmit = async (e) => {
     "Business-related legal advice",
     "Assistance with document preparation",
     "Representation in a court case",
-    "Other reasons"
+    "Other reasons",
   ];
   const handleReasonChange = (reason) => {
     setSelectedReason(reason);
@@ -258,7 +297,10 @@ const handleSubmit = async (e) => {
           <div className="flex space-x-4 mb-4">
             {/* First Name */}
             <div className="w-1/3">
-              <label className="block text-white font-medium mb-2" htmlFor="firstName">
+              <label
+                className="block text-white font-medium mb-2"
+                htmlFor="firstName"
+              >
                 First Name
               </label>
               <input
@@ -275,7 +317,10 @@ const handleSubmit = async (e) => {
 
             {/* Middle Name */}
             <div className="w-1/3">
-              <label className="block text-white font-medium mb-2" htmlFor="middleName">
+              <label
+                className="block text-white font-medium mb-2"
+                htmlFor="middleName"
+              >
                 Middle Name
               </label>
               <input
@@ -291,7 +336,10 @@ const handleSubmit = async (e) => {
 
             {/* Last Name */}
             <div className="w-1/3">
-              <label className="block text-white font-medium mb-2" htmlFor="lastName">
+              <label
+                className="block text-white font-medium mb-2"
+                htmlFor="lastName"
+              >
                 Last Name
               </label>
               <input
@@ -306,7 +354,6 @@ const handleSubmit = async (e) => {
               />
             </div>
           </div>
-
           {/* Email */}
           <div className="w-full mb-4">
             <label className="text-white font-medium mb-2" htmlFor="email">
@@ -324,7 +371,6 @@ const handleSubmit = async (e) => {
             />
           </div>
           <br />
-
           {/* Reasons */}
           <label className="text-white font-medium mb-2" htmlFor="reason">
             Select a Reason
@@ -343,6 +389,7 @@ const handleSubmit = async (e) => {
                           checked={selectedReason === reason}
                           onChange={(e) => handleReasonChange(e.target.value)}
                           className="w-4 h-4"
+                          required
                         />
                         <span className="text-white">{reason}</span>
                       </label>
@@ -356,13 +403,14 @@ const handleSubmit = async (e) => {
                     value={otherReason}
                     onChange={(e) => handleOtherReasonChange(e.target.value)}
                     className="w-full mt-2 p-6 focus:ring-2 focus:ring-orange-700"
+                    required
                   />
                 )}
               </tbody>
             </table>
           </div>
-
-          <br /><br />
+          <br />
+          <br />
           {/* Calendar */}
           <div className="mb-4">
             <div className="flex justify-between mb-2">
@@ -374,7 +422,8 @@ const handleSubmit = async (e) => {
                 <GoTriangleLeft size={30} />
               </button>
               <p className="text-white font-medium">
-                {currentMonth.toLocaleString("default", { month: "long" })} {currentMonth.getFullYear()}
+                {currentMonth.toLocaleString("default", { month: "long" })}{" "}
+                {currentMonth.getFullYear()}
               </p>
               <button
                 type="button"
@@ -387,7 +436,15 @@ const handleSubmit = async (e) => {
 
             {/* Weekday Labels */}
             <div className="grid grid-cols-7 gap-2 text-center font-bold text-white mb-2">
-              {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map((day, index) => (
+              {[
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+              ].map((day, index) => (
                 <div key={index} className="py-2 bg-gray-700 rounded-lg">
                   {day}
                 </div>
@@ -407,22 +464,24 @@ const handleSubmit = async (e) => {
               ))}
             </div>
           </div>
-
-          <br /><br />
-
+          <br />
+          <br />
           {/* Time Slots */}
           <div className="mb-4">
-            <h3 className="text-white font-medium mb-4">These are the available time slots:</h3>
+            <h3 className="text-white font-medium mb-4">
+              These are the available time slots:
+            </h3>
             <div className="grid grid-cols-3 gap-4">
               {timeSlots.map((slot) => (
                 <button
                   key={slot.id}
                   type="button"
                   onClick={() => handleTimeSelect(slot.start, slot.end)}
-                  className={`w-full py-2 text-white rounded-lg border ${formData.time === `${slot.start} - ${slot.end}`
-                    ? "bg-orange-900"
-                    : "bg-gray-800"
-                    }`}
+                  className={`w-full py-2 text-white rounded-lg border ${
+                    formData.time === `${slot.start} - ${slot.end}`
+                      ? "bg-green-900"
+                      : "bg-gray-800"
+                  }`}
                 >
                   {slot.start} - {slot.end}
                 </button>
@@ -430,19 +489,18 @@ const handleSubmit = async (e) => {
             </div>
           </div>
           <br /> <br />
-
           {/* Submit */}
           <div className="text-center flex justify-between">
             <button
               onClick={handlePrevArticleClick}
-              className="px-6 py-2 border-2 border-orange-700 text-white rounded-lg hover:bg-gray-500"
-            >
+              className="px-6 py-2 border-2 border-white text-white rounded-lg hover:bg-red-900"
+              >
               Go back
             </button>
 
             <button
               type="submit"
-              className="px-6 py-2 border-2 border-orange-700 text-white rounded-lg hover:bg-gray-500"
+              className="px-6 py-2 border-2 border-white text-white rounded-lg hover:bg-teal-900"
             >
               Confirm
             </button>
