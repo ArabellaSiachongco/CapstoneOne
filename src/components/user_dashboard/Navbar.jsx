@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { VscListSelection } from "react-icons/vsc";
 import { FiX } from "react-icons/fi";
-import { table_of_content_constitution } from "../../laws/table_of_content.json";
-import { table_of_content_RA12066 } from "../../laws/table_of_content.json";
+import { table_of_content_constitution, table_of_content_RA12066, table_of_content_family_code } from "../../laws/table_of_content.json";
 import { VscSignOut } from "react-icons/vsc";
-
 
 const Navbar = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
@@ -16,7 +14,9 @@ const Navbar = () => {
       return table_of_content_constitution;
     } else if (location.pathname.startsWith("/chapter")) {
       return table_of_content_RA12066;
-    } else {
+    } else if (location.pathname.startsWith("/family")) {
+      return table_of_content_family_code;
+    }else {
       return [];
     }
   })();

@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { styles } from "../../styles.js";
-import "../layouts/book.css";
-import { table_of_content_RA12066 } from "../../laws/table_of_content.json";
+import { styles } from "../../../styles.js";
+import "../../layouts/book.css";
+import { table_of_content_RA12066 } from "../../../laws/table_of_content.json";
 import { SectionWrapper, ScrollWrapper } from "/src/wrapper";
-import { fadeIn, staggerContainer } from "../../utility/motion.js";
-import { useDictionary } from "../../utility/dictionaryAPI.js";
+import { fadeIn, staggerContainer } from "../../../utility/motion.js";
+import { useDictionary } from "../../../utility/dictionaryAPI.js";
 
 const RA_12066 = () => {
     const { selectedWord, definition, tooltipPosition, handleTextSelection } =
@@ -18,7 +18,7 @@ const RA_12066 = () => {
                     initial="hidden"
                     animate="show"
                     variants={fadeIn("top", "spring", 0.5, 1)}
-                    id="Constitution_ID"
+                    id="RA_8371_ID"
                     className="p-8 min-h-screen text-center image-border-table"
                 >
                     <motion.div variants={fadeIn("top", "spring", 0.5, 1)} className="mb-16">

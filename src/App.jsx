@@ -38,11 +38,12 @@ import AppointmentLawyer3 from "./components/user_dashboard/about_lawyers/evasco
 import AppointmentTableLawyer3 from "./components/user_dashboard/about_lawyers/evasco_schedule/EvascoAppoinmentTable";
 import AppointmentResultLawyer3 from "./components/user_dashboard/about_lawyers/evasco_schedule/EvascoAppointmentResult";
 
-
 import Layout from "./components/user_dashboard/Layout"; //layout for all the navbars, ANG GULO KO
 
-import RA_12066 from "./components/user_dashboard/RA_12066";
-import Constitution from "./components/user_dashboard/Constitution";
+import RA_12066 from "./components/user_dashboard/books/RA_12066";
+import Constitution from "./components/user_dashboard/books/Constitution";
+import FamilyCode from "./components/user_dashboard/books/FamilyCode";
+
 import ArticleOne from "./components/pages/constitution_content/ArticleOne";
 import ArticleTwo from "./components/pages/constitution_content/ArticleTwo";
 import ArticleThree from "./components/pages/constitution_content/ArticleThree";
@@ -75,10 +76,24 @@ import ChapterTen from "./components/pages/peoples_rights_content/ChapterTen";
 import ChapterEleven from "./components/pages/peoples_rights_content/ChapterEleven";
 import ChapterTwelve from "./components/pages/peoples_rights_content/ChapterTwelve";
 
+import FamilyOne from "./components/pages/family_code/FamilyOne";
+import FamilyTwo from "./components/pages/family_code/FamilyTwo";
+import FamilyThree from "./components/pages/family_code/FamilyThree";
+import FamilyFour from "./components/pages/family_code/FamilyFour";
+import FamilyFive from "./components/pages/family_code/FamilyFive";
+import FamilySix from "./components/pages/family_code/FamilySix";
+import FamilySeven from "./components/pages/family_code/FamilySeven";
+import FamilyEight from "./components/pages/family_code/FamilyEight";
+
 const NavbarWrapper = ({ children }) => {
   const location = useLocation();
-  const showNavbar = location.pathname.startsWith("/articleOne") || location.pathname.startsWith("/chapterOne") || location.pathname.startsWith("/main");
-  // const showNavbarTop = location.pathname.startsWith("/ai") || location.pathname.startsWith("/lawyer-status") || location.pathname.startsWith("/appointment") || location.pathname.startsWith("/lawyer-appoinments");
+  const showNavbar = 
+  location.pathname.startsWith("/articleOne") || 
+  location.pathname.startsWith("/chapterOne") || 
+  location.pathname.startsWith("/main") || 
+  location.pathname.startsWith("/familyOne")
+  // location.pathname.startsWith("/family");  
+  
   const showNavbarTop = location.pathname.startsWith("/lawyer-status") || location.pathname.startsWith("/appointment") || location.pathname.startsWith("/lawyer-appoinments");
   return (
     <>
@@ -88,7 +103,6 @@ const NavbarWrapper = ({ children }) => {
     </>
   );
 };
-
 
 const StarsWrapper = ({ children }) => {
   return (
@@ -157,6 +171,7 @@ const App = () => {
             <Route path="/ai" element={<AI />} />
             <Route path="/constitution" element={<Constitution />} />
             <Route path="/RA_8371" element={<RA_12066 />} />
+            <Route path="/family" element={<FamilyCode />} />
 
             {/* Article Routes */}
             <Route path="/articleOne" element={<Layout><ArticleOne /></Layout>} />
@@ -191,6 +206,18 @@ const App = () => {
             <Route path="/chapterTen" element={<Layout> <ChapterTen /></Layout>} />
             <Route path="/chapterEleven" element={<Layout> <ChapterEleven /></Layout>} />
             <Route path="/chapterTwelve" element={<Layout> <ChapterTwelve /></Layout>} />
+            
+            {/* family code  */}
+            <Route path="/familyOne" element={<Layout> <FamilyOne /></Layout>} />
+            <Route path="/familyTwo" element={<Layout> <FamilyTwo /></Layout>} />
+            <Route path="/familyThree" element={<Layout> <FamilyThree /></Layout>} />
+            <Route path="/familyFour" element={<Layout> <FamilyFour /></Layout>} />
+            <Route path="/familyFive" element={<Layout> <FamilyFive /></Layout>} />
+            <Route path="/familySix" element={<Layout> <FamilySix /></Layout>} />
+            <Route path="/familySeven" element={<Layout> <FamilySeven /></Layout>} />
+            <Route path="/familyEight" element={<Layout> <FamilyEight /></Layout>} />
+            
+            
           </>
         )}
       {/* Admin Routes */}
