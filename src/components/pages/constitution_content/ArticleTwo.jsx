@@ -3,7 +3,7 @@ import "../../layouts/book.css";
 import { useNavigate } from "react-router-dom";
 import { styles } from "../../../styles.js";
 import { SectionWrapper, ScrollWrapper } from "../../../wrapper";
-import declarations from "../../../constants/book_constitution/declaration.js";
+import declarations from "../../../laws/book_constitution/declaration.json";
 import { useDictionary } from "../../../utility/dictionaryAPI.js";
 
 const ArticleTwo = () => {
@@ -43,7 +43,7 @@ const ArticleTwo = () => {
       <ScrollWrapper>
         <div>
           {/* Iterate through the declarations array */}
-          {declarations.map((item) => (
+          {declarations.declarations.map((item) => (
             <div key={item.id} className="my-5">
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
               <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>

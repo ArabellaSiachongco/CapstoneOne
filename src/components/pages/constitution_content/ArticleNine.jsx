@@ -3,10 +3,10 @@ import "../../layouts/book.css";
 import { useNavigate } from "react-router-dom";
 import { styles } from "../../../styles.js";
 import { SectionWrapper, ScrollWrapper } from "../../../wrapper";
-import commissions from "../../../constants/book_constitution/commission.js";
-import civil from "../../../constants/book_constitution/civil.js";
-import election from "../../../constants/book_constitution/election.js";
-import audit from "../../../constants/book_constitution/audit.js";
+import commissions from "../../../laws/book_constitution/commission.json";
+import civil from "../../../laws/book_constitution/civil.json";
+import election from "../../../laws/book_constitution/election.json";
+import audit from "../../../laws/book_constitution/audit.json";
 import { useDictionary } from "../../../utility/dictionaryAPI.js";
 
 const ArticleNine = () => {
@@ -44,7 +44,7 @@ const ArticleNine = () => {
     <div className="text-spacing-3 leading-relaxed tracking-wide">
       <ScrollWrapper>
         <div>
-          {commissions.map((item) => (
+          {commissions.commissions.map((item) => (
             <div key={item.id} className="my-5">
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
               <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
@@ -67,7 +67,7 @@ const ArticleNine = () => {
 
           <br />
           <br />
-          {civil.map((item) => (
+          {civil.civil.map((item) => (
             <div key={item.id} className="my-5">
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
               <h5 className={styles.paragraphHeadText}>{item.title}</h5>
@@ -89,7 +89,7 @@ const ArticleNine = () => {
 
           <br />
           <br />
-          {election.map((item) => (
+          {election.election.map((item) => (
             <div key={item.id} className="my-5">
               {/* Display Article Title and Subtitle */}
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
@@ -113,7 +113,7 @@ const ArticleNine = () => {
           <br />
           <br />
           {/* Iterate through the declarations array */}
-          {audit.map((item) => (
+          {audit.audit.map((item) => (
             <div key={item.id} className="my-5">
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
               <h5 className={styles.paragraphHeadText}>{item.title}</h5>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { styles } from "../../styles.js";
 import "../layouts/book.css";
-import { table_of_content_RA12066 } from "../../constants/table_of_content.js";
+import { table_of_content_RA12066 } from "../../laws/table_of_content.json";
 import { SectionWrapper, ScrollWrapper } from "/src/wrapper";
 import { fadeIn, staggerContainer } from "../../utility/motion.js";
 import { useDictionary } from "../../utility/dictionaryAPI.js";

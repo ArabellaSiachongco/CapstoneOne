@@ -3,13 +3,7 @@ import "../../layouts/book.css";
 import { useNavigate } from "react-router-dom";
 import { styles } from "../../../styles.js";
 import { SectionWrapper, ScrollWrapper } from "../../../wrapper";
-import {
-  educations,
-  languages,
-  scienceAndTechnology,
-  artsAndCulture,
-  sports,
-} from "../../../constants/book_constitution/education.js";
+import educationData from "../../../laws/book_constitution/education.json";
 import { useDictionary } from "../../../utility/dictionaryAPI.js";
 
 const ArticleFourteen = () => {
@@ -18,14 +12,17 @@ const ArticleFourteen = () => {
     useDictionary();
   const [showScrollButton, setShowScrollButton] = useState(false);
 
-  // Handle Scroll Event to toggle visibility of the scroll-to-top button
+  const sectionsData = [
+    { key: "educations", data: educationData.educations },
+    { key: "languages", data: educationData.languages },
+    { key: "scienceAndTechnology", data: educationData.scienceAndTechnology },
+    { key: "artsAndCulture", data: educationData.artsAndCulture },
+    { key: "sports", data: educationData.sports },
+  ];
+
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 200) {
-        setShowScrollButton(true);
-      } else {
-        setShowScrollButton(false);
-      }
+      setShowScrollButton(window.scrollY > 200);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -36,166 +33,67 @@ const ArticleFourteen = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleNextArticleClick = () => {
-    navigate("/articleFifteen");
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
-  const handlePrevArticleClick = () => {
-    navigate("/articleThirteen");
+  const renderSections = (data) => {
+    return (
+      data?.map((item) => (
+        <div key={item.id} className="my-5">
+          <h5 className={styles.paragraphSubText}>{item.subtitle || item.title}</h5>
+          {item.subtitle && <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>}
+          <div>
+            {item.sections?.map((section, index) => (
+              <div key={index} className="my-4">
+                <h6 className={styles.paragraphSubText}>{section.name}</h6>
+                <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>
+                  {section.paragraph}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))
+    );
   };
 
   return (
     <div className="text-spacing-3 leading-relaxed tracking-wide">
       <ScrollWrapper>
         <div>
-          {educations.map((item) => (
-            <div key={item.id} className="my-5">
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
-
-              <div>
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+          {sectionsData.map(({ key, data }) => (
+            <React.Fragment key={key}>{renderSections(data)}</React.Fragment>
           ))}
-          <br></br>
-
-          {languages.map((item) => (
-            <div key={item.id} className="my-5">
-              <h5 className={styles.paragraphHeadText}>{item.title}</h5>
-              <div>
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <br></br>
-
-          {scienceAndTechnology.map((item) => (
-            <div key={item.id} className="my-5">
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
-
-              <div>
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <br></br>
-
-          {artsAndCulture.map((item) => (
-            <div key={item.id} className="my-5">
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
-
-              <div>
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <br></br>
-
-          {sports.map((item) => (
-            <div key={item.id} className="my-5">
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
-
-              <div>
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <br></br>
-
           {selectedWord && (
             <div
               className="absolute text-left bg-white p-4 shadow-lg rounded-lg max-w-xs text-black"
-              style={{
-                left: tooltipPosition.left,
-                top: tooltipPosition.top,
-                zIndex: 100,
-              }}
+              style={{ left: tooltipPosition.left, top: tooltipPosition.top, zIndex: 100 }}
             >
               <div className="flex items-center justify-between">
                 <p className={styles.dictionaryText}>{selectedWord}</p>
-                {/* Icon aligned to the right */}
                 <i className="fas fa-volume-up ml-5 text-gray-600"></i>
               </div>
               <hr className="border-2 mb-2" />
               <p>{definition}</p>
             </div>
           )}
-          {/* Button Section */}
           <div className="mt-10 text-center flex justify-between">
-            {/* Previous Article Button */}
             <button
-              onClick={handlePrevArticleClick}
-              className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500"
+              onClick={() => handleNavigation("/articleThirteen")}
+              className="px-6 py-2 border text-white rounded-lg hover:bg-gray-500"
             >
               Previous Article
             </button>
-
-            {/* Next Article Button */}
             <button
-              onClick={handleNextArticleClick}
-              className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500"
+              onClick={() => handleNavigation("/articleFifteen")}
+              className="px-6 py-2 border text-white rounded-lg hover:bg-gray-500"
             >
               Next Article
             </button>
           </div>
         </div>
       </ScrollWrapper>
-
-      {/* Scroll-to-Top Button */}
       {showScrollButton && (
         <button
           onClick={scrollToTop}

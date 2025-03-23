@@ -3,7 +3,7 @@ import "../../layouts/book.css";
 import { useNavigate } from "react-router-dom";
 import { styles } from "../../../styles.js";
 import { SectionWrapper, ScrollWrapper } from "../../../wrapper";
-import national from "../../../constants/book_constitution/national.js";
+import national from "../../../laws/book_constitution/national.json";
 import { useDictionary } from "../../../utility/dictionaryAPI.js";
 
 const ArticleOne = () => {
@@ -30,7 +30,7 @@ const ArticleOne = () => {
   };
 
   const handleNextArticleClick = () => {
-    navigate(national[0].btn);
+    navigate(national.national[0].btn);
   };
 
   return (
@@ -40,7 +40,7 @@ const ArticleOne = () => {
     >
       <ScrollWrapper>
         <div>
-          {national.map((item) => (
+          {national.national.map((item) => (
             <div key={item.id} className="my-5">
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
               <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>

@@ -3,7 +3,7 @@ import "../../layouts/book.css";
 import { useNavigate } from "react-router-dom";
 import { styles } from "../../../styles.js";
 import { SectionWrapper, ScrollWrapper } from "../../../wrapper";
-import { justice, laborSection, agrarian, housing, heal, girls, role, human } from "../../../constants/book_constitution/justice.js";
+import justiceData from "../../../laws/book_constitution/justice.json";
 import { useDictionary } from "../../../utility/dictionaryAPI.js";
 
 const ArticleThirteen = () => {
@@ -12,16 +12,19 @@ const ArticleThirteen = () => {
     useDictionary();
 
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const justice = justiceData.justice || [];
+  const laborSection = justiceData.laborSection || [];
+  const agrarian = justiceData.agrarian || [];
+  const housing = justiceData.housing || [];
+  const heal = justiceData.heal || [];
+  const girls = justiceData.girls || [];
+  const role = justiceData.role || [];
+  const human = justiceData.human || [];
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 200) {
-        setShowScrollButton(true);
-      } else {
-        setShowScrollButton(false);
-      }
+      setShowScrollButton(window.scrollY > 200);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -30,241 +33,66 @@ const ArticleThirteen = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleNextArticleClick = () => {
-    navigate("/articleFourteen");
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
-  const handlePrevArticleClick = () => {
-    navigate("/articleTwelve");
-  };
+  const renderSections = (data) => (
+    data.map((item) => (
+      <div key={item.id} className="my-5">
+        <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
+        <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
+        <div>
+          {item.sections?.map((section, index) => (
+            <div key={index} className="my-4">
+              <h6 className={styles.paragraphSubText}>{section.name}</h6>
+              <p onMouseUp={handleTextSelection} className={styles.paragraphSubTextLower}>
+                {section.paragraph}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))
+  );
 
   return (
     <div className="text-spacing-3 leading-relaxed tracking-wide">
       <ScrollWrapper>
         <div>
-          {/* Iterate through the declarations array */}
-          {justice.map((item) => (
-            <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
-
-              <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <br></br>
-
-          {laborSection.map((item) => (
-            <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
-              <h5 className={styles.paragraphHeadText}>{item.title}</h5>
-              <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <br></br>
-
-          {agrarian.map((item) => (
-            <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
-
-              <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <br></br>
-
-          {housing.map((item) => (
-            <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
-
-              <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <br></br>
-
-          {heal.map((item) => (
-            <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
-
-              <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <br></br>
-
-          {girls.map((item) => (
-            <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
-
-              <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <br></br>
-
-          {role.map((item) => (
-            <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
-
-              <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <br></br>
-
-          {human.map((item) => (
-            <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
-
-              <div>
-                {/* <h5 className={styles.paragraphSubText}>Principles</h5> */}
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-          <br></br>
+          {renderSections(justice)}
+          {renderSections(laborSection)}
+          {renderSections(agrarian)}
+          {renderSections(housing)}
+          {renderSections(heal)}
+          {renderSections(girls)}
+          {renderSections(role)}
+          {renderSections(human)}
 
           {selectedWord && (
             <div
               className="absolute text-left bg-white p-4 shadow-lg rounded-lg max-w-xs text-black"
-              style={{
-                left: tooltipPosition.left,
-                top: tooltipPosition.top,
-                zIndex: 100,
-              }}
+              style={{ left: tooltipPosition.left, top: tooltipPosition.top, zIndex: 100 }}
             >
               <div className="flex items-center justify-between">
                 <p className={styles.dictionaryText}>{selectedWord}</p>
-                {/* Icon aligned to the right */}
                 <i className="fas fa-volume-up ml-5 text-gray-600"></i>
               </div>
               <hr className="border-2 mb-2" />
               <p>{definition}</p>
             </div>
           )}
-          {/* Button Section */}
+
           <div className="mt-10 text-center flex justify-between">
-            {/* Previous Article Button */}
             <button
-              onClick={handlePrevArticleClick}
-              className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500"
+              onClick={() => handleNavigation("/articleTwelve")}
+              className="px-6 py-2 border text-white rounded-lg hover:bg-gray-500"
             >
               Previous Article
             </button>
-
-            {/* Next Article Button */}
             <button
-              onClick={handleNextArticleClick}
-              className="px-6 py-2 border justify-end text-white rounded-lg hover:bg-gray-500"
+              onClick={() => handleNavigation("/articleFourteen")}
+              className="px-6 py-2 border text-white rounded-lg hover:bg-gray-500"
             >
               Next Article
             </button>
@@ -272,7 +100,6 @@ const ArticleThirteen = () => {
         </div>
       </ScrollWrapper>
 
-      {/* Scroll-to-Top Button */}
       {showScrollButton && (
         <button
           onClick={scrollToTop}

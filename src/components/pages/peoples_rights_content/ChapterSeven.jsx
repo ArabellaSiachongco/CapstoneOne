@@ -9,7 +9,7 @@ import {
   offices,
   chapterSevenII,
   chapterSevenIII,
-} from "../../../constants/book_peoples_right/chapterSeven.js";
+} from "../../../laws/book_peoples_right/chapterSeven.json";
 import { useDictionary } from "../../../utility/dictionaryAPI.js";
 
 const ChapterSeven = () => {
@@ -45,7 +45,7 @@ const ChapterSeven = () => {
     <div>
       <ScrollWrapper>
         <div>
-          {chapterSeven.map((item) => (
+          {chapterSeven.chapterSeven.map((item) => (
             <div key={item.id} className="my-5">
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
               <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
@@ -67,7 +67,7 @@ const ChapterSeven = () => {
             </div>
           ))}
 
-          {chapterPower.map((item) => (
+          {chapterPower.chapterPower.map((item) => (
             <div key={item.name} className="my-5">
               <h5 className={styles.paragraphSubText}>
                 {item.name} {item.subtitle}
@@ -93,7 +93,7 @@ const ChapterSeven = () => {
             </div>
           ))}
 
-          {chapterSevenII.map((item) => (
+          {chapterSevenII.chapterSevenII.map((item) => (
             <div key={item.name} className="my-5">
               <h6 className={styles.paragraphSubText}>
                 {item.name} {item.subtitle}
@@ -107,7 +107,7 @@ const ChapterSeven = () => {
             </div>
           ))}
 
-          {offices.map((item) => (
+          {offices.offices.map((item) => (
             <div key={item.name} className="my-5">
               <h5 className={styles.paragraphSubText}>
                 {item.name} {item.subtitle}
@@ -135,7 +135,7 @@ const ChapterSeven = () => {
             </div>
           ))}
 
-          {chapterSevenIII.map((item) => (
+          {chapterSevenIII.chapterSevenIII.map((item) => (
             <div key={item.name} className="my-5">
               <h5 className={styles.paragraphSubText}>
                 {item.name} {item.subtitle}

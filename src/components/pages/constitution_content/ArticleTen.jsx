@@ -3,10 +3,7 @@ import "../../layouts/book.css";
 import { useNavigate } from "react-router-dom";
 import { styles } from "../../../styles.js";
 import { SectionWrapper, ScrollWrapper } from "../../../wrapper";
-import {
-  government,
-  region,
-} from "../../../constants/book_constitution/government.js";
+import governmentData from "../../../laws/book_constitution/government.json";
 import { useDictionary } from "../../../utility/dictionaryAPI.js";
 
 const ArticleTen = () => {
@@ -16,13 +13,12 @@ const ArticleTen = () => {
 
   const [showScrollButton, setShowScrollButton] = useState(false);
 
+  const government = governmentData.government || [];
+  const region = governmentData.region || [];
+
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 200) {
-        setShowScrollButton(true);
-      } else {
-        setShowScrollButton(false);
-      }
+      setShowScrollButton(window.scrollY > 200);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -45,50 +41,51 @@ const ArticleTen = () => {
     <div className="text-spacing-3 leading-relaxed tracking-wide">
       <ScrollWrapper>
         <div>
-          {government.map((item) => (
-            <div key={item.id} className="my-5">
-              {/* Display Article Title and Subtitle */}
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
+          {government.length > 0 &&
+            government.map((item) => (
+              <div key={item.id} className="my-5">
+                <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
+                <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
 
-              <div>
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
+                <div>
+                  {item.sections.map((section, index) => (
+                    <div key={index} className="my-4">
+                      <h6 className={styles.paragraphSubText}>{section.name}</h6>
+                      <p
+                        onMouseUp={handleTextSelection}
+                        className={styles.paragraphSubTextLower}
+                      >
+                        {section.paragraph}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
           <br />
           <br />
-          {region.map((item) => (
-            <div key={item.id} className="my-5">
-              <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
-              <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
+          {region.length > 0 &&
+            region.map((item) => (
+              <div key={item.id} className="my-5">
+                <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
+                <h4 className={`${styles.headText} mb-10`}>{item.title}</h4>
 
-              <div>
-                {item.sections.map((section, index) => (
-                  <div key={index} className="my-4">
-                    <h6 className={styles.paragraphSubText}>{section.name}</h6>
-                    <p
-                      onMouseUp={handleTextSelection}
-                      className={styles.paragraphSubTextLower}
-                    >
-                      {section.paragraph}
-                    </p>
-                  </div>
-                ))}
+                <div>
+                  {item.sections.map((section, index) => (
+                    <div key={index} className="my-4">
+                      <h6 className={styles.paragraphSubText}>{section.name}</h6>
+                      <p
+                        onMouseUp={handleTextSelection}
+                        className={styles.paragraphSubTextLower}
+                      >
+                        {section.paragraph}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
           {selectedWord && (
             <div
@@ -101,7 +98,6 @@ const ArticleTen = () => {
             >
               <div className="flex items-center justify-between">
                 <p className={styles.dictionaryText}>{selectedWord}</p>
-                {/* Icon aligned to the right */}
                 <i className="fas fa-volume-up ml-5 text-gray-600"></i>
               </div>
               <hr className="border-2 mb-2" />

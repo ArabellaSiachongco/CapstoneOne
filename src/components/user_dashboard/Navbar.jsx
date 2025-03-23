@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { VscListSelection } from "react-icons/vsc";
 import { FiX } from "react-icons/fi";
-import { table_of_content_constitution } from "../../constants/table_of_content.js";
-import { table_of_content_RA12066 } from "../../constants/table_of_content.js";
+import { table_of_content_constitution } from "../../laws/table_of_content.json";
+import { table_of_content_RA12066 } from "../../laws/table_of_content.json";
 import { VscSignOut } from "react-icons/vsc";
 
 

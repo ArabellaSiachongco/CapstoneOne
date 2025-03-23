@@ -2,7 +2,7 @@ import { React, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion"; 
 import { styles } from "../../styles.js";
-import { table_of_content_constitution } from "../../constants/table_of_content.js";
+import { table_of_content_constitution } from "../../laws/table_of_content.json";
 import { SectionWrapper, ScrollWrapper } from "/src/wrapper";
 import { fadeIn } from "../../utility/motion.js";
 import "../layouts/book.css";

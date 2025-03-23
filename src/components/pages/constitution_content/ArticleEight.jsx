@@ -3,7 +3,7 @@ import "/src/components/layouts/book.css";
 import { useNavigate } from "react-router-dom";
 import { styles } from "/src/styles.js";
 import { SectionWrapper, ScrollWrapper } from "/src/wrapper";
-import judicial from "/src/constants/book_constitution/judicial.js";
+import judicial from "../../../laws/book_constitution/judicial.json";
 import { useDictionary } from "/src/utility/dictionaryAPI.js";
 
 const ArticleEight = () => {
@@ -44,7 +44,7 @@ const ArticleEight = () => {
       <ScrollWrapper>
         <div>
           {/* declarations array */}
-          {judicial.map((item) => (
+          {judicial.judicial.map((item) => (
             <div key={item.id} className="my-5">
               {/* Display Article Title and Subtitle */}
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>

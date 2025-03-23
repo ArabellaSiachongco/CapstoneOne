@@ -3,7 +3,7 @@ import "../../layouts/book.css";
 import { useNavigate } from "react-router-dom";
 import { styles } from "../../../styles.js";
 import { SectionWrapper, ScrollWrapper } from "../../../wrapper";
-import chapterThree from "../../../constants/book_peoples_right/chapterThree.js";
+import chapterThree from "../../../laws/book_peoples_right/chapterThree.json";
 import { useDictionary } from "../../../utility/dictionaryAPI.js";
 
 const ChapterThree = () => {
@@ -43,7 +43,7 @@ const ChapterThree = () => {
     <div className="text-spacing-3 leading-relaxed tracking-wide">
       <ScrollWrapper>
         <div>
-          {chapterThree.map((item) => (
+          {chapterThree.chapterThree.map((item) => (
             <div key={item.id} className="my-5">
               {/* Chapter Title and Subtitle */}
               <h5 className={styles.paragraphSubText}>{item.subtitle}</h5>
