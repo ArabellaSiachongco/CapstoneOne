@@ -56,16 +56,6 @@ const Admin_Magalgalit = () => {
     setSelectedAppointmentId(null); // Reset when closing
   };
 
-  const handleReject = () => {
-    if (selectedAppointment) {
-      setRejectedAppointments([...rejectedAppointments, selectedAppointment]);
-      setAppointments(
-        appointments.filter((app) => app.id !== selectedAppointment.id)
-      );
-      setShowModal(false);
-    }
-  };
-
   useEffect(() => {
     const q = query(
       collection(db, "appointments"),
