@@ -410,6 +410,7 @@ const Message = () => {
                   <th className="border p-2">Date</th>
                   <th className="border p-2">Time</th>
                   <th className="border p-2">Client</th>
+                  <th className="border p-2">Lawyer</th>
                   <th className="border p-2">Reason</th>
                   <th className="border p-2">Messages</th>
                 </tr>
@@ -421,9 +422,10 @@ const Message = () => {
                     <td className="border p-2">{appointment.time}</td>
                     <td className="border p-2">
                       {appointment.client ||
-                        `${appointment.firstName || ""} ${appointment.middleName || ""} ${appointment.lastName || ""}`.trim() ||
+                        `${appointment.firstName || ""} ${appointment.lastName || ""}`.trim() ||
                         "Unknown Client"}
                     </td>
+                    <td className="border p-2">{appointment.lawyer?.name}</td>
                     <td className="border p-2">{appointment.reasons}</td>
                     <td className="border p-2 text-center">
                       <button
