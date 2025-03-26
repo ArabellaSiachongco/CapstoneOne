@@ -11,6 +11,10 @@ const navLinks = [
         id: "lawyer-appoinments",
         title: "APPOINTMENT",
     },
+    {
+        id: "forms",
+        title: "DOWNLOADABLE FORMS",
+    },
 ];
 
 const userLink = [

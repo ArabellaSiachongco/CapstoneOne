@@ -22,7 +22,7 @@ import Lawyer from "./components/user_dashboard/about_lawyers/Lawyer";
 import AI from "./components/user_dashboard/AI/gemini/Gemini_main";
 import NavbarTop from "./components/user_dashboard/NavbarTop";
 import Message from "./components/user_dashboard/Message";
-
+import Forms from "./components/user_dashboard/Forms";
 // palmer 
 import AppointmentLawyer1 from "./components/user_dashboard/about_lawyers/palmer_schedule/PalmerAppointment";
 import AppointmentTableLawyer1 from "./components/user_dashboard/about_lawyers/palmer_schedule/PalmerAppointmentTable";
@@ -94,7 +94,7 @@ const NavbarWrapper = ({ children }) => {
   location.pathname.startsWith("/familyOne")
   // location.pathname.startsWith("/family");  
   
-  const showNavbarTop = location.pathname.startsWith("/lawyer-status") || location.pathname.startsWith("/appointment") || location.pathname.startsWith("/lawyer-appoinments");
+  const showNavbarTop = location.pathname.startsWith("/lawyer-status") || location.pathname.startsWith("/appointment") || location.pathname.startsWith("/lawyer-appoinments") || location.pathname.startsWith("/forms");
   return (
     <>
       {showNavbar && <Navbar />}
@@ -172,7 +172,8 @@ const App = () => {
             <Route path="/constitution" element={<Constitution />} />
             <Route path="/RA_8371" element={<RA_12066 />} />
             <Route path="/family" element={<FamilyCode />} />
-
+            <Route path="/forms" element={<Forms/>} />
+            
             {/* Article Routes */}
             <Route path="/articleOne" element={<Layout><ArticleOne /></Layout>} />
             <Route path="/articleTwo" element={<Layout><ArticleTwo /></Layout>} />
